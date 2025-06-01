@@ -1,0 +1,17 @@
+[book]
+authors = ["A. Chacon"]
+language = "en"
+multilingual = false
+src = "src"
+title = "OasCore Documentation"
+description = "This is the book with the documentation for configure and usage OasCore engine."
+
+[output.html]
+site-url = "/oas_core/"
+cname = "a-chacon.com"
+
+[output.llms-txt]
+optional = true
+
+[output.llms-txt-full]
+optional = true
