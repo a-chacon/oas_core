@@ -2,6 +2,7 @@
 
 require 'yard'
 require 'method_source'
+require 'oas_core/string'
 
 module OasCore
   require 'oas_core/version'

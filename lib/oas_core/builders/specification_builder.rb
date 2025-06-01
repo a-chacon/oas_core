@@ -12,6 +12,8 @@ module OasCore
         grouped_routes.each do |path, routes|
           @specification.paths.add_path(path, routes)
         end
+
+        self
       end
 
       def build

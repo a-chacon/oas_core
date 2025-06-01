@@ -10,11 +10,12 @@ module OasCore
 
       def from_oas_route(oas_route)
         tag_request_body = oas_route.tags(:request_body).first
-        if tag_request_body.nil? && OasCore.config.autodiscover_request_body
-          detect_request_body(oas_route) if %w[create update].include? oas_route.method_name
-        elsif !tag_request_body.nil?
-          from_tags(tag: tag_request_body, examples_tags: oas_route.tags(:request_body_example))
-        end
+        # TODO: This is for frameowkr specific.
+        # if tag_request_body.nil? && OasCore.config.autodiscover_request_body
+        #   detect_request_body(oas_route) if %w[create update].include? oas_route.method_name
+        return self if tag_request_body.nil?
+
+        from_tags(tag: tag_request_body, examples_tags: oas_route.tags(:request_body_example))
 
         self
       end

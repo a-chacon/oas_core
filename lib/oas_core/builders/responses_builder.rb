@@ -78,7 +78,7 @@ module OasCore
           code = @utils.status_to_integer(error)
           response = @response_builder.new(@specification).with_code(code).with_description(@utils.get_definition(code)).with_content(content).build
 
-          @responses.add_response(response) if @responses.responses[response.code].blank?
+          @responses.add_response(response) if @responses.responses[response.code].nil?
         end
       end
 

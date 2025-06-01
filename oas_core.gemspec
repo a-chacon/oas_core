@@ -24,8 +24,6 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 3.1'
 
-  # TODO: active record to schema should be part of implementation gems.
-  # spec.add_dependency 'easy_talk_two', '~> 1.1.2'
   spec.add_dependency 'method_source', '~> 1.0'
   spec.add_dependency 'yard', '~> 0.9'
   spec.metadata['rubygems_mfa_required'] = 'true'
