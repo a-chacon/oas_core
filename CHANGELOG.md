@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/a-chacon/oas_core/compare/oas_rails/v0.1.1...oas_rails/v0.1.2) (2025-06-02)
+
+
+### Documentation
+
+* update description and readme ([6e137bd](https://github.com/a-chacon/oas_core/commit/6e137bd73fd649c51407f080202b9ae42e9c290f))
+
 ## [0.1.1](https://github.com/a-chacon/oas_core/compare/oas_rails/v0.1.0...oas_rails/v0.1.1) (2025-06-02)
 
 
