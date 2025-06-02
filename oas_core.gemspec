@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.authors     = ['a-chacon']
   spec.email       = ['andres.ch@protonmail.com']
   spec.homepage    = 'https://github.com/a-chacon/oas_core'
-  spec.summary     = 'OasCore is a Rails engine for generating automatic interactive documentation for your Rails APIs.'
+  spec.summary     = 'Generates OpenAPI Specification (OAS) documents by analyzing and extracting routes from Rails applications.'
   spec.description =
-    'OasCore is a Rails engine for generating automatic interactive documentation for your Rails APIs. It generates an OAS 3.1 document and displays it using RapiDoc.'
+    'OasCore simplifies API documentation by automatically generating OpenAPI Specification (OAS 3.1) documents from your Rails application routes. It eliminates the need for manual documentation, ensuring accuracy and consistency. The gem integrates seamlessly with Rails, providing a hassle-free way to create interactive API documentation. Ideal for developers and teams aiming to maintain up-to-date API specs with minimal effort.'
 
   spec.license = 'GPL-3.0-only'
 
@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   # spec.metadata['changelog_uri'] = 'https://github.com/a-chacon/oas_core'
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
-    Dir['{app,config,db,lib,public}/**/*', 'LICENSE', 'Rakefile', 'README.md']
+    Dir['{lib}/**/*', 'LICENSE', 'Rakefile', 'README.md']
   end
 
   spec.required_ruby_version = '>= 3.1'
