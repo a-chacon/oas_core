@@ -99,6 +99,7 @@ PLATFORMS
 DEPENDENCIES
   debug (>= 1.0.0)
   factory_bot
+  minitest (~> 5.25, >= 5.25.5)
   oas_core!
   rubocop
 

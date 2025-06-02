@@ -8,9 +8,9 @@ gemspec
 
 gem 'rubocop'
 
-group :test do
-  gem 'factory_bot'
-end
+gem 'minitest', '~> 5.25', '>= 5.25.5'
+
+gem 'factory_bot'
 
 # Start debugger with binding.b [https://github.com/ruby/debug]
 gem 'debug', '>= 1.0.0'
