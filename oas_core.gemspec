@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.homepage    = 'https://github.com/a-chacon/oas_core'
   spec.summary     = 'Generates OpenAPI Specification (OAS) documents by analyzing and extracting routes from Rails applications.'
   spec.description =
-    'OasCore simplifies API documentation by automatically generating OpenAPI Specification (OAS 3.1) documents from your Rails application routes. It eliminates the need for manual documentation, ensuring accuracy and consistency. The gem integrates seamlessly with Rails, providing a hassle-free way to create interactive API documentation. Ideal for developers and teams aiming to maintain up-to-date API specs with minimal effort.'
+    'OasCore simplifies API documentation by automatically generating OpenAPI Specification (OAS 3.1) documents from your Ruby application routes. It eliminates the need for manual documentation, ensuring accuracy and consistency.'
 
   spec.license = 'GPL-3.0-only'
 
