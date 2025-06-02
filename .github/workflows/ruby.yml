@@ -21,7 +21,7 @@ jobs:
         with:
           bundler-cache: true
       - name: Run tests
-        run: rake
+        run: rake test
 
   lint:
     runs-on: ubuntu-latest
