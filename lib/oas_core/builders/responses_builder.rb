@@ -27,18 +27,6 @@ module OasCore
         self
       end
 
-      # def add_autodiscovered_responses(oas_route)
-      #   return self if !OasCore.config.autodiscover_responses || oas_route.tags(:response).any?
-      #
-      #   new_responses = Extractors::RenderResponseExtractor.extract_responses_from_source(@specification, source: oas_route.source_string)
-      #
-      #   new_responses.each do |new_response|
-      #     @responses.add_response(new_response) if @responses.responses[new_response.code].blank?
-      #   end
-      #
-      #   self
-      # end
-
       def add_default_responses(oas_route, security)
         return self unless OasCore.config.set_default_responses
 

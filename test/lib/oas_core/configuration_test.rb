@@ -11,14 +11,9 @@ module OasCore
     def test_initializes_with_default_values
       assert_equal '3.1.0', @config.instance_variable_get(:@swagger_version)
       assert_equal '/', @config.api_path
-      assert_equal [], @config.ignored_actions
-      assert_equal true, @config.autodiscover_request_body
-      assert_equal true, @config.autodiscover_responses
       assert_equal true, @config.authenticate_all_routes_by_default
       assert_equal %i[get post put patch delete], @config.http_verbs
       assert_equal 'Hash{ status: !Integer, error: String }', @config.response_body_of_default
-      assert_equal :rails, @config.rapidoc_theme
-      assert_equal :all, @config.include_mode
     end
 
     def test_sets_and_gets_servers
@@ -35,12 +30,6 @@ module OasCore
       assert_equal 1, @config.tags.size
       assert_equal 'Users', @config.tags.first.name
       assert_equal 'Operations about users', @config.tags.first.description
-    end
-
-    def test_validates_include_mode
-      @config.include_mode = :with_tags
-      @config.include_mode = :explicit
-      assert_raises(ArgumentError) { @config.include_mode = :invalid_mode }
     end
 
     def test_validates_response_body_of_default

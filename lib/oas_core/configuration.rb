@@ -3,33 +3,24 @@
 module OasCore
   class Configuration
     attr_accessor :info,
-                  :layout,
                   :default_tags_from,
-                  :autodiscover_request_body,
-                  :autodiscover_responses,
                   :api_path,
-                  :ignored_actions,
                   :security_schemas,
                   :authenticate_all_routes_by_default,
                   :set_default_responses,
                   :possible_default_responses,
                   :http_verbs,
-                  :use_model_names,
-                  :rapidoc_theme
+                  :use_model_names
 
-    attr_reader :servers, :tags, :security_schema, :include_mode, :response_body_of_default
+    attr_reader :servers, :tags, :security_schema, :response_body_of_default
 
     def initialize
       @info = Spec::Info.new
-      @layout = false
       @servers = default_servers
       @tags = []
       @swagger_version = '3.1.0'
       @default_tags_from = :namespace
-      @autodiscover_request_body = true
-      @autodiscover_responses = true
       @api_path = '/'
-      @ignored_actions = []
       @authenticate_all_routes_by_default = true
       @security_schema = nil
       @security_schemas = {}
@@ -38,9 +29,8 @@ module OasCore
                                        unprocessable_entity]
       @http_verbs = %i[get post put patch delete]
       @response_body_of_default = 'Hash{ status: !Integer, error: String }'
+      # TODO: What does this config??
       @use_model_names = false
-      @rapidoc_theme = :rails
-      @include_mode = :all
 
       @possible_default_responses.each do |response|
         method_name = "response_body_of_#{response}="
@@ -83,13 +73,6 @@ module OasCore
 
     def excluded_columns_outgoing
       []
-    end
-
-    def include_mode=(value)
-      valid_modes = %i[all with_tags explicit]
-      raise ArgumentError, "include_mode must be one of #{valid_modes}" unless valid_modes.include?(value)
-
-      @include_mode = value
     end
 
     def response_body_of_default=(value)

@@ -77,8 +77,6 @@ Then fill it with your data. Below are the available configuration options:
 
 - `config.default_tags_from`: Determines the source of default tags for operations. Can be set to `:namespace` or `:controller`. The first option means that if your endpoint is in the route `/users/:id`, it will be tagged with `Users`. If set to `controller`, the tag will be `UsersController`.
 
-- `config.autodiscover_request_body`: Automatically detects request bodies for create/update methods. Default is `true`.
-- `config.autodiscover_responses`: Automatically detects responses from controller renders. Default is `true`.
 - `config.http_verbs`: Defaults to `[:get, :post, :put, :patch, :delete]`
 - `config.use_model_names`: Use model names when possible, defaults to `false`
 

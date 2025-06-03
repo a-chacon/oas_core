@@ -57,9 +57,10 @@ module OasCore
   end
 
   class << self
-    def configure
-      OasCore.configure_yard!
-      yield config
+    def config=(config)
+      raise 'Configuration must be an OasCore::Configuration or its subclass' unless config.is_a?(OasCore::Configuration)
+
+      @config = config
     end
 
     def config
