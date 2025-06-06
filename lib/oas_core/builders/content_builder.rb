@@ -7,6 +7,7 @@ module OasCore
         @context = context || :incoming
         @specification = specification
         @media_type = Spec::MediaType.new(specification)
+        @content_type = 'application/json'
       end
 
       def with_schema(schema)
@@ -17,6 +18,12 @@ module OasCore
 
       def with_examples(examples)
         @media_type.examples = @specification.components.add_example(examples)
+
+        self
+      end
+
+      def with_content_type(content_type)
+        @content_type = content_type if content_type && !content_type.empty?
 
         self
       end
@@ -36,7 +43,7 @@ module OasCore
 
       def build
         {
-          'application/json': @media_type
+          @content_type => @media_type
         }
       end
     end

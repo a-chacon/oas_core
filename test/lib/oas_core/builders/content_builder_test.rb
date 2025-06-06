@@ -45,7 +45,7 @@ module OasCore
       def test_build
         builder = ContentBuilder.new(@specification, @context)
         result = builder.build
-        assert_equal({ 'application/json': builder.instance_variable_get(:@media_type) }, result)
+        assert_equal({ 'application/json' => builder.instance_variable_get(:@media_type) }, result)
       end
     end
   end

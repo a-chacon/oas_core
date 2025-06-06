@@ -116,6 +116,7 @@ module OasCore
     #
     # @param type [Symbol, String] The Ruby data type.
     # @return [Hash, String] The JSON schema type or a hash with additional format information.
+    # rubocop:disable Metrics/CyclomaticComplexity
     def self.ruby_type_to_json_schema_type(type)
       case type.to_s.downcase
       when 'string' then { type: 'string' }
@@ -127,8 +128,10 @@ module OasCore
       when 'nil' then { type: 'null' }
       when 'date' then { type: 'string', format: 'date' }
       when 'datetime' then { type: 'string', format: 'date-time' }
+      when 'file' then { type: 'string', format: 'binary' }
       else type.to_s.downcase
       end
     end
+    # rubocop:enable Metrics/CyclomaticComplexity
   end
 end
