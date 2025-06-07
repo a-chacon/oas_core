@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/a-chacon/oas_core/compare/oas_core/v0.2.0...oas_core/v0.3.0) (2025-06-06)
+
+
+### Features
+
+* add the content type dynamically with the tags ([2920a1a](https://github.com/a-chacon/oas_core/commit/2920a1ad468d800993e7fceb66f0bf760ac85a37))
+
 ## [0.2.0](https://github.com/a-chacon/oas_core/compare/oas_core/v0.1.0...oas_core/v0.2.0) (2025-06-03)
 
 
