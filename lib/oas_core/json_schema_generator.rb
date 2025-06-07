@@ -6,6 +6,16 @@ module OasCore
   # The JsonSchemaGenerator module provides methods to transform string representations
   # of data types into JSON schema formats.
   module JsonSchemaGenerator
+    @custom_type_parsers = {}
+
+    # Registers a custom type parser.
+    #
+    # @param type_matcher [Proc] A proc that matches the type string.
+    # @param parser [Proc] A proc that processes the type string.
+    def self.register_type_parser(type_matcher, parser)
+      @custom_type_parsers[type_matcher] = parser
+    end
+
     # Processes a string representing a data type and converts it into a JSON schema.
     #
     # @param str [String] The string representation of a data type.
@@ -22,6 +32,7 @@ module OasCore
     #
     # @param str [String] The string representation of a data type.
     # @return [Hash] A hash containing the type, whether it's required, and any additional properties.
+    # Registry for custom type parsers
     def self.parse_type(str)
       required = str.start_with?('!')
       type = str.sub(/^!/, '').strip
@@ -32,7 +43,12 @@ module OasCore
       when /^Array<(.+)>$/i
         { type: :array, required:, items: parse_type(::Regexp.last_match(1)) }
       else
-        { type: type.downcase.to_sym, required: }
+        custom_parser = @custom_type_parsers.find { |matcher, _| matcher.call(type) }
+        if custom_parser
+          custom_parser.last.call(type, required)
+        else
+          { type: type.downcase.to_sym, required: }
+        end
       end
     end
 
