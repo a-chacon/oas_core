@@ -6,6 +6,9 @@ require 'oas_core'
 require 'minitest/autorun'
 require 'factory_bot'
 require 'debug'
+require 'minitest/reporters'
+
+Minitest::Reporters.use!
 
 module Minitest
   class Test

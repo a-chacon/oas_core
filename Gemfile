@@ -16,3 +16,5 @@ gem 'factory_bot'
 
 # Start debugger with binding.b [https://github.com/ruby/debug]
 gem 'debug', '>= 1.0.0'
+
+gem 'minitest-reporters', '~> 1.7', '>= 1.7.1'
