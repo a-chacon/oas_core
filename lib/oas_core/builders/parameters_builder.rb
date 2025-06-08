@@ -10,13 +10,9 @@ module OasCore
 
       def from_oas_route(oas_route)
         parameters_from_tags(tags: oas_route.tags(:parameter))
+
         oas_route.path_params.try(:map) do |p|
-          unless @parameters.any? do |param|
-            param.name.to_s == p.to_s
-          end
-            @parameters << ParameterBuilder.new(@specification).from_path(oas_route.path,
-                                                                          p).build
-          end
+          @parameters << ParameterBuilder.new(@specification).from_path(oas_route.path, p).build unless @parameters.any? { |param| param.name.to_s == p.to_s }
         end
 
         self

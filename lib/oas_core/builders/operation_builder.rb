@@ -35,7 +35,7 @@ module OasCore
       end
 
       def extract_operation_id(oas_route:)
-        "#{oas_route.method_name}#{oas_route.path.gsub('/', '_').gsub(/[{}]/, '')}"
+        "#{oas_route.verb}_#{oas_route.path.gsub('/', '_')}"
       end
 
       def extract_tags(oas_route:)

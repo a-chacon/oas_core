@@ -12,7 +12,7 @@ module OasCore
     end
 
     def path_params
-      @path.to_s.scan(/:(\w+)/).flatten.reject! { |e| e == 'format' }
+      @path.to_s.scan(/\{(\w+)\}/).flatten
     end
 
     def tags(name = nil)
