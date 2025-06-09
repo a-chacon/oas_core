@@ -4,33 +4,33 @@
 
 # Introduction
 
-OasCore is a Rails engine that automatically generates OpenAPI 3.1 documentation from YARD comments in your Rails app, rendered with RapiDoc for interactive exploration.
+OasCore is a Ruby gem designed to generate Open API Specification (OAS) 3.1 documentation directly from YARD comments in your endpoints. It serves as the core engine for OAS generation, while framework-specific adapters like `OasRails` (for Ruby on Rails) handle the extraction, integration and additional features.
 
 ### Key Features
 
-- 🚀 **Automatic OAS 3.1 Generation**: OasCore scans your Rails application and generates OpenAPI specifications automatically.
+- 🚀 **OAS 3.1 Generation**: OasCore generates OAS version 3.1, the latest standard, ensuring your API documentation is up-to-date.
 
-- 📝 **YARD-Powered Documentation**: Use YARD tags in your endpoint comments to add descriptions, parameters, and examples—no need to learn a new DSL or use a specific framework (like Grape or RSpec).
+- 📝 **YARD-Powered Documentation**: Simply annotate your endpoints with YARD tags to include descriptions, parameters, and examples—no need to learn a new DSL or rely on framework-specific tools.
 
-- 🎨 **Interactive API Explorer**: Visualize and test your APIs in real-time with a polished UI powered by RapiDoc. If you prefer another UI, you can easily replace RapiDoc with alternatives like Swagger UI or ReDoc.
+- 🔌 **Framework Agnostic**: OasCore is designed to work with any Ruby framework. Adapters like `OasRails` extend its functionality for specific frameworks.
 
-### Demo App
-
-Explore the interactive documentation live:
+### Demo App (OasRails)
 
 🔗 **[Open Demo App](https://paso.fly.dev/api/docs)**  
 👤 **Username**: `oasrails`  
 🔑 **Password**: `oasrails`
 
+### Screenshot
+
 ![Screenshot of OasCore](assets/rails_theme.png)
 
 
-# Installation
+## Installation
 
 1. Add this line to your Rails application's Gemfile:
 
    ```ruby
-   gem "oas_core"`
+   gem "oas_rails"`
    ```
 
 2. Execute:
@@ -48,9 +48,9 @@ Explore the interactive documentation live:
 You'll now have **basic documentation** based on your routes and automatically gathered information at `localhost:3000/docs`. To enhance it, create an initializer file and add [Yard](https://yardoc.org/) tags to your controller methods.
 
 
-# Configuration
+# Configuring OasRails
 
-To configure OasCore, **you MUST create an initializer file** including all your settings. The first step is to create your initializer file, which you can easily do with:
+To configure OasRails, **you MUST create an initializer file** including all your settings. The first step is to create your initializer file, which you can easily do with:
 
 ```bash
 rails generate oas_core:config
@@ -178,7 +178,7 @@ Then fill it with your data. Below are the available configuration options:
 
 # Enabling CORS for Interactive Documentation
 
-By default, OasCore uses **RapiDoc** as the frontend for interactive API documentation. However, you can customize this to use other tools like Swagger UI or ReDoc if needed.
+By default, OasRails uses **RapiDoc** as the frontend for interactive API documentation. However, you can customize this to use other tools like Swagger UI or ReDoc if needed.
 
 To test endpoints interactively using RapiDoc (or your chosen frontend), you must enable Cross-Origin Resource Sharing (CORS) in your Rails application. Follow these steps:
 
@@ -209,17 +209,17 @@ To test endpoints interactively using RapiDoc (or your chosen frontend), you mus
 This will allow RapiDoc to make requests to your API endpoints from the browser.
 
 
-# Securing the OasCore Engine
+# Securing the OasRails Engine
 
-To secure the OasCore engine, which exposes an endpoint for showing the OAS definition, you can configure authentication to ensure that only authorized users have access. Here are a few methods to achieve this:
+To secure the OasRails engine, which exposes an endpoint for showing the OAS definition, you can configure authentication to ensure that only authorized users have access. Here are a few methods to achieve this:
 
 ### 1. Using Basic Authentication
 
-Use basic authentication to protect the OasCore endpoint. You can set this up in an initializer:
+Use basic authentication to protect the OasRails endpoint. You can set this up in an initializer:
 
 ```ruby
 # config/initializers/oas_core.rb
-OasCore::Engine.middleware.use(Rack::Auth::Basic) do |username, password|
+OasRails::Engine.middleware.use(Rack::Auth::Basic) do |username, password|
   ActiveSupport::SecurityUtils.secure_compare(Rails.application.credentials.oas_core_username, username) &
     ActiveSupport::SecurityUtils.secure_compare(Rails.application.credentials.oas_core_password, password)
 end
@@ -227,25 +227,25 @@ end
 
 ### 2. Using Devise's `authenticate` Helper
 
-You can use Devise's `authenticate` helper to restrict access to the OasCore endpoint. For example, you can allow only admin users to access the endpoint:
+You can use Devise's `authenticate` helper to restrict access to the OasRails endpoint. For example, you can allow only admin users to access the endpoint:
 
 ```ruby
 # config/routes.rb
 # ...
 authenticate :user, ->(user) { user.admin? } do
-  mount OasCore::Engine, at: '/docs'
+  mount OasRails::Engine, at: '/docs'
 end
 ```
 
 ### 3. Custom Authentication
 
-To support custom authentication, you can extend the OasCore' ApplicationController using a hook. This allows you to add custom before actions to check for specific user permissions:
+To support custom authentication, you can extend the OasRails' ApplicationController using a hook. This allows you to add custom before actions to check for specific user permissions:
 
 ```ruby
 # config/initializers/oas_core.rb
 
 ActiveSupport.on_load(:oas_core_application_controller) do
-  # context here is OasCore::ApplicationController
+  # context here is OasRails::ApplicationController
 
   before_action do
     raise ActionController::RoutingError.new('Not Found') unless current_user&.admin?
@@ -261,7 +261,7 @@ end
 
 # Customizing the View
 
-The OasCore engine provides an easy way to display your OpenAPI Specification (OAS) within your Rails application. By default, it includes an `index` view in the `OasCoreController` that displays [RapiDoc](https://rapidocweb.com/) through a CDN with default configurations. You can easily override this view to replace RapiDoc entirely or configure it differently.
+The OasRails engine provides an easy way to display your OpenAPI Specification (OAS) within your Rails application. By default, it includes an `index` view in the `OasCoreController` that displays [RapiDoc](https://rapidocweb.com/) through a CDN with default configurations. You can easily override this view to replace RapiDoc entirely or configure it differently.
 
 ### Available configurations
 
@@ -293,7 +293,7 @@ You can customize the appearance of the OAS documentation UI by setting the `con
 To change the theme, add the following line to your `config/initializers/oas_core.rb` file:
 
 ```ruby
-OasCore.configure do |config|
+OasRails.configure do |config|
   config.rapidoc_theme = "dark" # Replace "dark" with your preferred theme name
 end
 ```
@@ -302,7 +302,7 @@ Any other modification will require that you overwrite the index view explained 
 
 ### Overriding the `index` View
 
-To override the `index` view provided by the OasCore engine, follow these steps:
+To override the `index` view provided by the OasRails engine, follow these steps:
 
 1. **Create the Override View File**: In your host application, create a new file at the path `app/views/oas_core/oas_core/index.html.erb`. If the directories do not exist, you will need to create them.
 
@@ -310,7 +310,7 @@ To override the `index` view provided by the OasCore engine, follow these steps:
 
 #### Using the Custom View
 
-Once the custom view file is in place, Rails will automatically use it instead of the view provided by the OasCore engine. This allows you to fully customize the presentation of the OAS without modifying the engine's code.
+Once the custom view file is in place, Rails will automatically use it instead of the view provided by the OasRails engine. This allows you to fully customize the presentation of the OAS without modifying the engine's code.
 
 
 # Tags

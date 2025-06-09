@@ -8,14 +8,14 @@
 
 ## Installation
 
-- [Installation](installation.md)
+- [Installation](installation/oasrails.md)
 
 ## Configuration
 
-- [Configuration](configuration/index.md)
-- [Cors](configuration/cors.md)
-- [Securing](configuration/securing.md)
-- [Customizing View](configuration/customizing_view.md)
+- [Configuration](configuration/oasrails.md)
+- [Cors](configuration/oasrails/cors.md)
+- [Securing](configuration/oasrails/securing.md)
+- [Customizing View](configuration/oasrails/customizing_view.md)
 
 ## Tags
 
