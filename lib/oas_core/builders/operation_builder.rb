@@ -30,8 +30,9 @@ module OasCore
       private
 
       def extract_summary(oas_route:)
-        oas_route.tags(:summary).first.try(:text) || generate_crud_name(oas_route.method_name,
-                                                                        oas_route.controller.downcase) || "#{oas_route.verb} #{oas_route.path}"
+        summary_tag = oas_route.tags(:summary).first
+        summary_tag&.text || generate_crud_name(oas_route.method_name,
+                                                oas_route.controller.downcase) || "#{oas_route.verb} #{oas_route.path}"
       end
 
       def extract_operation_id(oas_route:)
@@ -50,7 +51,7 @@ module OasCore
       def default_tags(oas_route:)
         tags = []
         if OasCore.config.default_tags_from == :namespace
-          tag = oas_route.path.split('/').reject(&:empty?).first.try(:titleize)
+          tag = oas_route.path.split('/').reject(&:empty?).first&.titleize
           tags << tag unless tag.nil?
         else
           tags << oas_route.controller.gsub('/', ' ').titleize
