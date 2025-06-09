@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.5.0](https://github.com/a-chacon/oas_core/compare/oas_core/v0.4.0...oas_core/v0.5.0) (2025-06-09)
+
+
+### Features
+
+* replace try for safe navigator. (try is rails specific method) ([d5d58cd](https://github.com/a-chacon/oas_core/commit/d5d58cddd018455471b0de83a165e990a5ed7154))
+
+
+### Documentation
+
+* update mdbook documentation ([ba41005](https://github.com/a-chacon/oas_core/commit/ba41005b257e5d3456b37ed8dfdb43cbfc77b179))
+* update readme ([f71b0a8](https://github.com/a-chacon/oas_core/commit/f71b0a885590c9216cd666ccd31236686d9d8f35))
+
 ## [0.4.0](https://github.com/a-chacon/oas_core/compare/oas_core/v0.3.0...oas_core/v0.4.0) (2025-06-08)
 
 
