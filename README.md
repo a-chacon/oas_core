@@ -1,13 +1,16 @@
 ![Gem Version](https://img.shields.io/gem/v/oas_core?color=E9573F)
 ![GitHub License](https://img.shields.io/github/license/a-chacon/oas_core?color=blue)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/a-chacon/oas_core/.github%2Fworkflows%2Frubyonrails.yml)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/a-chacon/oas_core/.github%2Fworkflows%2Fruby.yml)
 ![Gem Total Downloads](https://img.shields.io/gem/dt/oas_core)
-![Static Badge](https://img.shields.io/badge/Rails-%3E%3D7.0.0-%23E9573F)
 ![Static Badge](https://img.shields.io/badge/Ruby-%3E%3D3.1.0-%23E9573F)
 
-# 📃Open API Specification For Rails
+# 📃Open API Specification Core
 
-Generates OpenAPI Specification (OAS) documents by analyzing and extracting routes from Rails applications.
+OasCore is a Ruby gem designed to generate Open API Specification (OAS) 3.1 documentation directly from YARD comments in your endpoints. It serves as the core engine for OAS generation, while framework-specific adapters like `OasRails` (for Ruby on Rails) handle the extraction, integration and additional features.
+
+## Framework adapters
+
+- **[OasRails](https://github.com/a-chacon/oas_rails)**
 
 ## Documentation
 
