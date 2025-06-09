@@ -1,6 +1,6 @@
 # Customizing the View
 
-The OasCore engine provides an easy way to display your OpenAPI Specification (OAS) within your Rails application. By default, it includes an `index` view in the `OasCoreController` that displays [RapiDoc](https://rapidocweb.com/) through a CDN with default configurations. You can easily override this view to replace RapiDoc entirely or configure it differently.
+The OasRails engine provides an easy way to display your OpenAPI Specification (OAS) within your Rails application. By default, it includes an `index` view in the `OasCoreController` that displays [RapiDoc](https://rapidocweb.com/) through a CDN with default configurations. You can easily override this view to replace RapiDoc entirely or configure it differently.
 
 ### Available configurations
 
@@ -32,7 +32,7 @@ You can customize the appearance of the OAS documentation UI by setting the `con
 To change the theme, add the following line to your `config/initializers/oas_core.rb` file:
 
 ```ruby
-OasCore.configure do |config|
+OasRails.configure do |config|
   config.rapidoc_theme = "dark" # Replace "dark" with your preferred theme name
 end
 ```
@@ -41,7 +41,7 @@ Any other modification will require that you overwrite the index view explained 
 
 ### Overriding the `index` View
 
-To override the `index` view provided by the OasCore engine, follow these steps:
+To override the `index` view provided by the OasRails engine, follow these steps:
 
 1. **Create the Override View File**: In your host application, create a new file at the path `app/views/oas_core/oas_core/index.html.erb`. If the directories do not exist, you will need to create them.
 
@@ -49,4 +49,4 @@ To override the `index` view provided by the OasCore engine, follow these steps:
 
 #### Using the Custom View
 
-Once the custom view file is in place, Rails will automatically use it instead of the view provided by the OasCore engine. This allows you to fully customize the presentation of the OAS without modifying the engine's code.
+Once the custom view file is in place, Rails will automatically use it instead of the view provided by the OasRails engine. This allows you to fully customize the presentation of the OAS without modifying the engine's code.

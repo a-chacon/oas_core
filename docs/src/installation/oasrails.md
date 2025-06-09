@@ -1,9 +1,9 @@
-# Installation
+## Installation
 
 1. Add this line to your Rails application's Gemfile:
 
    ```ruby
-   gem "oas_core"`
+   gem "oas_rails"`
    ```
 
 2. Execute:

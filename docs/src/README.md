@@ -1,21 +1,21 @@
 # Introduction
 
-OasCore is a Rails engine that automatically generates OpenAPI 3.1 documentation from YARD comments in your Rails app, rendered with RapiDoc for interactive exploration.
+OasCore is a Ruby gem designed to generate Open API Specification (OAS) 3.1 documentation directly from YARD comments in your endpoints. It serves as the core engine for OAS generation, while framework-specific adapters like `OasRails` (for Ruby on Rails) handle the extraction, integration and additional features.
 
 ### Key Features
 
-- 🚀 **Automatic OAS 3.1 Generation**: OasCore scans your Rails application and generates OpenAPI specifications automatically.
+- 🚀 **OAS 3.1 Generation**: OasCore generates OAS version 3.1, the latest standard, ensuring your API documentation is up-to-date.
 
-- 📝 **YARD-Powered Documentation**: Use YARD tags in your endpoint comments to add descriptions, parameters, and examples—no need to learn a new DSL or use a specific framework (like Grape or RSpec).
+- 📝 **YARD-Powered Documentation**: Simply annotate your endpoints with YARD tags to include descriptions, parameters, and examples—no need to learn a new DSL or rely on framework-specific tools.
 
-- 🎨 **Interactive API Explorer**: Visualize and test your APIs in real-time with a polished UI powered by RapiDoc. If you prefer another UI, you can easily replace RapiDoc with alternatives like Swagger UI or ReDoc.
+- 🔌 **Framework Agnostic**: OasCore is designed to work with any Ruby framework. Adapters like `OasRails` extend its functionality for specific frameworks.
 
-### Demo App
-
-Explore the interactive documentation live:
+### Demo App (OasRails)
 
 🔗 **[Open Demo App](https://paso.fly.dev/api/docs)**  
 👤 **Username**: `oasrails`  
 🔑 **Password**: `oasrails`
+
+### Screenshot
 
 ![Screenshot of OasCore](assets/rails_theme.png)

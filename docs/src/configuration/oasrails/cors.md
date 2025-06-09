@@ -1,6 +1,6 @@
 # Enabling CORS for Interactive Documentation
 
-By default, OasCore uses **RapiDoc** as the frontend for interactive API documentation. However, you can customize this to use other tools like Swagger UI or ReDoc if needed.
+By default, OasRails uses **RapiDoc** as the frontend for interactive API documentation. However, you can customize this to use other tools like Swagger UI or ReDoc if needed.
 
 To test endpoints interactively using RapiDoc (or your chosen frontend), you must enable Cross-Origin Resource Sharing (CORS) in your Rails application. Follow these steps:
 

@@ -2,13 +2,14 @@
 
 [Introduction](README.md)
 
-# User Guide
+# OasRails
 
-- [Installation](installation.md)
-- [Configuration](configuration/README.md)
-  - [Cors](configuration/cors.md)
-  - [Securing](configuration/securing.md)
-  - [Customizing View](configuration/customizing_view.md)
+- [Installation](installation/oasrails.md)
+
+- [Configuration](configuration/oasrails.md)
+  - [Cors](configuration/oasrails/cors.md)
+  - [Securing](configuration/oasrails/securing.md)
+  - [Customizing View](configuration/oasrails/customizing_view.md)
 
 # Usage
 

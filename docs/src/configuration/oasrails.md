@@ -1,6 +1,6 @@
-# Configuration
+# Configuring OasRails
 
-To configure OasCore, **you MUST create an initializer file** including all your settings. The first step is to create your initializer file, which you can easily do with:
+To configure OasRails, **you MUST create an initializer file** including all your settings. The first step is to create your initializer file, which you can easily do with:
 
 ```bash
 rails generate oas_core:config
