@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/a-chacon/oas_core/compare/oas_core/v0.5.0...oas_core/v0.5.1) (2025-06-09)
+
+
+### Bug Fixes
+
+* add activesupport dependency so there is no need to replace all rails methods for manage strings ([c337af4](https://github.com/a-chacon/oas_core/commit/c337af403f9c3b8e658324f3b2f08abc816b75c7))
+
 ## [0.5.0](https://github.com/a-chacon/oas_core/compare/oas_core/v0.4.0...oas_core/v0.5.0) (2025-06-09)
 
 

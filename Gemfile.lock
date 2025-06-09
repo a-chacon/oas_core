@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    oas_core (0.5.0)
+    oas_core (0.5.1)
       activesupport (>= 7.0)
       method_source (~> 1.0)
       yard (~> 0.9)
