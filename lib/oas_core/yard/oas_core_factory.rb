@@ -112,13 +112,13 @@ module OasCore
       # Evaluates a string as a hash, handling errors gracefully.
       # @param content [String] The content string to evaluate.
       # @return [Hash] The evaluated hash, or an empty hash if an error occurs.
-      # rubocop:disable Security/Eval
       def eval_content(content)
-        eval(content)
+        # Sanitize the content to ensure it's valid JSON
+        sanitized = content.gsub(/([{,])\s*([^":\s]+)\s*:/, '\1"\2":')
+        JSON.parse(sanitized, { symbolize_names: true })
       rescue StandardError
         {}
       end
-      # rubocop:enable Security/Eval
 
       # Parses the position name and location from input text.
       # @param input [String] The input text to parse.
