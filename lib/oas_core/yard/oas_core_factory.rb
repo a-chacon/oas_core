@@ -115,7 +115,7 @@ module OasCore
       # rubocop:disable Security/Eval
       def eval_content(content)
         eval(content)
-      rescue StandardError
+      rescue StandardError, SyntaxError
         {}
       end
       # rubocop:enable Security/Eval
