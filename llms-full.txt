@@ -42,7 +42,7 @@ OasCore is a Ruby gem designed to generate Open API Specification (OAS) 3.1 docu
 3. Mount the engine in your config/routes.rb file
 
    ```ruby
-   mount OasCore::Engine => '/docs'
+   mount OasRails::Engine => '/docs'
    ```
 
 You'll now have **basic documentation** based on your routes and automatically gathered information at `localhost:3000/docs`. To enhance it, create an initializer file and add [Yard](https://yardoc.org/) tags to your controller methods.
@@ -53,7 +53,7 @@ You'll now have **basic documentation** based on your routes and automatically g
 To configure OasRails, **you MUST create an initializer file** including all your settings. The first step is to create your initializer file, which you can easily do with:
 
 ```bash
-rails generate oas_core:config
+rails generate oas_rails:config
 ```
 
 Then fill it with your data. Below are the available configuration options:

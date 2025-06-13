@@ -201,14 +201,14 @@
 </li>
 <li>
 <p>Mount the engine in your config/routes.rb file</p>
-<pre><code class="language-ruby">mount OasCore::Engine =&gt; '/docs'
+<pre><code class="language-ruby">mount OasRails::Engine =&gt; '/docs'
 </code></pre>
 </li>
 </ol>
 <p>You'll now have <strong>basic documentation</strong> based on your routes and automatically gathered information at <code>localhost:3000/docs</code>. To enhance it, create an initializer file and add <a href="https://yardoc.org/">Yard</a> tags to your controller methods.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="configuring-oasrails"><a class="header" href="#configuring-oasrails">Configuring OasRails</a></h1>
 <p>To configure OasRails, <strong>you MUST create an initializer file</strong> including all your settings. The first step is to create your initializer file, which you can easily do with:</p>
-<pre><code class="language-bash">rails generate oas_core:config
+<pre><code class="language-bash">rails generate oas_rails:config
 </code></pre>
 <p>Then fill it with your data. Below are the available configuration options:</p>
 <h3 id="basic-information-about-the-api"><a class="header" href="#basic-information-about-the-api">Basic Information about the API</a></h3>
