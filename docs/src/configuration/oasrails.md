@@ -3,7 +3,7 @@
 To configure OasRails, **you MUST create an initializer file** including all your settings. The first step is to create your initializer file, which you can easily do with:
 
 ```bash
-rails generate oas_core:config
+rails generate oas_rails:config
 ```
 
 Then fill it with your data. Below are the available configuration options:
