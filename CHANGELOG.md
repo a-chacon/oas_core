@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.2](https://github.com/a-chacon/oas_core/compare/oas_core/v0.5.1...oas_core/v0.5.2) (2025-06-14)
+
+
+### Documentation
+
+* fix oas_rails documentation reference to oas_core ([cc7396a](https://github.com/a-chacon/oas_core/commit/cc7396a25c34a49d3b7d6560ee0386633cbd0642))
+
+
+### Code Refactoring
+
+* clean oas_route unused variables ([be647a2](https://github.com/a-chacon/oas_core/commit/be647a20a383a0fabdd7c1622d8c472e44f93b51))
+
 ## [0.5.1](https://github.com/a-chacon/oas_core/compare/oas_core/v0.5.0...oas_core/v0.5.1) (2025-06-09)
 
 
