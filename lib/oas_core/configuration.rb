@@ -14,9 +14,9 @@ module OasCore
 
     attr_reader :servers, :tags, :security_schema, :response_body_of_default
 
-    def initialize
-      @info = Spec::Info.new
-      @servers = default_servers
+    def initialize(**args)
+      @info = args.fetch(:info, Spec::Info.new)
+      @servers = args.fetch(:servers, default_servers)
       @tags = []
       @swagger_version = '3.1.0'
       @default_tags_from = :namespace
@@ -56,7 +56,7 @@ module OasCore
     end
 
     def default_servers
-      [Spec::Server.new(url: 'http://localhost:3000', description: 'Rails Default Development Server')]
+      [Spec::Server.new(url: 'http://localhost:3000', description: 'Development Server')]
     end
 
     def servers=(value)
@@ -65,14 +65,6 @@ module OasCore
 
     def tags=(value)
       @tags = value.map { |t| Spec::Tag.new(name: t[:name], description: t[:description]) }
-    end
-
-    def excluded_columns_incoming
-      %i[id created_at updated_at deleted_at]
-    end
-
-    def excluded_columns_outgoing
-      []
     end
 
     def response_body_of_default=(value)

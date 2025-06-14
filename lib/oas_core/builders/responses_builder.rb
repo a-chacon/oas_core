@@ -43,6 +43,8 @@ module OasCore
       private
 
       def determine_common_errors(oas_route, security)
+        # TODO: this is Rails focus solution.
+        #   We need a framework agnostic solution or simple remove and give this responsability to adapters.
         common_errors = []
         common_errors.push(:unauthorized, :forbidden, :internal_server_error) if security
 
