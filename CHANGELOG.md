@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.3](https://github.com/a-chacon/oas_core/compare/oas_core/v0.5.2...oas_core/v0.5.3) (2025-06-14)
+
+
+### Bug Fixes
+
+* add args to config initializer for be able to replace default info ([e953cf7](https://github.com/a-chacon/oas_core/commit/e953cf7b75e216e87811f42144ae1b042c17c4db))
+
 ## [0.5.2](https://github.com/a-chacon/oas_core/compare/oas_core/v0.5.1...oas_core/v0.5.2) (2025-06-14)
 
 
