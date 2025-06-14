@@ -2,9 +2,7 @@
 
 module OasCore
   class OasRoute
-    # TODO: Check what variables are in use and remove the ones that are not.
-    attr_accessor :controller_class, :controller_action, :controller, :controller_path, :method_name, :verb, :path,
-                  :docstring, :source_string
+    attr_accessor :controller, :method_name, :verb, :path, :docstring, :source_string
     attr_writer :tags
 
     def initialize(attributes = {})

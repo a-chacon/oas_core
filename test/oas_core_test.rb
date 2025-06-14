@@ -9,6 +9,6 @@ class OasCoreTest < Minitest::Test
 
   def test_oas_route_factory
     route = build(:oas_route)
-    assert_equal 'ExampleController', route.controller_class
+    assert_equal 'get', route.verb
   end
 end

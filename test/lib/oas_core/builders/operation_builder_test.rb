@@ -21,7 +21,7 @@ module OasCore
         oas_route = FactoryBot.build(:oas_route)
         operation = @builder.from_oas_route(oas_route).build
 
-        assert_equal "#{oas_route.verb} #{oas_route.path}", operation.summary
+        assert_equal 'View', operation.summary
       end
 
       def test_from_oas_route_with_tags_tag

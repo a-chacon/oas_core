@@ -2,11 +2,8 @@
 
 FactoryBot.define do
   factory :oas_route, class: 'OasCore::OasRoute' do
-    controller_class { 'ExampleController' }
-    controller_action { 'index' }
     controller { 'ExampleController' }
-    controller_path { '/example' }
-    method_name { 'GET' }
+    method_name { 'show' }
     verb { 'get' }
     path { '/example/:id' }
     docstring { 'Example docstring' }

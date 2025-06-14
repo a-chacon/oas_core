@@ -31,8 +31,7 @@ module OasCore
 
       def extract_summary(oas_route:)
         summary_tag = oas_route.tags(:summary).first
-        summary_tag&.text || generate_crud_name(oas_route.method_name,
-                                                oas_route.controller.downcase) || "#{oas_route.verb} #{oas_route.path}"
+        summary_tag&.text || generate_crud_name(oas_route.method_name) || "#{oas_route.verb} #{oas_route.path}"
       end
 
       def extract_operation_id(oas_route:)
@@ -74,21 +73,14 @@ module OasCore
         end
       end
 
-      def generate_crud_name(method, controller)
-        controller_name = controller.to_s.underscore.humanize.downcase.pluralize
-
-        case method.to_sym
-        when :index
-          "List #{controller_name}"
-        when :show
-          "View #{controller_name.singularize}"
-        when :create
-          "Create new #{controller_name.singularize}"
-        when :update
-          "Update #{controller_name.singularize}"
-        when :destroy
-          "Delete #{controller_name.singularize}"
-        end
+      def generate_crud_name(method)
+        {
+          index: 'List',
+          show: 'View',
+          create: 'Create',
+          update: 'Update',
+          destroy: 'Delete'
+        }.fetch(method.to_sym)
       end
     end
   end
