@@ -20,9 +20,10 @@ OasCore is a Ruby gem designed to generate Open API Specification (OAS) 3.1 docu
 👤 **Username**: `oasrails`  
 🔑 **Password**: `oasrails`
 
-### Screenshot
 
-![Screenshot of OasCore](assets/rails_theme.png)
+# OasRails
+
+![Screenshot of OasCore](../assets/rails_theme.png)
 
 
 ## Installation
@@ -311,6 +312,150 @@ To override the `index` view provided by the OasRails engine, follow these steps
 #### Using the Custom View
 
 Once the custom view file is in place, Rails will automatically use it instead of the view provided by the OasRails engine. This allows you to fully customize the presentation of the OAS without modifying the engine's code.
+
+
+# OasHanami
+
+**Please note that this implementation is not yet thoroughly tested and is in an early stage. If you encounter any issues or have suggestions, feel free to open a GitHub issue, PR, or discussion [here](https://github.com/a-chacon/oas_hanami).**
+
+![Screenshot of OasHanami](../assets/hanami_theme.png)
+
+
+# Installation
+
+1. Add this line to your Hanami application's Gemfile:
+
+   ```ruby
+   gem "oas_namai"`
+   ```
+
+2. Execute:
+
+   ```bash
+   bundle
+   ```
+
+3. Mount the engine in your config/routes.rb file **at the bottom of all routes** to ensure it doesn't interfere with your application's routing:
+
+   ```ruby
+    mount OasHanami::Web::View, at: "/docs"
+   ```
+
+4. **The most important step:** add the route inspector before starting the app.
+   It can be do in your `config.ru` file:
+
+    ```ruby
+    require "hanami/boot"
+
+    Hanami.app.router(inspector: OasHanami::Inspector.new) # set before run the app.
+
+    run Hanami.app
+    ```
+
+You'll now have **basic documentation** based on your routes and automatically gathered information at `localhost:2300/docs`. To enhance it, create an initializer file and add [Yard](https://yardoc.org/) tags to your controller methods.
+
+
+# Configuring OasHanami
+
+To configure OasHanami, you need to create an initializer file including all your settings. The first step is to create your initializer file like this:
+
+```ruby
+# config/initializers/oas_hanami.rb
+OasHanami.configure do |config|
+  config.info.title = 'Amazing Hanami API'
+  # Others configurations here...
+end
+```
+
+Then fill it with your data. Below are the available configuration options:
+
+### Basic Information about the API
+
+- `config.info.title`: The title of your API documentation.
+
+- `config.info.summary`: A brief summary of your API.
+
+- `config.info.description`: A detailed description of your API. This can include markdown formatting and will be displayed prominently in your documentation.
+
+- `config.info.contact.name`: The name of the contact person or organization.
+
+- `config.info.contact.email`: The contact email address.
+
+- `config.info.contact.url`: The URL for more information or support.
+
+### Servers Information
+
+- `config.servers`: An array of server objects, each containing `url` and `description` keys. For more details, refer to the [OpenAPI Specification](https://spec.openapis.org/oas/latest.html#server-object).
+
+### Tag Information
+
+- `config.tags`: An array of tag objects, each containing `name` and `description` keys. For more details, refer to the [OpenAPI Specification](https://spec.openapis.org/oas/latest.html#tag-object).
+
+### Optional Settings
+
+- `config.include_mode`: Determines the mode for including operations. The default value is `all`, which means it will include all route operations under the `api_path`, whether documented or not. Other possible values:
+  - `:with_tags`: Includes in your OAS only the operations with at least one tag. Example:
+
+    Not included:
+
+    ```ruby
+    def update
+    end
+    ```
+
+    Included:
+
+    ```ruby
+    # @summary Return all Books
+    def index
+    end
+    ```
+
+  - `:explicit`: Includes in your OAS only the operations tagged with `@oas_include`. Example:
+
+    Not included:
+
+    ```ruby
+    def update
+    end
+    ```
+
+    Included:
+
+    ```ruby
+    # @oas_include
+    def index
+    end
+    ```
+
+- `config.api_path`: Sets the API path if your API is under a different namespace than the root. This is important to configure if you have the `include_mode` set to `all` because it will include all routes of your app in the final OAS. For example, if your app has additional routes and your API is under the namespace `/api`, set this configuration as follows:
+
+  ```ruby
+  config.api_path = "/api"
+  ```
+
+- `config.http_verbs`: Defaults to `[:get, :post, :put, :patch, :delete]`
+
+### Authentication Settings
+
+- `config.authenticate_all_routes_by_default`: Determines whether to authenticate all routes by default. Default is `true`.
+
+- `config.security_schema`: The default security schema used for authentication. Choose from the following predefined options:
+  - `:api_key_cookie`: API key passed via HTTP cookie.
+  - `:api_key_header`: API key passed via HTTP header.
+  - `:api_key_query`: API key passed via URL query parameter.
+  - `:basic`: HTTP Basic Authentication.
+  - `:bearer`: Bearer token (generic).
+  - `:bearer_jwt`: Bearer token formatted as a JWT (JSON Web Token).
+  - `:mutual_tls`: Mutual TLS authentication (mTLS).
+
+- `config.security_schemas`: Custom security schemas. Follow the [OpenAPI Specification](https://spec.openapis.org/oas/latest.html#security-scheme-object) for defining these schemas.
+
+### Project License
+
+- `config.info.license.name`: The title name of your project's license. Default: GPL 3.0
+
+- `config.info.license.url`: The URL to the full license text. Default: <https://www.gnu.org/licenses/gpl-3.0.html#license-text>
 
 
 # Tags

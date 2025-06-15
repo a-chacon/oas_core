@@ -166,9 +166,13 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="configuring-oasrails"><a class="header" href="#configuring-oasrails">Configuring OasRails</a></h1>
-<p>To configure OasRails, <strong>you MUST create an initializer file</strong> including all your settings. The first step is to create your initializer file, which you can easily do with:</p>
-<pre><code class="language-bash">rails generate oas_rails:config
+                        <h1 id="configuring-oashanami"><a class="header" href="#configuring-oashanami">Configuring OasHanami</a></h1>
+<p>To configure OasHanami, you need to create an initializer file including all your settings. The first step is to create your initializer file like this:</p>
+<pre><code class="language-ruby"># config/initializers/oas_hanami.rb
+OasHanami.configure do |config|
+  config.info.title = 'Amazing Hanami API'
+  # Others configurations here...
+end
 </code></pre>
 <p>Then fill it with your data. Below are the available configuration options:</p>
 <h3 id="basic-information-about-the-api"><a class="header" href="#basic-information-about-the-api">Basic Information about the API</a></h3>
@@ -237,16 +241,7 @@ end
 </code></pre>
 </li>
 <li>
-<p><code>config.ignored_actions</code>: Defines an array of controller or controller#action pairs. You do not need to prepend the <code>api_path</code>. This is useful when you want to include all routes except a few specific actions or when an external engine (e.g., Devise) adds routes to your API.</p>
-</li>
-<li>
-<p><code>config.default_tags_from</code>: Determines the source of default tags for operations. Can be set to <code>:namespace</code> or <code>:controller</code>. The first option means that if your endpoint is in the route <code>/users/:id</code>, it will be tagged with <code>Users</code>. If set to <code>controller</code>, the tag will be <code>UsersController</code>.</p>
-</li>
-<li>
 <p><code>config.http_verbs</code>: Defaults to <code>[:get, :post, :put, :patch, :delete]</code></p>
-</li>
-<li>
-<p><code>config.use_model_names</code>: Use model names when possible, defaults to <code>false</code></p>
 </li>
 </ul>
 <h3 id="authentication-settings"><a class="header" href="#authentication-settings">Authentication Settings</a></h3>
@@ -270,32 +265,6 @@ end
 <p><code>config.security_schemas</code>: Custom security schemas. Follow the <a href="https://spec.openapis.org/oas/latest.html#security-scheme-object">OpenAPI Specification</a> for defining these schemas.</p>
 </li>
 </ul>
-<h3 id="default-errors"><a class="header" href="#default-errors">Default Errors</a></h3>
-<ul>
-<li>
-<p><strong><code>config.set_default_responses</code></strong>: Determines whether to add default error responses to endpoints. Default is <code>true</code>.</p>
-</li>
-<li>
-<p><strong><code>config.possible_default_responses</code></strong>: An array of possible default error responses. Some responses are added conditionally based on the endpoint (e.g., <code>:not_found</code> only applies to <code>show</code>, <code>update</code>, or <code>delete</code> actions).<br />
-<strong>Default</strong>: <code>[:not_found, :unauthorized, :forbidden, :internal_server_error, :unprocessable_entity]</code><br />
-<strong>Allowed Values</strong>: Symbols representing HTTP status codes from the list:<br />
-<code>[:not_found, :unauthorized, :forbidden, :internal_server_error, :unprocessable_entity]</code></p>
-</li>
-<li>
-<p><strong><code>config.response_body_of_default</code></strong>: The response body template for default error responses. Must be a string representing a hash, similar to those used in request body tags.<br />
-<strong>Default</strong>: <code>"Hash{ message: String }"</code></p>
-</li>
-<li>
-<p><strong><code>config.response_body_of_{code symbol}</code></strong>: Customizes the response body for specific error responses. Must be a string representing a hash, similar to <code>response_body_of_default</code>. If not specified, it defaults to the value of <code>response_body_of_default</code>.</p>
-<p><strong>Examples</strong>:</p>
-<pre><code class="language-ruby"># Customize the response body for "unprocessable_entity" errors
-config.response_body_of_unprocessable_entity = "Hash{ errors: Array&lt;String&gt; }"
-
-# Customize the response body for "forbidden" errors
-config.response_body_of_forbidden = "Hash{ code: Integer, message: String }"
-</code></pre>
-</li>
-</ul>
 <h3 id="project-license"><a class="header" href="#project-license">Project License</a></h3>
 <ul>
 <li>
@@ -310,11 +279,11 @@ config.response_body_of_forbidden = "Hash{ code: Integer, message: String }"
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../installation/oasrails.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../oas_hanami/installation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../configuration/oasrails/cors.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../tags/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -324,11 +293,11 @@ config.response_body_of_forbidden = "Hash{ code: Integer, message: String }"
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../installation/oasrails.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../oas_hanami/installation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../configuration/oasrails/cors.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../tags/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

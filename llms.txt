@@ -6,16 +6,17 @@
 
 - [Introduction](index.md)
 
-## Installation
+## OasRails
 
-- [Installation](installation/oasrails.md)
+- [OasRails](oas_rails/index.md)
+- [Installation](oas_rails/installation.md)
+- [Configuration](oas_rails/configuration/index.md)
 
-## Configuration
+## OasHanami
 
-- [Configuration](configuration/oasrails.md)
-- [Cors](configuration/oasrails/cors.md)
-- [Securing](configuration/oasrails/securing.md)
-- [Customizing View](configuration/oasrails/customizing_view.md)
+- [OasHanami](oas_hanami/index.md)
+- [Installation](oas_hanami/installation.md)
+- [Configuration](oas_hanami/configuration.md)
 
 ## Tags
 

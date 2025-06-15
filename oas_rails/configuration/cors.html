@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - OasCore Documentation</title>
+        <title>Cors - OasCore Documentation</title>
 
 
         <!-- Custom HTML head -->
@@ -12,33 +12,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -102,7 +102,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -137,7 +137,7 @@
                     <h1 class="menu-title">OasCore Documentation</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -166,31 +166,46 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
-<p>OasCore is a Ruby gem designed to generate Open API Specification (OAS) 3.1 documentation directly from YARD comments in your endpoints. It serves as the core engine for OAS generation, while framework-specific adapters like <code>OasRails</code> (for Ruby on Rails) handle the extraction, integration and additional features.</p>
-<h3 id="key-features"><a class="header" href="#key-features">Key Features</a></h3>
-<ul>
+                        <h1 id="enabling-cors-for-interactive-documentation"><a class="header" href="#enabling-cors-for-interactive-documentation">Enabling CORS for Interactive Documentation</a></h1>
+<p>By default, OasRails uses <strong>RapiDoc</strong> as the frontend for interactive API documentation. However, you can customize this to use other tools like Swagger UI or ReDoc if needed.</p>
+<p>To test endpoints interactively using RapiDoc (or your chosen frontend), you must enable Cross-Origin Resource Sharing (CORS) in your Rails application. Follow these steps:</p>
+<ol>
 <li>
-<p>🚀 <strong>OAS 3.1 Generation</strong>: OasCore generates OAS version 3.1, the latest standard, ensuring your API documentation is up-to-date.</p>
+<p><strong>Add the <code>rack-cors</code> gem</strong> to your <code>Gemfile</code> (Or uncomment):</p>
+<pre><code class="language-ruby">gem 'rack-cors'
+</code></pre>
 </li>
 <li>
-<p>📝 <strong>YARD-Powered Documentation</strong>: Simply annotate your endpoints with YARD tags to include descriptions, parameters, and examples—no need to learn a new DSL or rely on framework-specific tools.</p>
+<p><strong>Run <code>bundle install</code></strong> to install the gem.</p>
 </li>
 <li>
-<p>🔌 <strong>Framework Agnostic</strong>: OasCore is designed to work with any Ruby framework. Adapters like <code>OasRails</code> extend its functionality for specific frameworks.</p>
+<p><strong>Configure CORS</strong> in <code>config/initializers/cors.rb</code> (create the file if it doesn't exist):</p>
+<pre><code class="language-ruby">Rails.application.config.middleware.insert_before 0, Rack::Cors do
+  allow do
+    origins '*'  # For development, allow all origins. Restrict this in production.
+    resource '*',
+      headers: :any,
+      methods: [:get, :post, :put, :patch, :delete, :options, :head],
+      credentials: false  # Set to `true` if using cookies or authentication headers.
+  end
+end
+</code></pre>
 </li>
-</ul>
-<h3 id="demo-app-oasrails"><a class="header" href="#demo-app-oasrails">Demo App (OasRails)</a></h3>
-<p>🔗 <strong><a href="https://paso.fly.dev/api/docs">Open Demo App</a></strong><br />
-👤 <strong>Username</strong>: <code>oasrails</code><br />
-🔑 <strong>Password</strong>: <code>oasrails</code></p>
+<li>
+<p><strong>Restart your Rails server</strong> for the changes to take effect.</p>
+</li>
+</ol>
+<p>This will allow RapiDoc to make requests to your API endpoints from the browser.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../oas_rails/configuration/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
-                            <a rel="next prefetch" href="oas_rails/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../oas_rails/configuration/securing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -200,8 +215,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../oas_rails/configuration/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
-                    <a rel="next prefetch" href="oas_rails/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../oas_rails/configuration/securing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -216,13 +234,13 @@
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
 

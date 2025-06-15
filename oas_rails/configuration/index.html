@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Customizing View - OasCore Documentation</title>
+        <title>Configuration - OasCore Documentation</title>
 
 
         <!-- Custom HTML head -->
@@ -166,60 +166,155 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="customizing-the-view"><a class="header" href="#customizing-the-view">Customizing the View</a></h1>
-<p>The OasRails engine provides an easy way to display your OpenAPI Specification (OAS) within your Rails application. By default, it includes an <code>index</code> view in the <code>OasCoreController</code> that displays <a href="https://rapidocweb.com/">RapiDoc</a> through a CDN with default configurations. You can easily override this view to replace RapiDoc entirely or configure it differently.</p>
-<h3 id="available-configurations"><a class="header" href="#available-configurations">Available configurations</a></h3>
-<h4 id="changing-the-ui-theme"><a class="header" href="#changing-the-ui-theme">Changing the UI Theme</a></h4>
-<p>You can customize the appearance of the OAS documentation UI by setting the <code>config.rapidoc_theme</code> option in the initializer file. The default theme is <code>"rails"</code>, but you can choose from the following predefined themes:</p>
+                        <h1 id="configuring-oasrails"><a class="header" href="#configuring-oasrails">Configuring OasRails</a></h1>
+<p>To configure OasRails, <strong>you MUST create an initializer file</strong> including all your settings. The first step is to create your initializer file, which you can easily do with:</p>
+<pre><code class="language-bash">rails generate oas_rails:config
+</code></pre>
+<p>Then fill it with your data. Below are the available configuration options:</p>
+<h3 id="basic-information-about-the-api"><a class="header" href="#basic-information-about-the-api">Basic Information about the API</a></h3>
 <ul>
-<li><strong>dark</strong>: Dark background with light text.</li>
-<li><strong>light</strong>: Light background with dark text.</li>
-<li><strong>night</strong>: Dark theme with a blueish tint.</li>
-<li><strong>mud</strong>: Dark theme with brownish tones.</li>
-<li><strong>coffee</strong>: Dark theme with warm brown tones.</li>
-<li><strong>forest</strong>: Dark theme with greenish tones.</li>
-<li><strong>olive</strong>: Dark theme with olive tones.</li>
-<li><strong>outerspace</strong>: Dark theme with a space-like feel.</li>
-<li><strong>ebony</strong>: Dark theme with deep blue tones.</li>
-<li><strong>snow</strong>: Light theme with a clean white background.</li>
-<li><strong>green</strong>: Light theme with green accents.</li>
-<li><strong>blue</strong>: Light theme with blue accents.</li>
-<li><strong>beige</strong>: Light theme with a beige background.</li>
-<li><strong>graynav</strong>: Light theme with a gray navigation bar.</li>
-<li><strong>purplenav</strong>: Light theme with a purple navigation bar.</li>
-<li><strong>lightgraynav</strong>: Light theme with a light gray navigation bar.</li>
-<li><strong>darkbluenav</strong>: Light theme with a dark blue navigation bar.</li>
-<li><strong>rails</strong>: Default theme with Rails-inspired colors (red accents).</li>
+<li>
+<p><code>config.info.title</code>: The title of your API documentation.</p>
+</li>
+<li>
+<p><code>config.info.summary</code>: A brief summary of your API.</p>
+</li>
+<li>
+<p><code>config.info.description</code>: A detailed description of your API. This can include markdown formatting and will be displayed prominently in your documentation.</p>
+</li>
+<li>
+<p><code>config.info.contact.name</code>: The name of the contact person or organization.</p>
+</li>
+<li>
+<p><code>config.info.contact.email</code>: The contact email address.</p>
+</li>
+<li>
+<p><code>config.info.contact.url</code>: The URL for more information or support.</p>
+</li>
 </ul>
-<h4 id="how-to-configure-the-theme"><a class="header" href="#how-to-configure-the-theme">How to Configure the Theme</a></h4>
-<p>To change the theme, add the following line to your <code>config/initializers/oas_core.rb</code> file:</p>
-<pre><code class="language-ruby">OasRails.configure do |config|
-  config.rapidoc_theme = "dark" # Replace "dark" with your preferred theme name
+<h3 id="servers-information"><a class="header" href="#servers-information">Servers Information</a></h3>
+<ul>
+<li><code>config.servers</code>: An array of server objects, each containing <code>url</code> and <code>description</code> keys. For more details, refer to the <a href="https://spec.openapis.org/oas/latest.html#server-object">OpenAPI Specification</a>.</li>
+</ul>
+<h3 id="tag-information"><a class="header" href="#tag-information">Tag Information</a></h3>
+<ul>
+<li><code>config.tags</code>: An array of tag objects, each containing <code>name</code> and <code>description</code> keys. For more details, refer to the <a href="https://spec.openapis.org/oas/latest.html#tag-object">OpenAPI Specification</a>.</li>
+</ul>
+<h3 id="optional-settings"><a class="header" href="#optional-settings">Optional Settings</a></h3>
+<ul>
+<li>
+<p><code>config.include_mode</code>: Determines the mode for including operations. The default value is <code>all</code>, which means it will include all route operations under the <code>api_path</code>, whether documented or not. Other possible values:</p>
+<ul>
+<li>
+<p><code>:with_tags</code>: Includes in your OAS only the operations with at least one tag. Example:</p>
+<p>Not included:</p>
+<pre><code class="language-ruby">def update
 end
 </code></pre>
-<p>Any other modification will require that you overwrite the index view explained in the next steps.</p>
-<h3 id="overriding-the-index-view"><a class="header" href="#overriding-the-index-view">Overriding the <code>index</code> View</a></h3>
-<p>To override the <code>index</code> view provided by the OasRails engine, follow these steps:</p>
-<ol>
-<li>
-<p><strong>Create the Override View File</strong>: In your host application, create a new file at the path <code>app/views/oas_core/oas_core/index.html.erb</code>. If the directories do not exist, you will need to create them.</p>
+<p>Included:</p>
+<pre><code class="language-ruby"># @summary Return all Books
+def index
+end
+</code></pre>
 </li>
 <li>
-<p><strong>Customize the View</strong>: Open the newly created <code>index.html.erb</code> file and add your custom HTML and ERB code to display the OAS as desired. You can refer to the source code of this project for guidance.</p>
+<p><code>:explicit</code>: Includes in your OAS only the operations tagged with <code>@oas_include</code>. Example:</p>
+<p>Not included:</p>
+<pre><code class="language-ruby">def update
+end
+</code></pre>
+<p>Included:</p>
+<pre><code class="language-ruby"># @oas_include
+def index
+end
+</code></pre>
 </li>
-</ol>
-<h4 id="using-the-custom-view"><a class="header" href="#using-the-custom-view">Using the Custom View</a></h4>
-<p>Once the custom view file is in place, Rails will automatically use it instead of the view provided by the OasRails engine. This allows you to fully customize the presentation of the OAS without modifying the engine's code.</p>
+</ul>
+</li>
+<li>
+<p><code>config.api_path</code>: Sets the API path if your API is under a different namespace than the root. This is important to configure if you have the <code>include_mode</code> set to <code>all</code> because it will include all routes of your app in the final OAS. For example, if your app has additional routes and your API is under the namespace <code>/api</code>, set this configuration as follows:</p>
+<pre><code class="language-ruby">config.api_path = "/api"
+</code></pre>
+</li>
+<li>
+<p><code>config.ignored_actions</code>: Defines an array of controller or controller#action pairs. You do not need to prepend the <code>api_path</code>. This is useful when you want to include all routes except a few specific actions or when an external engine (e.g., Devise) adds routes to your API.</p>
+</li>
+<li>
+<p><code>config.default_tags_from</code>: Determines the source of default tags for operations. Can be set to <code>:namespace</code> or <code>:controller</code>. The first option means that if your endpoint is in the route <code>/users/:id</code>, it will be tagged with <code>Users</code>. If set to <code>controller</code>, the tag will be <code>UsersController</code>.</p>
+</li>
+<li>
+<p><code>config.http_verbs</code>: Defaults to <code>[:get, :post, :put, :patch, :delete]</code></p>
+</li>
+<li>
+<p><code>config.use_model_names</code>: Use model names when possible, defaults to <code>false</code></p>
+</li>
+</ul>
+<h3 id="authentication-settings"><a class="header" href="#authentication-settings">Authentication Settings</a></h3>
+<ul>
+<li>
+<p><code>config.authenticate_all_routes_by_default</code>: Determines whether to authenticate all routes by default. Default is <code>true</code>.</p>
+</li>
+<li>
+<p><code>config.security_schema</code>: The default security schema used for authentication. Choose from the following predefined options:</p>
+<ul>
+<li><code>:api_key_cookie</code>: API key passed via HTTP cookie.</li>
+<li><code>:api_key_header</code>: API key passed via HTTP header.</li>
+<li><code>:api_key_query</code>: API key passed via URL query parameter.</li>
+<li><code>:basic</code>: HTTP Basic Authentication.</li>
+<li><code>:bearer</code>: Bearer token (generic).</li>
+<li><code>:bearer_jwt</code>: Bearer token formatted as a JWT (JSON Web Token).</li>
+<li><code>:mutual_tls</code>: Mutual TLS authentication (mTLS).</li>
+</ul>
+</li>
+<li>
+<p><code>config.security_schemas</code>: Custom security schemas. Follow the <a href="https://spec.openapis.org/oas/latest.html#security-scheme-object">OpenAPI Specification</a> for defining these schemas.</p>
+</li>
+</ul>
+<h3 id="default-errors"><a class="header" href="#default-errors">Default Errors</a></h3>
+<ul>
+<li>
+<p><strong><code>config.set_default_responses</code></strong>: Determines whether to add default error responses to endpoints. Default is <code>true</code>.</p>
+</li>
+<li>
+<p><strong><code>config.possible_default_responses</code></strong>: An array of possible default error responses. Some responses are added conditionally based on the endpoint (e.g., <code>:not_found</code> only applies to <code>show</code>, <code>update</code>, or <code>delete</code> actions).<br />
+<strong>Default</strong>: <code>[:not_found, :unauthorized, :forbidden, :internal_server_error, :unprocessable_entity]</code><br />
+<strong>Allowed Values</strong>: Symbols representing HTTP status codes from the list:<br />
+<code>[:not_found, :unauthorized, :forbidden, :internal_server_error, :unprocessable_entity]</code></p>
+</li>
+<li>
+<p><strong><code>config.response_body_of_default</code></strong>: The response body template for default error responses. Must be a string representing a hash, similar to those used in request body tags.<br />
+<strong>Default</strong>: <code>"Hash{ message: String }"</code></p>
+</li>
+<li>
+<p><strong><code>config.response_body_of_{code symbol}</code></strong>: Customizes the response body for specific error responses. Must be a string representing a hash, similar to <code>response_body_of_default</code>. If not specified, it defaults to the value of <code>response_body_of_default</code>.</p>
+<p><strong>Examples</strong>:</p>
+<pre><code class="language-ruby"># Customize the response body for "unprocessable_entity" errors
+config.response_body_of_unprocessable_entity = "Hash{ errors: Array&lt;String&gt; }"
+
+# Customize the response body for "forbidden" errors
+config.response_body_of_forbidden = "Hash{ code: Integer, message: String }"
+</code></pre>
+</li>
+</ul>
+<h3 id="project-license"><a class="header" href="#project-license">Project License</a></h3>
+<ul>
+<li>
+<p><code>config.info.license.name</code>: The title name of your project's license. Default: GPL 3.0</p>
+</li>
+<li>
+<p><code>config.info.license.url</code>: The URL to the full license text. Default: <a href="https://www.gnu.org/licenses/gpl-3.0.html#license-text">https://www.gnu.org/licenses/gpl-3.0.html#license-text</a></p>
+</li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../configuration/oasrails/securing.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../oas_rails/installation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../tags/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../oas_rails/configuration/cors.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -229,11 +324,11 @@ end
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../configuration/oasrails/securing.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../oas_rails/installation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../tags/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../oas_rails/configuration/cors.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
