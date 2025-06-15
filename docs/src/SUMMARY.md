@@ -2,14 +2,18 @@
 
 [Introduction](README.md)
 
-# OasRails
+# Implementations
 
-- [Installation](installation/oasrails.md)
+- [OasRails](oas_rails/README.md)
+  - [Installation](oas_rails/installation.md)
+  - [Configuration](oas_rails/configuration/README.md)
+    - [Cors](oas_rails/configuration/cors.md)
+    - [Securing](oas_rails/configuration/securing.md)
+    - [Customizing View](oas_rails/configuration/customizing_view.md)
 
-- [Configuration](configuration/oasrails.md)
-  - [Cors](configuration/oasrails/cors.md)
-  - [Securing](configuration/oasrails/securing.md)
-  - [Customizing View](configuration/oasrails/customizing_view.md)
+- [OasHanami](oas_hanami/README.md)
+  - [Installation](oas_hanami/installation.md)
+  - [Configuration](oas_hanami/configuration.md)
 
 # Usage
 

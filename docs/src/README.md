@@ -15,7 +15,3 @@ OasCore is a Ruby gem designed to generate Open API Specification (OAS) 3.1 docu
 🔗 **[Open Demo App](https://paso.fly.dev/api/docs)**  
 👤 **Username**: `oasrails`  
 🔑 **Password**: `oasrails`
-
-### Screenshot
-
-![Screenshot of OasCore](assets/rails_theme.png)
