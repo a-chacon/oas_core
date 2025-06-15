@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.4](https://github.com/a-chacon/oas_core/compare/oas_core/v0.5.3...oas_core/v0.5.4) (2025-06-15)
+
+
+### Documentation
+
+* add oas_hanami to book ([5233231](https://github.com/a-chacon/oas_core/commit/52332312775654b3da972e6a785c361d980b1f5e))
+* **readme:** update list of adapters ([6d37e47](https://github.com/a-chacon/oas_core/commit/6d37e4748ece2e36cb4574d398a117c08635ceef))
+
 ## [0.5.3](https://github.com/a-chacon/oas_core/compare/oas_core/v0.5.2...oas_core/v0.5.3) (2025-06-14)
 
 
