@@ -10,7 +10,11 @@ OasCore is a Ruby gem designed to generate Open API Specification (OAS) 3.1 docu
 
 ## Framework adapters
 
-- **[OasRails](https://github.com/a-chacon/oas_rails)**
+- **[OasRails](https://github.com/a-chacon/oas_rails)**: For Ruby on Rails framework.
+
+- **[OasHanami](https://github.com/a-chacon/oas_hanami)**: For [Hanami](https://github.com/hanami/hanami) framework.
+
+- **[OasRage](https://github.com/a-chacon/oas_rage)**: For [Rage](https://github.com/rage-rb/rage) framework.
 
 ## Documentation
 
