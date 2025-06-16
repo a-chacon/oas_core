@@ -15,8 +15,8 @@ Gem::Specification.new do |spec|
   spec.license = 'GPL-3.0-only'
 
   spec.metadata['homepage_uri'] = spec.homepage
-  # spec.metadata['source_code_uri'] = 'https://github.com/a-chacon/oas_core'
-  # spec.metadata['changelog_uri'] = 'https://github.com/a-chacon/oas_core'
+  spec.metadata['source_code_uri'] = 'https://github.com/a-chacon/oas_core'
+  spec.metadata['changelog_uri'] = 'https://github.com/a-chacon/oas_core/blob/main/CHANGELOG.md'
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     Dir['{lib}/**/*', 'LICENSE', 'Rakefile', 'README.md']
@@ -25,6 +25,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 3.1'
 
   spec.add_dependency 'activesupport', '>= 7.0'
+  spec.add_dependency 'deep_merge', '~> 1.2', '>= 1.2.2'
   spec.add_dependency 'method_source', '~> 1.0'
   spec.add_dependency 'yard', '~> 0.9'
 

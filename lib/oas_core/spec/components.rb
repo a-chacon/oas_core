@@ -21,8 +21,18 @@ module OasCore
         @callbacks = {}
       end
 
-      def oas_fields
-        %i[request_bodies examples responses schemas parameters security_schemes]
+      def to_spec
+        {
+          schemas: @schemas,
+          responses: @responses.transform_values(&:to_spec),
+          parameters: @parameters.transform_values(&:to_spec),
+          request_bodies: @request_bodies.transform_values(&:to_spec),
+          security_schemes: @security_schemes,
+          headers: @headers.transform_values(&:to_spec),
+          examples: @examples.transform_values(&:to_spec),
+          links: @links.transform_values(&:to_spec),
+          callbacks: @callbacks.transform_values(&:to_spec)
+        }.compact
       end
 
       def add_response(response)

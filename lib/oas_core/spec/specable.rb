@@ -19,12 +19,16 @@ module OasCore
                               value.to_spec
                             elsif value.is_a?(Array) && value.all? { |elem| elem.respond_to?(:to_spec) }
                               value.map(&:to_spec)
-                            # elsif value.is_a?(Hash)
-                            #   hash = {}
-                            #   value.each do |key, object|
-                            #     hash[key] = object.to_spec
-                            #   end
-                            #   hash
+                              # elsif value.is_a?(Hash)
+                              #   debugger
+                              #   value.transform_values(&:to_spec)
+                              # hash = {}
+                              # value.each do |key, object|
+                              #   next if object.is_a? Hash
+                              #
+                              #   hash[key] = object.to_spec
+                              # end
+                              # hash
                             else
                               value
                             end

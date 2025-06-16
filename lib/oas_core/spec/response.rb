@@ -17,6 +17,13 @@ module OasCore
       def oas_fields
         %i[description content]
       end
+
+      def to_spec
+        {
+          description: @description,
+          content: @content.transform_values(&:to_spec)
+        }
+      end
     end
   end
 end
