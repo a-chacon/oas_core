@@ -5,13 +5,12 @@ FactoryBot.define do
     transient do
       tag_name { 'request_body' }
       text { 'Example request body description' }
-      klass { 'User' }
-      schema { { type: 'object', properties: { name: { type: 'string' } } }.to_json }
+      content { { type: 'object', properties: { name: { type: 'string' } } }.to_json }
       required { false }
     end
 
     initialize_with do
-      new(tag_name, text, klass, schema: schema, required: required)
+      new(tag_name, text, content: content, required: required)
     end
 
     trait :required do
@@ -19,7 +18,7 @@ FactoryBot.define do
     end
 
     trait :with_complex_schema do
-      schema do
+      content do
         {
           type: 'object',
           properties: {

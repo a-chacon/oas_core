@@ -8,8 +8,12 @@ module OasCore
       # @param text [String] The tag text to parse.
       # @return [RequestBodyTag] The parsed request body tag object.
       def parse_tag_with_request_body(tag_name, text)
-        description, klass, schema, required, content_type = extract_description_and_schema(text.squish)
-        RequestBodyTag.new(tag_name, description, klass, schema:, required:, content_type:)
+        description, raw_type = split_description_and_type(text)
+        description, content_type = text_and_last_parenthesis_content(description)
+        raw_type, required = text_and_required(raw_type)
+        content = raw_type_to_content(raw_type)
+
+        RequestBodyTag.new(tag_name, description, content:, required:, content_type:)
       end
 
       # Parses a tag that represents a request body example.
@@ -120,6 +124,22 @@ module OasCore
       end
       # rubocop:enable Security/Eval
 
+      # Converts raw_type to content based on its format.
+      # @param raw_type [String] The raw type string to process.
+      # @return [Hash] The processed content.
+      def raw_type_to_content(raw_type)
+        if raw_type.start_with?('JSON')
+          JSON.parse(raw_type.sub(/^JSON/, ''))
+        elsif raw_type.start_with?('Reference:')
+          ref = raw_type.sub(/^Reference:/, '').strip
+          OasCore::Spec::Reference.new(ref)
+        else
+          JsonSchemaGenerator.process_string(raw_type)[:json_schema]
+        end
+      rescue JSON::ParserError
+        {}
+      end
+
       # Parses the position name and location from input text.
       # @param input [String] The input text to parse.
       # @return [Array] An array containing the name and location.
@@ -162,6 +182,33 @@ module OasCore
         klass = Object
 
         [klass, schema, required]
+      end
+
+      # Splits the text into description with detail and type parts.
+      # @param text [String] The text to parse.
+      # @return [Array] An array containing the description with detail and the type.
+      def split_description_and_type(text)
+        match = text.match(/^(.*?)\s*\[(.*?)\]$/)
+        raise ArgumentError, "Invalid format: #{text}" if match.nil?
+
+        [match[1].strip, match[2].strip]
+      end
+
+      # Extracts the description and the detail (content of the last parentheses) from the text.
+      # @param text [String] The text to parse.
+      # @return [Array] An array containing the description and the detail.
+      def text_and_last_parenthesis_content(text)
+        # Find the last occurrence of parentheses
+        last_open = text.rindex('(')
+        last_close = text.rindex(')')
+
+        if last_open && last_close && last_open < last_close
+          description = text[0...last_open].strip
+          detail = text[(last_open + 1)...last_close].strip
+          [description, detail]
+        else
+          [text.strip, nil]
+        end
       end
     end
   end
