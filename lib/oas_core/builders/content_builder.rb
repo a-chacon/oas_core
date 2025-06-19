@@ -11,7 +11,11 @@ module OasCore
       end
 
       def with_schema(schema)
-        @media_type.schema = @specification.components.add_schema(schema)
+        @media_type.schema = if schema.is_a? OasCore::Spec::Reference
+                               schema
+                             else
+                               @specification.components.add_schema(schema)
+                             end
 
         self
       end

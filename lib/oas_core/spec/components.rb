@@ -29,7 +29,7 @@ module OasCore
           request_bodies: @request_bodies.transform_values(&:to_spec),
           security_schemes: @security_schemes,
           headers: @headers.transform_values(&:to_spec),
-          examples: @examples.transform_values(&:to_spec),
+          examples: @examples,
           links: @links.transform_values(&:to_spec),
           callbacks: @callbacks.transform_values(&:to_spec)
         }.compact

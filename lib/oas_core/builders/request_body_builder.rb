@@ -19,8 +19,7 @@ module OasCore
 
       def from_tags(tag:, examples_tags: [])
         @request_body.description = tag.text
-        # TODO: the content of the requst body is what can be a reference or a schema
-        @request_body.content = ContentBuilder.new(@specification, :incoming).with_schema(tag.schema).with_examples_from_tags(examples_tags).with_content_type(tag.content_type).build
+        @request_body.content = ContentBuilder.new(@specification, :incoming).with_schema(tag.content).with_examples_from_tags(examples_tags).with_content_type(tag.content_type).build
         @request_body.required = tag.required
 
         self

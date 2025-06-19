@@ -8,7 +8,7 @@ module OasCore
       # @param text [String] The tag text to parse.
       # @return [RequestBodyTag] The parsed request body tag object.
       def parse_tag_with_request_body(tag_name, text)
-        description, raw_type = split_description_and_type(text)
+        description, raw_type = split_description_and_type(text.squish)
         description, content_type = text_and_last_parenthesis_content(description)
         raw_type, required = text_and_required(raw_type)
         content = raw_type_to_content(raw_type)
@@ -21,9 +21,14 @@ module OasCore
       # @param text [String] The tag text to parse.
       # @return [RequestBodyExampleTag] The parsed request body example tag object.
       def parse_tag_with_request_body_example(tag_name, text)
-        description, _, hash = extract_description_type_and_content(text.squish, process_content: true,
-                                                                                 expresion: /^(.*?)\[([^\]]*)\](.*)$/m)
-        RequestBodyExampleTag.new(tag_name, description, content: hash)
+        # @request_body_example example [JSON{}]
+        # description, _, hash = extract_description_type_and_content(text.squish, process_content: true,
+        #                                                                          expresion: /^(.*?)\[([^\]]*)\](.*)$/m)
+        description, raw_type = split_description_and_type(text.squish)
+        raw_type, = text_and_required(raw_type)
+        content = raw_type_to_content(raw_type)
+
+        RequestBodyExampleTag.new(tag_name, description, content: content)
       end
 
       # Parses a tag that represents a parameter.

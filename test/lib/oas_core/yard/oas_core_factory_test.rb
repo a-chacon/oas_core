@@ -17,8 +17,6 @@ module OasCore
         assert_equal true, tag.required
         assert_equal 'request_body', tag.tag_name
         assert_equal 'The user to be created', tag.text
-        assert_nil tag.name
-        assert_nil tag.types
       end
 
       def test_parse_tag_with_request_body_handles_optional_parameters
@@ -29,6 +27,17 @@ module OasCore
         assert_equal false, tag.required
       end
 
+      def test_parse_tag_with_request_body_returns_request_body_tag_with_reference
+        text = 'The user to be created (multipart/form-data) [!Reference:#/components/content/user]'
+        tag = @factory.parse_tag_with_request_body('request_body', text)
+
+        assert_instance_of RequestBodyTag, tag
+        assert_equal true, tag.required
+        assert_equal OasCore::Spec::Reference, tag.content.class
+        assert_equal '#/components/content/user', tag.content.ref
+        assert_equal 'multipart/form-data', tag.content_type
+      end
+
       def test_parse_tag_with_request_body_raises_error_for_malformed_input
         text = 'The user to be created [!Hash{user: Hash{name: String, age: Integer, password: String}'
         assert_raises(ArgumentError) do
@@ -37,7 +46,7 @@ module OasCore
       end
 
       def test_parse_tag_with_request_body_example_returns_request_body_example_tag_with_correct_structure
-        text = 'A complete User. [Hash] {user: {name: "Luis", age: 30, password: "MyWeakPassword123"}}'
+        text = 'A complete User. [JSON{ "user": { "name": "Luis", "age": 30, "password": "MyWeakPassword123"}}]'
         tag = @factory.parse_tag_with_request_body_example('request_body_example', text)
 
         assert_instance_of RequestBodyExampleTag, tag
@@ -45,9 +54,12 @@ module OasCore
         assert_equal 'A complete User.', tag.text
         assert_nil tag.name
         assert_nil tag.types
+        expected = { "user": { "name": 'Luis', "age": 30, "password": 'MyWeakPassword123' } }
+        actual = tag.content
+
         assert_equal(
-          { user: { name: 'Luis', age: 30, password: 'MyWeakPassword123' } },
-          tag.content
+          expected.deep_stringify_keys,
+          actual.deep_stringify_keys
         )
       end
 

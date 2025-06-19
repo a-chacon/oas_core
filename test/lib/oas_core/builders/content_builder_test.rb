@@ -18,12 +18,19 @@ module OasCore
         assert_instance_of Spec::MediaType, builder.instance_variable_get(:@media_type)
       end
 
-      def test_with_schema
+      def test_with_schema_json
         schema = { type: 'object', properties: { name: { type: 'string' } } }
         @components.expect(:add_schema, '#/components/schemas/User', [schema])
         builder = ContentBuilder.new(@specification, @context)
         builder.with_schema(schema)
         assert_equal '#/components/schemas/User', builder.instance_variable_get(:@media_type).schema
+      end
+
+      def test_with_schema_reference
+        schema = build(:reference)
+        builder = ContentBuilder.new(@specification, @context)
+        builder.with_schema(schema)
+        assert_equal schema.ref, builder.instance_variable_get(:@media_type).schema.ref
       end
 
       def test_with_examples

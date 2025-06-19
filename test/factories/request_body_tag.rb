@@ -17,7 +17,7 @@ FactoryBot.define do
       required { true }
     end
 
-    trait :with_complex_schema do
+    trait :with_json_content do
       content do
         {
           type: 'object',
@@ -41,6 +41,12 @@ FactoryBot.define do
             }
           }
         }.to_json
+      end
+    end
+
+    trait :with_reference_content do
+      content do
+        build(:reference).ref
       end
     end
   end

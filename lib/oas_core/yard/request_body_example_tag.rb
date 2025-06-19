@@ -5,7 +5,7 @@ module OasCore
     class RequestBodyExampleTag < ExampleTag
       attr_accessor :content
 
-      def initialize(tag_name, text, content: {})
+      def initialize(tag_name, text, content: nil)
         super
       end
     end
