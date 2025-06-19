@@ -15,10 +15,9 @@ module OasCore
 
       def from_oas_route(oas_route)
         oas_route.tags(:response).each do |tag|
-          content = @content_builder.new(@specification,
-                                         :outgoing).with_schema(tag.schema).with_examples_from_tags(oas_route.tags(:response_example).filter do |re|
-                                                                                                      re.code == tag.name
-                                                                                                    end).build
+          content = @content_builder.new(@specification).with_schema(tag.schema).with_examples_from_tags(oas_route.tags(:response_example).filter do |re|
+            re.code == tag.name
+          end).build
           response = @response_builder.new(@specification).with_code(tag.name.to_i).with_description(tag.text).with_content(content).build
 
           @responses.add_response(response)
@@ -63,8 +62,7 @@ module OasCore
       def add_responses_for_errors(errors)
         errors.each do |error|
           response_body = resolve_response_body(error)
-          content = @content_builder.new(@specification,
-                                         :outgoing).with_schema(@json_schema_generator.process_string(response_body)[:json_schema]).build
+          content = @content_builder.new(@specification).with_schema(@json_schema_generator.process_string(response_body)[:json_schema]).build
           code = @utils.status_to_integer(error)
           response = @response_builder.new(@specification).with_code(code).with_description(@utils.get_definition(code)).with_content(content).build
 

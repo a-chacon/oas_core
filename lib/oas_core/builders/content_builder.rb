@@ -3,8 +3,7 @@
 module OasCore
   module Builders
     class ContentBuilder
-      def initialize(specification, context)
-        @context = context || :incoming
+      def initialize(specification)
         @specification = specification
         @media_type = Spec::MediaType.new(specification)
         @content_type = 'application/json'
@@ -35,11 +34,15 @@ module OasCore
       def with_examples_from_tags(tags)
         @media_type.examples = @media_type.examples.merge(tags.each_with_object({}).with_index(1) do |(example, result), _index|
           key = example.text.downcase.gsub(' ', '_')
-          value = {
-            'summary' => example.text,
-            'value' => example.content
-          }
-          result[key] = @specification.components.add_example(value)
+          if example.content.is_a? OasCore::Spec::Reference
+            result[key] = example.content
+          else
+            value = {
+              'summary' => example.text,
+              'value' => example.content
+            }
+            result[key] = @specification.components.add_example(value)
+          end
         end)
 
         self

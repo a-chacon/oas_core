@@ -8,34 +8,22 @@ module OasCore
       end
 
       def to_spec
-        hash = {}
-        oas_fields.each do |var|
-          key = var.to_s
-
-          camel_case_key = key.camelize(:lower).to_sym
+        oas_fields.each_with_object({}) do |var, hash|
+          key = var.to_s.camelize(:lower).to_sym
           value = send(var)
 
           processed_value = if value.respond_to?(:to_spec)
                               value.to_spec
                             elsif value.is_a?(Array) && value.all? { |elem| elem.respond_to?(:to_spec) }
                               value.map(&:to_spec)
-                              # elsif value.is_a?(Hash)
-                              #   debugger
-                              #   value.transform_values(&:to_spec)
-                              # hash = {}
-                              # value.each do |key, object|
-                              #   next if object.is_a? Hash
-                              #
-                              #   hash[key] = object.to_spec
-                              # end
-                              # hash
+                            elsif value.is_a?(Hash)
+                              value.transform_values { |val| val.respond_to?(:to_spec) ? val.to_spec : val }
                             else
                               value
                             end
 
-          hash[camel_case_key] = processed_value unless valid_processed_value?(processed_value)
+          hash[key] = processed_value unless valid_processed_value?(processed_value)
         end
-        hash
       end
 
       # rubocop:disable Lint/UnusedMethodArgument
