@@ -27,9 +27,9 @@ module OasCore
       end
 
       def from_tag(tag)
-        @response.code = tag.name.to_i
+        @response.code = tag.code.to_i
         @response.description = tag.text
-        @response.content = ContentBuilder.new(@specification).with_schema(tag.schema).build
+        @response.content = ContentBuilder.new(@specification).with_schema(tag.content).build
 
         self
       end

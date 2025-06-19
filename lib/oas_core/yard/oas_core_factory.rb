@@ -21,9 +21,6 @@ module OasCore
       # @param text [String] The tag text to parse.
       # @return [RequestBodyExampleTag] The parsed request body example tag object.
       def parse_tag_with_request_body_example(tag_name, text)
-        # @request_body_example example [JSON{}]
-        # description, _, hash = extract_description_type_and_content(text.squish, process_content: true,
-        #                                                                          expresion: /^(.*?)\[([^\]]*)\](.*)$/m)
         description, raw_type = split_description_and_type(text.squish)
         raw_type, = text_and_required(raw_type)
         content = raw_type_to_content(raw_type)
@@ -46,8 +43,11 @@ module OasCore
       # @param text [String] The tag text to parse.
       # @return [ResponseTag] The parsed response tag object.
       def parse_tag_with_response(tag_name, text)
-        name, code, schema = extract_name_code_and_schema(text.squish)
-        ResponseTag.new(tag_name, code, name, schema)
+        description, raw_type = split_description_and_type(text.squish)
+        description, code = text_and_last_parenthesis_content(description)
+        content = raw_type_to_content(raw_type)
+
+        ResponseTag.new(tag_name, description, code, content)
       end
 
       # Parses a tag that represents a response example.
@@ -55,8 +55,11 @@ module OasCore
       # @param text [String] The tag text to parse.
       # @return [ResponseExampleTag] The parsed response example tag object.
       def parse_tag_with_response_example(tag_name, text)
-        description, code, hash = extract_name_code_and_hash(text.squish)
-        ResponseExampleTag.new(tag_name, description, content: hash, code:)
+        description, raw_type = split_description_and_type(text.squish)
+        description, code = text_and_last_parenthesis_content(description)
+        content = raw_type_to_content(raw_type)
+
+        ResponseExampleTag.new(tag_name, description, content: content, code:)
       end
 
       private

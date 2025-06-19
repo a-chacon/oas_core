@@ -5,11 +5,11 @@ module OasCore
     class ParameterTag < ::YARD::Tags::Tag
       attr_accessor :schema, :required, :location
 
-      def initialize(tag_name, name, text, schema, location, required: false)
+      def initialize(tag_name, name, text, *args, **kwargs)
         super(tag_name, text, nil, name)
-        @schema = schema
-        @required = required
-        @location = location
+        @schema = args[0] || kwargs.fetch(:schema, nil)
+        @location = args[1] || kwargs.fetch(:location, nil)
+        @required = kwargs.fetch(:required, false)
       end
     end
   end

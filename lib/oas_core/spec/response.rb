@@ -12,17 +12,11 @@ module OasCore
         @specification = specification
         @description = ''
         @content = {} # Hash with {content: MediaType}
+        @code = 200
       end
 
       def oas_fields
         %i[description content]
-      end
-
-      def to_spec
-        {
-          description: @description,
-          content: @content.transform_values(&:to_spec)
-        }
       end
     end
   end

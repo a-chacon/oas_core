@@ -15,10 +15,10 @@ module OasCore
 
       def from_oas_route(oas_route)
         oas_route.tags(:response).each do |tag|
-          content = @content_builder.new(@specification).with_schema(tag.schema).with_examples_from_tags(oas_route.tags(:response_example).filter do |re|
-            re.code == tag.name
+          content = @content_builder.new(@specification).with_schema(tag.content).with_examples_from_tags(oas_route.tags(:response_example).filter do |re|
+            re.code == tag.code
           end).build
-          response = @response_builder.new(@specification).with_code(tag.name.to_i).with_description(tag.text).with_content(content).build
+          response = @response_builder.new(@specification).with_code(tag.code.to_i).with_description(tag.text).with_content(content).build
 
           @responses.add_response(response)
         end

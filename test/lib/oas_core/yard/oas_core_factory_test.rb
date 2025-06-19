@@ -90,17 +90,24 @@ module OasCore
         text = 'User not found by the provided Id(404) [Hash{success: Boolean, message: String}]'
         tag = @factory.parse_tag_with_response('response', text)
         assert_instance_of ResponseTag, tag
-        assert_equal '404', tag.name
+        assert_equal '404', tag.code
+      end
+
+      def test_parse_tag_with_response_reference
+        text = 'User not found by the provided Id(404) [Reference:#/components/schemas/404]'
+        tag = @factory.parse_tag_with_response('response', text)
+
+        assert_equal OasCore::Spec::Reference, tag.content.class
+        assert_equal '#/components/schemas/404', tag.content.ref
       end
 
       def test_parse_tag_with_response_returns_response_tag_using_array_as_response
-        text = 'List of Users(200) [Array<Hash{name: String, age: Integer, password: String}>]'
+        text = 'List of Users(200) [Array<Hash{name: String, age: Integer}>]'
         tag = @factory.parse_tag_with_response('response', text)
-        assert_instance_of ResponseTag, tag
-        assert_equal '200', tag.name
+
+        assert_equal '200', tag.code
         assert_equal 'response', tag.tag_name
         assert_equal 'List of Users', tag.text
-        assert_nil tag.types
         assert_equal(
           {
             type: 'array',
@@ -108,20 +115,27 @@ module OasCore
               type: 'object',
               properties: {
                 name: { type: 'string' },
-                age: { type: 'integer' },
-                password: { type: 'string' }
+                age: { type: 'integer' }
               }
             }
           },
-          tag.schema
+          tag.content
         )
       end
 
       def test_parse_tag_with_response_example_returns_response_example_tag
-        text = 'Invalid Email(422) [Hash] {success: "false", errors: [{field: "email", type: "email", detail: ["Invalid email"]}] }'
+        text = 'Invalid Email(422) [JSON{ "success": "false", "errors": [{ "field": "email", "type": "email", "detail": ["Invalid email"]}] }]'
         tag = @factory.parse_tag_with_response_example('response_example', text)
         assert_instance_of ResponseExampleTag, tag
         assert_equal 'Invalid Email', tag.text
+      end
+
+      def test_parse_tag_with_response_example_and_reference_content
+        text = 'Invalid Email(422) [Reference:#/components/schemas/response_example]'
+        tag = @factory.parse_tag_with_response_example('response_example', text)
+
+        assert_instance_of OasCore::Spec::Reference, tag.content
+        assert_equal '#/components/schemas/response_example', tag.content.ref
       end
     end
   end

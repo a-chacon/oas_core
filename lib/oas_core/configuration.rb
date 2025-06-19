@@ -9,8 +9,7 @@ module OasCore
                   :authenticate_all_routes_by_default,
                   :set_default_responses,
                   :possible_default_responses,
-                  :http_verbs,
-                  :use_model_names
+                  :http_verbs
 
     attr_reader :servers, :tags, :security_schema, :response_body_of_default
 
@@ -29,8 +28,6 @@ module OasCore
                                        unprocessable_entity]
       @http_verbs = %i[get post put patch delete]
       @response_body_of_default = 'Hash{ status: !Integer, error: String }'
-      # TODO: What does this config??
-      @use_model_names = false
 
       @possible_default_responses.each do |response|
         method_name = "response_body_of_#{response}="

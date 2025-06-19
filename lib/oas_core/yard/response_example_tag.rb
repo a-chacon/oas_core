@@ -5,7 +5,7 @@ module OasCore
     class ResponseExampleTag < ExampleTag
       attr_accessor :code
 
-      def initialize(tag_name, text, content: {}, code: 200)
+      def initialize(tag_name, text, content: nil, code: 200)
         super(tag_name, text, content:)
         @code = code
       end

@@ -52,6 +52,7 @@ module OasCore
       end
     end
 
+    # rubocop:disable Metrics
     # Parses the properties of an object type from a string.
     #
     # @param str [String] The string representation of the object's properties.
@@ -97,6 +98,7 @@ module OasCore
 
       properties
     end
+    # rubocop:enable Metrics
 
     # Converts a parsed data type into a JSON schema format.
     #
@@ -128,11 +130,11 @@ module OasCore
       end
     end
 
+    # rubocop:disable Metrics
     # Converts a Ruby data type into its corresponding JSON schema type.
     #
     # @param type [Symbol, String] The Ruby data type.
     # @return [Hash, String] The JSON schema type or a hash with additional format information.
-    # rubocop:disable Metrics/CyclomaticComplexity
     def self.ruby_type_to_json_schema_type(type)
       case type.to_s.downcase
       when 'string' then { type: 'string' }
@@ -148,6 +150,6 @@ module OasCore
       else type.to_s.downcase
       end
     end
-    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics
   end
 end
