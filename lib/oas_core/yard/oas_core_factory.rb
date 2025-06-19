@@ -134,7 +134,8 @@ module OasCore
       # @return [Hash] The processed content.
       def raw_type_to_content(raw_type)
         if raw_type.start_with?('JSON')
-          JSON.parse(raw_type.sub(/^JSON/, ''))
+          json_string = raw_type.sub(/^JSON/, '').gsub(/'/, '"')
+          JSON.parse(json_string)
         elsif raw_type.start_with?('Reference:')
           ref = raw_type.sub(/^Reference:/, '').strip
           OasCore::Spec::Reference.new(ref)
