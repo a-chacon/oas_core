@@ -40,7 +40,7 @@ module OasCore
 
       def test_parse_tag_with_request_body_raises_error_for_malformed_input
         text = 'The user to be created [!Hash{user: Hash{name: String, age: Integer, password: String}'
-        assert_raises(ArgumentError) do
+        assert_raises(TagParsingError) do
           @factory.parse_tag_with_request_body('request_body', text)
         end
       end
