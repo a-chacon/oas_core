@@ -137,6 +137,33 @@ module OasCore
         assert_instance_of OasCore::Spec::Reference, tag.content
         assert_equal '#/components/schemas/response_example', tag.content.ref
       end
+
+      def test_parse_tag_with_parameter_reference_returns_parameter_reference_tag
+        text = '#/components/parameters/one'
+        tag = @factory.parse_tag_with_parameter_reference('parameter_reference', text)
+
+        assert_instance_of ParameterReferenceTag, tag
+        assert_equal 'parameter_reference', tag.tag_name
+        assert_equal '#/components/parameters/one', tag.reference.ref
+      end
+
+      def test_parse_tag_with_request_body_reference_returns_request_body_reference_tag
+        text = '#/components/requestBodies/one'
+        tag = @factory.parse_tag_with_request_body_reference('request_body_reference', text)
+
+        assert_instance_of RequestBodyReferenceTag, tag
+        assert_equal 'request_body_reference', tag.tag_name
+        assert_equal '#/components/requestBodies/one', tag.reference.ref
+      end
+
+      def test_parse_tag_with_response_reference_returns_response_reference_tag
+        text = '#/components/responses/one'
+        tag = @factory.parse_tag_with_response_reference('response_reference', text)
+
+        assert_instance_of ResponseReferenceTag, tag
+        assert_equal 'response_reference', tag.tag_name
+        assert_equal '#/components/responses/one', tag.reference.ref
+      end
     end
   end
 end

@@ -83,6 +83,42 @@ module OasCore
         raise TagParsingError, "Failed to parse response example tag: #{e.message}"
       end
 
+      # Parses a tag that represents a parameter reference.
+      # @param tag_name [String] The name of the tag.
+      # @param text [String] The tag text to parse.
+      # @return [ParameterReferenceTag] The parsed parameter reference tag object.
+      def parse_tag_with_parameter_reference(tag_name, text)
+        ref = text.strip
+        reference = OasCore::Spec::Reference.new(ref)
+        ParameterReferenceTag.new(tag_name, reference)
+      rescue StandardError => e
+        raise TagParsingError, "Failed to parse parameter reference tag: #{e.message}"
+      end
+
+      # Parses a tag that represents a request body reference.
+      # @param tag_name [String] The name of the tag.
+      # @param text [String] The tag text to parse.
+      # @return [RequestBodyReferenceTag] The parsed request body reference tag object.
+      def parse_tag_with_request_body_reference(tag_name, text)
+        ref = text.strip
+        reference = OasCore::Spec::Reference.new(ref)
+        RequestBodyReferenceTag.new(tag_name, reference)
+      rescue StandardError => e
+        raise TagParsingError, "Failed to parse request body reference tag: #{e.message}"
+      end
+
+      # Parses a tag that represents a response reference.
+      # @param tag_name [String] The name of the tag.
+      # @param text [String] The tag text to parse.
+      # @return [ResponseReferenceTag] The parsed response reference tag object.
+      def parse_tag_with_response_reference(tag_name, text)
+        ref = text.strip
+        reference = OasCore::Spec::Reference.new(ref)
+        ResponseReferenceTag.new(tag_name, reference)
+      rescue StandardError => e
+        raise TagParsingError, "Failed to parse response reference tag: #{e.message}"
+      end
+
       private
 
       # Converts raw_type to content based on its format.

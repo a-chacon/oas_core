@@ -50,11 +50,16 @@ module OasCore
   module YARD
     autoload :RequestBodyTag, 'oas_core/yard/request_body_tag'
     autoload :ExampleTag, 'oas_core/yard/example_tag'
+    autoload :ReferenceTag, 'oas_core/yard/reference_tag'
     autoload :RequestBodyExampleTag, 'oas_core/yard/request_body_example_tag'
     autoload :ParameterTag, 'oas_core/yard/parameter_tag'
     autoload :ResponseTag, 'oas_core/yard/response_tag'
     autoload :ResponseExampleTag, 'oas_core/yard/response_example_tag'
     autoload :OasCoreFactory, 'oas_core/yard/oas_core_factory'
+
+    autoload :ParameterReferenceTag, 'oas_core/yard/parameter_reference_tag'
+    autoload :RequestBodyReferenceTag, 'oas_core/yard/request_body_reference_tag'
+    autoload :ResponseReferenceTag, 'oas_core/yard/response_reference_tag'
   end
 
   class << self
@@ -72,9 +77,12 @@ module OasCore
       ::YARD::Tags::Library.default_factory = YARD::OasCoreFactory
       yard_tags = {
         'Request body' => %i[request_body with_request_body],
+        'Request body Reference' => %i[request_body_ref with_request_body_reference],
         'Request body Example' => %i[request_body_example with_request_body_example],
         'Parameter' => %i[parameter with_parameter],
+        'Parameter Reference' => %i[parameter_ref with_parameter_reference],
         'Response' => %i[response with_response],
+        'Response Reference' => %i[response_ref with_response_reference],
         'Response Example' => %i[response_example with_response_example],
         'Endpoint Tags' => [:tags],
         'Summary' => [:summary],

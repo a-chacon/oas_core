@@ -15,6 +15,10 @@ module OasCore
           @parameters << ParameterBuilder.new(@specification).from_path(oas_route.path, p).build unless @parameters.any? { |param| param.name.to_s == p.to_s }
         end
 
+        oas_route.tags(:parameter_ref)&.each do |ref_tag|
+          @parameters << ref_tag.reference
+        end
+
         self
       end
 
@@ -34,7 +38,11 @@ module OasCore
 
       def build
         @parameters.map do |p|
-          @specification.components.add_parameter(p)
+          if p.is_a? OasCore::Spec::Reference
+            p
+          else
+            @specification.components.add_parameter(p)
+          end
         end
       end
     end

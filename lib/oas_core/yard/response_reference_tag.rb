@@ -2,7 +2,7 @@
 
 module OasCore
   module YARD
-    class RequestBodyExampleTag < ExampleTag
+    class ResponseReferenceTag < ReferenceTag
     end
   end
 end
