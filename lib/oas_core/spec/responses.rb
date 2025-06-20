@@ -16,11 +16,7 @@ module OasCore
       end
 
       def to_spec
-        spec = {}
-        @responses.each do |key, value|
-          spec[key] = value.to_spec
-        end
-        spec
+        @responses.transform_values(&:to_spec)
       end
     end
   end

@@ -21,8 +21,18 @@ module OasCore
         @callbacks = {}
       end
 
-      def oas_fields
-        %i[request_bodies examples responses schemas parameters security_schemes]
+      def to_spec
+        {
+          schemas: @schemas,
+          responses: @responses.transform_values(&:to_spec),
+          parameters: @parameters.transform_values(&:to_spec),
+          requestBodies: @request_bodies.transform_values(&:to_spec),
+          securitySchemes: @security_schemes,
+          headers: @headers.transform_values(&:to_spec),
+          examples: @examples,
+          links: @links.transform_values(&:to_spec),
+          callbacks: @callbacks.transform_values(&:to_spec)
+        }.compact
       end
 
       def add_response(response)
@@ -47,20 +57,9 @@ module OasCore
       end
 
       def add_schema(schema)
-        key = nil
-        if OasCore.config.use_model_names
-          if schema[:type] == 'array'
-            arr_schema = schema[:items]
-            arr_key = arr_schema['title']
-            key = "#{arr_key}List" unless arr_key.nil?
-          else
-            key = schema['title']
-          end
-        end
-
-        key = Hashable.generate_hash(schema) if key.nil?
-
+        key = Hashable.generate_hash(schema)
         @schemas[key] = schema if @schemas[key].nil?
+
         schema_reference(key)
       end
 

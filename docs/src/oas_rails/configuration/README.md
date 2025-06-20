@@ -33,6 +33,7 @@ Then fill it with your data. Below are the available configuration options:
 ### Optional Settings
 
 - `config.include_mode`: Determines the mode for including operations. The default value is `all`, which means it will include all route operations under the `api_path`, whether documented or not. Other possible values:
+
   - `:with_tags`: Includes in your OAS only the operations with at least one tag. Example:
 
     Not included:
@@ -78,13 +79,13 @@ Then fill it with your data. Below are the available configuration options:
 - `config.default_tags_from`: Determines the source of default tags for operations. Can be set to `:namespace` or `:controller`. The first option means that if your endpoint is in the route `/users/:id`, it will be tagged with `Users`. If set to `controller`, the tag will be `UsersController`.
 
 - `config.http_verbs`: Defaults to `[:get, :post, :put, :patch, :delete]`
-- `config.use_model_names`: Use model names when possible, defaults to `false`
 
 ### Authentication Settings
 
 - `config.authenticate_all_routes_by_default`: Determines whether to authenticate all routes by default. Default is `true`.
 
 - `config.security_schema`: The default security schema used for authentication. Choose from the following predefined options:
+
   - `:api_key_cookie`: API key passed via HTTP cookie.
   - `:api_key_header`: API key passed via HTTP header.
   - `:api_key_query`: API key passed via URL query parameter.
@@ -107,7 +108,7 @@ Then fill it with your data. Below are the available configuration options:
 - **`config.response_body_of_default`**: The response body template for default error responses. Must be a string representing a hash, similar to those used in request body tags.  
   **Default**: `"Hash{ message: String }"`
 
-- **`config.response_body_of_{code symbol}`**: Customizes the response body for specific error responses. Must be a string representing a hash, similar to `response_body_of_default`. If not specified, it defaults to the value of `response_body_of_default`.  
+- **`config.response_body_of_{code symbol}`**: Customizes the response body for specific error responses. Must be a string representing a hash, similar to `response_body_of_default`. If not specified, it defaults to the value of `response_body_of_default`.
 
   **Examples**:
 

@@ -13,7 +13,7 @@ module OasCore
         request_body_tag = build(:request_body_tag, text: 'User creation', required: true)
         example_tags = [
           build(:request_body_example_tag),
-          build(:request_body_example_tag, :with_complex_content)
+          build(:request_body_example_tag, :with_json_content)
         ]
         oas_route = build(:oas_route, tags: [request_body_tag] + example_tags)
 

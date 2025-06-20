@@ -1,4 +1,3 @@
-inherit_from: .rubocop_todo.yml
 
 AllCops:
   TargetRubyVersion:
@@ -20,4 +19,10 @@ Layout/LineLength:
   Enabled: false
 
 Metrics/ModuleLength:
-  Max: 150
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false

@@ -12,6 +12,7 @@ module OasCore
         @specification = specification
         @description = ''
         @content = {} # Hash with {content: MediaType}
+        @code = 200
       end
 
       def oas_fields

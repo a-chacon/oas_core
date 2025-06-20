@@ -20,7 +20,7 @@ FactoryBot.define do
       new(tag_name, text, content: content)
     end
 
-    trait :with_complex_content do
+    trait :with_json_content do
       content do
         {
           user: {
@@ -33,6 +33,12 @@ FactoryBot.define do
             ]
           }
         }
+      end
+    end
+
+    trait :with_reference_content do
+      content do
+        build(:reference).ref
       end
     end
   end

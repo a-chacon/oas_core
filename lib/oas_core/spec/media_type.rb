@@ -10,7 +10,6 @@ module OasCore
       # Initializes a new MediaType object.
       #
       # @param schema [Hash] the schema of the media type.
-      # @param kwargs [Hash] additional keyword arguments.
       def initialize(specification)
         @specification = specification
         @schema = {}
