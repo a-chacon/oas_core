@@ -112,9 +112,9 @@ module OasCore
       # @param text [String] The tag text to parse.
       # @return [ResponseReferenceTag] The parsed response reference tag object.
       def parse_tag_with_response_reference(tag_name, text)
-        ref = text.strip
-        reference = OasCore::Spec::Reference.new(ref)
-        ResponseReferenceTag.new(tag_name, reference)
+        reference_str, code_text = text_and_first_parenthesis_content(text.strip)
+        reference = OasCore::Spec::Reference.new(reference_str)
+        ResponseReferenceTag.new(tag_name, reference, code: code_text.to_i)
       rescue StandardError => e
         raise TagParsingError, "Failed to parse response reference tag: #{e.message}"
       end
@@ -180,6 +180,23 @@ module OasCore
           description = text[0...last_open].strip
           detail = text[(last_open + 1)...last_close].strip
           [description, detail]
+        else
+          [text.strip, nil]
+        end
+      end
+
+      # Extracts the first occurrence of content inside parentheses and the rest of the text.
+      # @param text [String] The text to parse.
+      # @return [Array] An array containing the rest of the text and the first detail in parentheses.
+      def text_and_first_parenthesis_content(text)
+        # Find the first occurrence of parentheses
+        first_open = text.index('(')
+        first_close = text.index(')')
+
+        if first_open && first_close && first_open < first_close
+          detail = text[(first_open + 1)...first_close].strip
+          rest = (text[0...first_open] + text[(first_close + 1)..]).strip
+          [rest, detail]
         else
           [text.strip, nil]
         end

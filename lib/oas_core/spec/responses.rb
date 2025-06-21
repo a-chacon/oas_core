@@ -15,6 +15,10 @@ module OasCore
         @responses[response.code] = @specification.components.add_response(response)
       end
 
+      def add_reference_response(code, reference)
+        @responses[code] = reference
+      end
+
       def to_spec
         @responses.transform_values(&:to_spec)
       end

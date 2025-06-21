@@ -28,6 +28,13 @@ module OasCore
 
         assert_equal({ 200 => { '$ref' => '#/components/responses/c3cbab93bbd905e02b9daa07c824b88a' } }, @responses.to_spec)
       end
+
+      def test_add_reference_response
+        reference = '#/components/responses/some_reference'
+        @responses.add_reference_response(404, reference)
+
+        assert_equal reference, @responses.responses[404]
+      end
     end
   end
 end

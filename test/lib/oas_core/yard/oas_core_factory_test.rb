@@ -157,12 +157,13 @@ module OasCore
       end
 
       def test_parse_tag_with_response_reference_returns_response_reference_tag
-        text = '#/components/responses/one'
+        text = '(405) #/components/responses/one'
         tag = @factory.parse_tag_with_response_reference('response_reference', text)
 
         assert_instance_of ResponseReferenceTag, tag
         assert_equal 'response_reference', tag.tag_name
         assert_equal '#/components/responses/one', tag.reference.ref
+        assert_equal 405, tag.code
       end
     end
   end
