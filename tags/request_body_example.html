@@ -167,26 +167,28 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="request_body_example"><a class="header" href="#request_body_example">@request_body_example</a></h1>
-<p><strong>Structure</strong>: <code>@request_body_example text [type] structure</code></p>
+<p><strong>Structure</strong>: <code>@request_body_example text [type]</code></p>
 <p>Adds examples to the provided request body.</p>
 <p><strong>One line example</strong>:</p>
-<p><code># @request_body_example A complete User. [Hash] {user: {name: 'Luis', age: 30, password: 'MyWeakPassword123'}}</code></p>
+<p><code># @request_body_example A complete User. [JSON{"user": {"name": 'Luis', "age": 30, "password": 'MyWeakPassword123'}}]</code></p>
 <p><strong>Multi-line example</strong>:</p>
-<pre><code class="language-ruby">  # @request_body_example basic user [Hash]
-  #   {
-  #     user: {
-  #       name: "Oas",
-  #       email: "oas@test.com",
-  #       password: "Test12345"
+<pre><code class="language-ruby">  # @request_body_example basic user
+  #   [JSON{
+  #       "user": {
+  #         "name": "Oas",
+  #         "email": "oas@test.com",
+  #         "password": "Test12345"
+  #       }
   #     }
-  #   }
+  #   ]
 </code></pre>
+<p><strong>It should be valid JSON; don't forget that keys must be enclosed in quotes ("").</strong></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../tags/request_body.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../tags/request_body_ref.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
@@ -200,7 +202,7 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../tags/request_body.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../tags/request_body_ref.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 

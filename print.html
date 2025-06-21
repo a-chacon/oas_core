@@ -451,6 +451,78 @@ end
 </ol>
 <h4 id="using-the-custom-view"><a class="header" href="#using-the-custom-view">Using the Custom View</a></h4>
 <p>Once the custom view file is in place, Rails will automatically use it instead of the view provided by the OasRails engine. This allows you to fully customize the presentation of the OAS without modifying the engine's code.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="configuring-the-source-oas"><a class="header" href="#configuring-the-source-oas">Configuring the Source OAS</a></h1>
+<p>For more complex scenarios, it is highly recommended to use a <strong>source OAS (OpenAPI Specification)</strong> file. This file serves as a centralized repository for reusable objects (such as schemas, request bodies, parameters, and responses) that can be referenced across your API documentation. This approach promotes consistency and reduces redundancy.</p>
+<h2 id="basic-configuration"><a class="header" href="#basic-configuration">Basic Configuration</a></h2>
+<p>To set up a source OAS file, configure the path in your <code>OasRails</code> configuration block:</p>
+<pre><code class="language-ruby">OasRails.configure do |config|
+  config.source_oas_path = "lib/assets/oas.json" # Path to your source OAS file
+end
+</code></pre>
+<h2 id="example-source-oas-file"><a class="header" href="#example-source-oas-file">Example Source OAS File</a></h2>
+<p>Below is an example of an <code>oas.json</code> file containing reusable components, such as a <code>User</code> schema:</p>
+<pre><code class="language-json">{
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The user's full name"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "The user's email address"
+          },
+          "age": {
+            "type": "integer",
+            "description": "The user's age",
+            "minimum": 0
+          },
+          "password": {
+            "type": "string",
+            "description": "The user's password",
+            "minLength": 6
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "example": {
+          "name": "John Doe",
+          "email": "john.doe@example.com",
+          "age": 30,
+          "password": "securepassword123"
+        }
+      }
+    },
+    "requestBodies": { ... },
+    "parameters": { ... },
+    ...
+  }
+}
+</code></pre>
+<h2 id="referencing-reusable-components"><a class="header" href="#referencing-reusable-components">Referencing Reusable Components</a></h2>
+<p>Once your source OAS file is configured, you can reference its components in your API documentation tags. For example, to reference the <code>User</code> schema in a response:</p>
+<pre><code class="language-markdown"># @response Created User (200) [Reference:#/components/schemas/User]
+</code></pre>
+<h3 id="key-benefits"><a class="header" href="#key-benefits">Key Benefits</a></h3>
+<ol>
+<li><strong>Consistency</strong>: Ensures uniformity across your API documentation.</li>
+<li><strong>Reusability</strong>: Eliminates duplication by centralizing common objects.</li>
+<li><strong>Maintainability</strong>: Simplifies updates, as changes to the source OAS propagate automatically to all references.</li>
+</ol>
+<h3 id="supported-references"><a class="header" href="#supported-references">Supported References</a></h3>
+<p>You can reference the <strong>schemas</strong> of <strong>request bodies, responses, and parameters</strong> using the main tag. For example:</p>
+<pre><code class="language-markdown"># @request_body Required User [Reference:#/components/schemas/User]
+</code></pre>
+<p>Alternatively, you can <strong>reference the entire request body, response, or parameter</strong> using the reference tags:</p>
+<pre><code class="language-markdown"># @request_body_ref #/components/requestBodies/createUser
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="oashanami"><a class="header" href="#oashanami">OasHanami</a></h1>
 <p><strong>Please note that this implementation is not yet thoroughly tested and is in an early stage. If you encounter any issues or have suggestions, feel free to open a GitHub issue, PR, or discussion <a href="https://github.com/a-chacon/oas_hanami">here</a>.</strong></p>
 <p><img src="oas_hanami/../assets/hanami_theme.png" alt="Screenshot of OasHanami" /></p>
@@ -593,7 +665,7 @@ end
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="tags"><a class="header" href="#tags">Tags</a></h1>
 <p>In addition to the information provided in the initializer file and the data that can be extracted from the routes and methods automatically, it is essential to document your API in the following way. The documentation is created <strong>with the help of YARD</strong>, so the methods are documented with <strong>comment tags</strong>.</p>
-<h3 id="documenting-your-endpoints"><a class="header" href="#documenting-your-endpoints">Documenting Your Endpoints</a></h3>
+<h2 id="documenting-your-endpoints"><a class="header" href="#documenting-your-endpoints">Documenting Your Endpoints</a></h2>
 <p>Almost every tag description in an OAS file supports <strong>markdown formatting</strong> (e.g., bold, italics, lists, links) for better readability in the generated documentation. Additionally, <strong>multi-line descriptions</strong> are supported. When using multi-line descriptions, ensure the content is indented at least one space more than the tag itself to maintain proper formatting.</p>
 <p>For example:</p>
 <pre><code class="language-ruby">  # @request_body_example Simple User [Hash]
@@ -606,7 +678,41 @@ end
   #   }
 </code></pre>
 <p>You can use these tags in your controller methods to enhance the automatically generated documentation. Remember to use markdown formatting in your descriptions for better readability in the generated OAS document.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="summary"><a class="header" href="#summary">@summary</a></h1>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p>Below is a summary of all available tags for documenting your API endpoints:</p>
+<h3 id="authentication-tags"><a class="header" href="#authentication-tags">Authentication Tags</a></h3>
+<ul>
+<li><strong><code>@auth</code></strong>: Specifies security mechanisms for the endpoint (e.g., <code># @auth [bearer, basic]</code>).</li>
+<li><strong><code>@no_auth</code></strong>: Removes security requirements for the endpoint (e.g., <code># @no_auth</code>).</li>
+</ul>
+<h3 id="inclusion-tags"><a class="header" href="#inclusion-tags">Inclusion Tags</a></h3>
+<ul>
+<li><strong><code>@oas_include</code></strong>: Explicitly includes the endpoint in the OAS file when <code>include_mode</code> is <code>:explicit</code> (e.g., <code># @oas_include</code>).</li>
+</ul>
+<h3 id="parameter-tags"><a class="header" href="#parameter-tags">Parameter Tags</a></h3>
+<ul>
+<li><strong><code>@parameter</code></strong>: Documents a parameter for the endpoint (e.g., <code># @parameter page(query) [Integer] The page number.</code>).</li>
+<li><strong><code>@parameter_ref</code></strong>: References a predefined parameter (e.g., <code># @parameter_ref #/components/parameters/user_id</code>).</li>
+</ul>
+<h3 id="request-body-tags"><a class="header" href="#request-body-tags">Request Body Tags</a></h3>
+<ul>
+<li><strong><code>@request_body</code></strong>: Describes the request body (e.g., <code># @request_body The user to be created [!User]</code>).</li>
+<li><strong><code>@request_body_example</code></strong>: Provides examples for the request body (e.g., <code># @request_body_example basic user [Hash] {user: {name: "Oas"}}</code>).</li>
+<li><strong><code>@request_body_ref</code></strong>: References a predefined request body (e.g., <code># @request_body_ref #/components/requestBodies/user</code>).</li>
+</ul>
+<h3 id="response-tags"><a class="header" href="#response-tags">Response Tags</a></h3>
+<ul>
+<li><strong><code>@response</code></strong>: Documents the endpoint's responses (e.g., <code># @response User not found by the provided Id(404) [Hash]</code>).</li>
+<li><strong><code>@response_example</code></strong>: Provides examples for responses (e.g., <code># @response_example Invalid Email(422) [{success: "false"}]</code>).</li>
+<li><strong><code>@response_ref</code></strong>: References a predefined response (e.g., <code># @response_ref (200) #/components/responses/success</code>).</li>
+</ul>
+<h3 id="metadata-tags"><a class="header" href="#metadata-tags">Metadata Tags</a></h3>
+<ul>
+<li><strong><code>@summary</code></strong>: Adds a custom summary for the endpoint (e.g., <code># @summary This endpoint creates a User</code>).</li>
+<li><strong><code>@tags</code></strong>: Tags the endpoint for categorization (e.g., <code># @tags Users, Admin</code>).</li>
+</ul>
+<p>For detailed usage and examples, refer to the individual tag documentation files.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="summary-1"><a class="header" href="#summary-1">@summary</a></h1>
 <p><strong>Structure</strong>: <code>@summary text</code></p>
 <p>Used to add a summary to the endpoint. It replaces the default summary/title of the endpoint.</p>
 <p><strong>Example</strong>:</p>
@@ -616,10 +722,43 @@ end
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="parameter"><a class="header" href="#parameter">@parameter</a></h1>
 <p><strong>Structure</strong>: <code>@parameter name(position) [type] text</code></p>
-<p>Represents a parameter for the endpoint. The position can be: <code>header</code>, <code>path</code>, <code>cookie</code>, or <code>query</code>. The type should be a valid Ruby class: <code>String</code>, <code>Integer</code>, <code>Array&lt;String&gt;</code>, etc. Add a <code>!</code> before the class to indicate a required parameter.</p>
-<p><strong>Examples</strong>:
-<code># @parameter page(query) [Integer] The page number.</code>
-<code># @parameter slug(path) [!String] Slug of the Project.</code></p>
+<p>Represents a parameter for the endpoint. The position can be one of the following: <code>header</code>, <code>path</code>, <code>cookie</code>, or <code>query</code>. The type should be a valid Ruby class, such as <code>String</code>, <code>Integer</code>, or <code>Array&lt;String&gt;</code>. Prefix the class with a <code>!</code> to indicate a required parameter.</p>
+<p><strong>Examples</strong>:</p>
+<p><code># @parameter page(query) [Integer] The page number.</code></p>
+<p><code># @parameter slug(path) [!String] The slug of the project.</code></p>
+<h3 id="reference"><a class="header" href="#reference">Reference</a></h3>
+<p>This tag also supports a reference for its schema. The reference can point to any external or internal resource, following the OpenAPI Specification (OAS) definition: <a href="https://spec.openapis.org/oas/v3.1.0.html#schema-object">https://spec.openapis.org/oas/v3.1.0.html#schema-object</a>.</p>
+<p>The reference should be formatted as follows:</p>
+<pre><code># @parameter page(query) [Reference:#/components/schema/pageQueryParam]
+</code></pre>
+<p>Note that the reference applies to the schema, not the entire parameter. To reference the complete parameter, use the <code>@parameter_ref</code> tag.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="parameter_ref"><a class="header" href="#parameter_ref">@parameter_ref</a></h1>
+<p><strong>Structure</strong>: <code>@parameter_ref text</code></p>
+<p>Document a parameter using a custom reference. This tag allows you to reference predefined parameters or external resources, making your API documentation more modular and reusable.</p>
+<h3 id="usage"><a class="header" href="#usage">Usage</a></h3>
+<ul>
+<li><strong><code>text</code></strong>: A reference to the parameter definition. This can be:
+<ul>
+<li>An internal reference (e.g., <code>#/components/parameters/user_id</code>).</li>
+<li>An external URL (e.g., <code>https://example.com/parameters/user_id.json</code>).</li>
+</ul>
+</li>
+</ul>
+<h3 id="examples"><a class="header" href="#examples">Examples</a></h3>
+<ol>
+<li>
+<p><strong>Internal Reference</strong>:</p>
+<pre><code class="language-markdown"># @parameter_ref #/components/parameters/user_id
+</code></pre>
+<p>This references a predefined user ID parameter in your OpenAPI components.</p>
+</li>
+<li>
+<p><strong>External Resource</strong>:</p>
+<pre><code class="language-markdown"># @parameter_ref https://example.com/parameters/user_id.json
+</code></pre>
+<p>This references an external resource for a user ID parameter, useful for shared documentation across services.</p>
+</li>
+</ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="request_body"><a class="header" href="#request_body">@request_body</a></h1>
 <p><strong>Structure</strong>: <code>@request_body text [type&lt;structure&gt;]</code></p>
 <p>Documents the request body needed by the endpoint. The structure is optional if you provide a valid Active Record class. Use <code>!</code> to indicate a required request body.</p>
@@ -643,21 +782,56 @@ end
   #     }
   #   ]
 </code></pre>
+<h3 id="reference-1"><a class="header" href="#reference-1">Reference</a></h3>
+<p>This tag also supports a reference for its schema. The reference can be to anything you want, external or internal resources, following the definition of OAS <a href="https://spec.openapis.org/oas/v3.1.0.html#schema-object">https://spec.openapis.org/oas/v3.1.0.html#schema-object</a>.</p>
+<p>The reference should be passed like this:</p>
+<pre><code># @request_body The user to be created [Reference:#/components/schema/userRequest]
+</code></pre>
+<p>Notice that the reference here <strong>is for the schema and not for the entire request body</strong>. If you need to reference the complete request body, consider using <code>@request_body_ref</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="request_body_ref"><a class="header" href="#request_body_ref">@request_body_ref</a></h1>
+<p><strong>Structure</strong>: <code>@request_body_ref text</code></p>
+<p>Document a request body using a custom reference. This tag allows you to reference predefined request bodies or external resources, making your API documentation more modular and reusable.</p>
+<h3 id="usage-1"><a class="header" href="#usage-1">Usage</a></h3>
+<ul>
+<li><strong><code>text</code></strong>: A reference to the request body definition. This can be:
+<ul>
+<li>An internal reference (e.g., <code>#/components/requestBodies/user</code>).</li>
+<li>An external URL (e.g., <code>https://example.com/request_bodies/user.json</code>).</li>
+</ul>
+</li>
+</ul>
+<h3 id="examples-1"><a class="header" href="#examples-1">Examples</a></h3>
+<ol>
+<li>
+<p><strong>Internal Reference</strong>:</p>
+<pre><code class="language-markdown"># @request_body_ref #/components/requestBodies/user
+</code></pre>
+<p>This references a predefined user request body in your OpenAPI components.</p>
+</li>
+<li>
+<p><strong>External Resource</strong>:</p>
+<pre><code class="language-markdown"># @request_body_ref https://example.com/request_bodies/user.json
+</code></pre>
+<p>This references an external resource for a user request body, useful for shared documentation across services.</p>
+</li>
+</ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="request_body_example"><a class="header" href="#request_body_example">@request_body_example</a></h1>
-<p><strong>Structure</strong>: <code>@request_body_example text [type] structure</code></p>
+<p><strong>Structure</strong>: <code>@request_body_example text [type]</code></p>
 <p>Adds examples to the provided request body.</p>
 <p><strong>One line example</strong>:</p>
-<p><code># @request_body_example A complete User. [Hash] {user: {name: 'Luis', age: 30, password: 'MyWeakPassword123'}}</code></p>
+<p><code># @request_body_example A complete User. [JSON{"user": {"name": 'Luis', "age": 30, "password": 'MyWeakPassword123'}}]</code></p>
 <p><strong>Multi-line example</strong>:</p>
-<pre><code class="language-ruby">  # @request_body_example basic user [Hash]
-  #   {
-  #     user: {
-  #       name: "Oas",
-  #       email: "oas@test.com",
-  #       password: "Test12345"
+<pre><code class="language-ruby">  # @request_body_example basic user
+  #   [JSON{
+  #       "user": {
+  #         "name": "Oas",
+  #         "email": "oas@test.com",
+  #         "password": "Test12345"
+  #       }
   #     }
-  #   }
+  #   ]
 </code></pre>
+<p><strong>It should be valid JSON; don't forget that keys must be enclosed in quotes ("").</strong></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="response"><a class="header" href="#response">@response</a></h1>
 <p><strong>Structure</strong>: <code>@response text(code) [type&lt;structure&gt;]</code></p>
 <p>Documents the responses of the endpoint and overrides the default responses found by the engine.</p>
@@ -676,24 +850,67 @@ end
   #     }
   #   ]
 </code></pre>
+<h3 id="reference-2"><a class="header" href="#reference-2">Reference</a></h3>
+<p>This tag also supports a reference for its schema. The reference can be to anything you want, external or internal resources, following the definition of OAS <a href="https://spec.openapis.org/oas/v3.1.0.html#schema-object">https://spec.openapis.org/oas/v3.1.0.html#schema-object</a>.</p>
+<p>The reference should be passed like this:</p>
+<pre><code># @response User not found by the provided Id(404) [Reference:#/components/schema/errorResponse]
+</code></pre>
+<p>Notice that the reference here <strong>is for the schema and not for the entire response</strong>. If you need to reference the complete response, consider using <code>@response_ref</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="response_ref"><a class="header" href="#response_ref">@response_ref</a></h1>
+<p><strong>Structure</strong>: <code>@response_ref (code) text</code></p>
+<p>Document a response using a custom reference. This tag allows you to reference predefined responses or external resources, making your API documentation more modular and reusable.</p>
+<h3 id="usage-2"><a class="header" href="#usage-2">Usage</a></h3>
+<ul>
+<li><strong><code>code</code></strong>: The HTTP status code for the response (e.g., <code>200</code>, <code>404</code>, <code>500</code>).</li>
+<li><strong><code>text</code></strong>: A reference to the response definition. This can be:
+<ul>
+<li>An internal reference (e.g., <code>#/components/responses/success</code>).</li>
+<li>An external URL (e.g., <code>https://example.com/responses/not_found</code>).</li>
+</ul>
+</li>
+</ul>
+<h3 id="examples-2"><a class="header" href="#examples-2">Examples</a></h3>
+<ol>
+<li>
+<p><strong>Internal Reference</strong>:</p>
+<pre><code class="language-markdown"># @response_ref (200) #/components/responses/success
+</code></pre>
+<p>This references a predefined success response in your OpenAPI components.</p>
+</li>
+<li>
+<p><strong>Error Response</strong>:</p>
+<pre><code class="language-markdown"># @response_ref (500) #/components/responses/error
+</code></pre>
+<p>This references a predefined error response in your OpenAPI components.</p>
+</li>
+<li>
+<p><strong>External Resource</strong>:</p>
+<pre><code class="language-markdown"># @response_ref (404) https://example.com/responses/not_found.json
+</code></pre>
+<p>This references an external resource for a "Not Found" response, useful for shared documentation across services.</p>
+</li>
+</ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="response_example"><a class="header" href="#response_example">@response_example</a></h1>
-<p><strong>Structure</strong>: <code>@response_example text(code) [String Hash]</code></p>
+<p><strong>Structure</strong>: <code>@response_example text(code) [Type]</code></p>
 <p>Documents response examples of the endpoint associated to a response code.</p>
 <p><strong>One line example</strong>:</p>
-<p><code># @response_example Invalida Email(422) [{success: "false", errors: [{field: "email", type: "email", detail: ["Invalid email"]}] }]</code></p>
-<p><code># @response_example Id not exists (404) [{success: "false", message: "Nothing found with the provided ID." }]</code></p>
+<p><code># @response_example Invalida Email(422) [JSON{"success": "false", "errors": [{"field": "email", "type": "email", "detail": ["Invalid email"]}] }]</code></p>
+<p><code># @response_example Id not exists (404) [{"success": "false", "message": "Nothing found with the provided ID." }]</code></p>
 <p><strong>Multi-line example</strong>:</p>
-<pre><code class="language-ruby">  # @response_example Another 405 Error (405) [Hash]
-  #   {
-  #     message: "another",
-  #     data: {
-  #       availabilities: [
-  #         "three"
-  #       ],
-  #       dates: []
+<pre><code class="language-ruby">  # @response_example Another 405 Error (405)
+  #   [JSON{
+  #     {
+  #       "message": "another",
+  #       "data": {
+  #         "availabilities": [
+  #           "three"
+  #         ],
+  #         "dates": []
+  #       }
   #     }
-  #   }
+  #   }]
 </code></pre>
+<p><strong>It should be valid JSON; don't forget that keys must be enclosed in quotes ("").</strong></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="tags-1"><a class="header" href="#tags-1">@tags</a></h1>
 <p><strong>Structure</strong>: <code>@tags Tag1,Tag2,Tag3</code></p>
 <p>Tags your endpoints. You can define these tags in the initializer file for documentation purposes, but it is not required to predefine them before use.</p>
@@ -715,7 +932,7 @@ end
 <code># @auth [bearer, basic]</code></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="oas_include"><a class="header" href="#oas_include">@oas_include</a></h1>
 <p>Use this tag to explicitly include endpoints in the final OpenAPI Specification (OAS) file <strong>when <code>include_mode</code> is set to <code>:explicit</code></strong>. Only endpoints annotated with <code>@oas_include</code> will be included.</p>
-<h2 id="usage"><a class="header" href="#usage">Usage</a></h2>
+<h2 id="usage-3"><a class="header" href="#usage-3">Usage</a></h2>
 <p>Add the <code>@oas_include</code> tag as a comment above the endpoint you want to document. For example:</p>
 <h3 id="endpoint-not-included-default-behavior"><a class="header" href="#endpoint-not-included-default-behavior">Endpoint Not Included (Default Behavior)</a></h3>
 <pre><code class="language-ruby">def update
@@ -726,7 +943,7 @@ end
 def index
 end
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="examples"><a class="header" href="#examples">Examples</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="examples-3"><a class="header" href="#examples-3">Examples</a></h1>
 <pre><code class="language-ruby">class UsersController &lt; ApplicationController
   before_action :set_user, only: %i[show update destroy]
 

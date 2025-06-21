@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>@request_body - OasCore Documentation</title>
+        <title>@parameter_ref - OasCore Documentation</title>
 
 
         <!-- Custom HTML head -->
@@ -166,45 +166,43 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="request_body"><a class="header" href="#request_body">@request_body</a></h1>
-<p><strong>Structure</strong>: <code>@request_body text [type&lt;structure&gt;]</code></p>
-<p>Documents the request body needed by the endpoint. The structure is optional if you provide a valid Active Record class. Use <code>!</code> to indicate a required request body.</p>
-<p><strong>One line example</strong>:</p>
-<p><code># @request_body The user to be created [!User]</code></p>
-<p><code># @request_body The user to be created [User]</code></p>
-<p><strong>Multi-line example</strong>:</p>
-<pre><code class="language-ruby">  # @request_body User to be created
-  #   [
-  #     !Hash{
-  #       user: Hash{
-  #         name: String,
-  #         email: String,
-  #         age: Integer,
-  #         cars: Array&lt;
-  #           Hash{
-  #             identifier: String
-  #           }
-  #         &gt;
-  #       }
-  #     }
-  #   ]
+                        <h1 id="parameter_ref"><a class="header" href="#parameter_ref">@parameter_ref</a></h1>
+<p><strong>Structure</strong>: <code>@parameter_ref text</code></p>
+<p>Document a parameter using a custom reference. This tag allows you to reference predefined parameters or external resources, making your API documentation more modular and reusable.</p>
+<h3 id="usage"><a class="header" href="#usage">Usage</a></h3>
+<ul>
+<li><strong><code>text</code></strong>: A reference to the parameter definition. This can be:
+<ul>
+<li>An internal reference (e.g., <code>#/components/parameters/user_id</code>).</li>
+<li>An external URL (e.g., <code>https://example.com/parameters/user_id.json</code>).</li>
+</ul>
+</li>
+</ul>
+<h3 id="examples"><a class="header" href="#examples">Examples</a></h3>
+<ol>
+<li>
+<p><strong>Internal Reference</strong>:</p>
+<pre><code class="language-markdown"># @parameter_ref #/components/parameters/user_id
 </code></pre>
-<h3 id="reference"><a class="header" href="#reference">Reference</a></h3>
-<p>This tag also supports a reference for its schema. The reference can be to anything you want, external or internal resources, following the definition of OAS <a href="https://spec.openapis.org/oas/v3.1.0.html#schema-object">https://spec.openapis.org/oas/v3.1.0.html#schema-object</a>.</p>
-<p>The reference should be passed like this:</p>
-<pre><code># @request_body The user to be created [Reference:#/components/schema/userRequest]
+<p>This references a predefined user ID parameter in your OpenAPI components.</p>
+</li>
+<li>
+<p><strong>External Resource</strong>:</p>
+<pre><code class="language-markdown"># @parameter_ref https://example.com/parameters/user_id.json
 </code></pre>
-<p>Notice that the reference here <strong>is for the schema and not for the entire request body</strong>. If you need to reference the complete request body, consider using <code>@request_body_ref</code>.</p>
+<p>This references an external resource for a user ID parameter, useful for shared documentation across services.</p>
+</li>
+</ol>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../tags/parameter_ref.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../tags/parameter.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../tags/request_body_ref.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../tags/request_body.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -214,11 +212,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../tags/parameter_ref.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../tags/parameter.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../tags/request_body_ref.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../tags/request_body.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

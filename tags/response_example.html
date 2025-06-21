@@ -167,29 +167,32 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="response_example"><a class="header" href="#response_example">@response_example</a></h1>
-<p><strong>Structure</strong>: <code>@response_example text(code) [String Hash]</code></p>
+<p><strong>Structure</strong>: <code>@response_example text(code) [Type]</code></p>
 <p>Documents response examples of the endpoint associated to a response code.</p>
 <p><strong>One line example</strong>:</p>
-<p><code># @response_example Invalida Email(422) [{success: "false", errors: [{field: "email", type: "email", detail: ["Invalid email"]}] }]</code></p>
-<p><code># @response_example Id not exists (404) [{success: "false", message: "Nothing found with the provided ID." }]</code></p>
+<p><code># @response_example Invalida Email(422) [JSON{"success": "false", "errors": [{"field": "email", "type": "email", "detail": ["Invalid email"]}] }]</code></p>
+<p><code># @response_example Id not exists (404) [{"success": "false", "message": "Nothing found with the provided ID." }]</code></p>
 <p><strong>Multi-line example</strong>:</p>
-<pre><code class="language-ruby">  # @response_example Another 405 Error (405) [Hash]
-  #   {
-  #     message: "another",
-  #     data: {
-  #       availabilities: [
-  #         "three"
-  #       ],
-  #       dates: []
+<pre><code class="language-ruby">  # @response_example Another 405 Error (405)
+  #   [JSON{
+  #     {
+  #       "message": "another",
+  #       "data": {
+  #         "availabilities": [
+  #           "three"
+  #         ],
+  #         "dates": []
+  #       }
   #     }
-  #   }
+  #   }]
 </code></pre>
+<p><strong>It should be valid JSON; don't forget that keys must be enclosed in quotes ("").</strong></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../tags/response.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../tags/response_ref.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
@@ -203,7 +206,7 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../tags/response.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../tags/response_ref.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 

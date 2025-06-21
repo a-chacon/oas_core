@@ -184,6 +184,12 @@
   #     }
   #   ]
 </code></pre>
+<h3 id="reference"><a class="header" href="#reference">Reference</a></h3>
+<p>This tag also supports a reference for its schema. The reference can be to anything you want, external or internal resources, following the definition of OAS <a href="https://spec.openapis.org/oas/v3.1.0.html#schema-object">https://spec.openapis.org/oas/v3.1.0.html#schema-object</a>.</p>
+<p>The reference should be passed like this:</p>
+<pre><code># @response User not found by the provided Id(404) [Reference:#/components/schema/errorResponse]
+</code></pre>
+<p>Notice that the reference here <strong>is for the schema and not for the entire response</strong>. If you need to reference the complete response, consider using <code>@response_ref</code>.</p>
 
                     </main>
 
@@ -193,7 +199,7 @@
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../tags/response_example.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../tags/response_ref.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -207,7 +213,7 @@
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../tags/response_example.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../tags/response_ref.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

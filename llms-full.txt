@@ -315,6 +315,100 @@ To override the `index` view provided by the OasRails engine, follow these steps
 Once the custom view file is in place, Rails will automatically use it instead of the view provided by the OasRails engine. This allows you to fully customize the presentation of the OAS without modifying the engine's code.
 
 
+# Configuring the Source OAS
+
+For more complex scenarios, it is highly recommended to use a **source OAS (OpenAPI Specification)** file. This file serves as a centralized repository for reusable objects (such as schemas, request bodies, parameters, and responses) that can be referenced across your API documentation. This approach promotes consistency and reduces redundancy.
+
+## Basic Configuration
+
+To set up a source OAS file, configure the path in your `OasRails` configuration block:
+
+```ruby
+OasRails.configure do |config|
+  config.source_oas_path = "lib/assets/oas.json" # Path to your source OAS file
+end
+```
+
+## Example Source OAS File
+
+Below is an example of an `oas.json` file containing reusable components, such as a `User` schema:
+
+```json
+{
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The user's full name"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "The user's email address"
+          },
+          "age": {
+            "type": "integer",
+            "description": "The user's age",
+            "minimum": 0
+          },
+          "password": {
+            "type": "string",
+            "description": "The user's password",
+            "minLength": 6
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "example": {
+          "name": "John Doe",
+          "email": "john.doe@example.com",
+          "age": 30,
+          "password": "securepassword123"
+        }
+      }
+    },
+    "requestBodies": { ... },
+    "parameters": { ... },
+    ...
+  }
+}
+```
+
+## Referencing Reusable Components
+
+Once your source OAS file is configured, you can reference its components in your API documentation tags. For example, to reference the `User` schema in a response:
+
+```markdown
+# @response Created User (200) [Reference:#/components/schemas/User]
+```
+
+### Key Benefits
+
+1. **Consistency**: Ensures uniformity across your API documentation.
+2. **Reusability**: Eliminates duplication by centralizing common objects.
+3. **Maintainability**: Simplifies updates, as changes to the source OAS propagate automatically to all references.
+
+### Supported References
+
+You can reference the **schemas** of **request bodies, responses, and parameters** using the main tag. For example:
+
+```markdown
+# @request_body Required User [Reference:#/components/schemas/User]
+```
+
+Alternatively, you can **reference the entire request body, response, or parameter** using the reference tags:
+
+```markdown
+# @request_body_ref #/components/requestBodies/createUser
+```
+
+
 # OasHanami
 
 **Please note that this implementation is not yet thoroughly tested and is in an early stage. If you encounter any issues or have suggestions, feel free to open a GitHub issue, PR, or discussion [here](https://github.com/a-chacon/oas_hanami).**
@@ -463,7 +557,7 @@ Then fill it with your data. Below are the available configuration options:
 
 In addition to the information provided in the initializer file and the data that can be extracted from the routes and methods automatically, it is essential to document your API in the following way. The documentation is created **with the help of YARD**, so the methods are documented with **comment tags**.
 
-### Documenting Your Endpoints
+## Documenting Your Endpoints
 
 Almost every tag description in an OAS file supports **markdown formatting** (e.g., bold, italics, lists, links) for better readability in the generated documentation. Additionally, **multi-line descriptions** are supported. When using multi-line descriptions, ensure the content is indented at least one space more than the tag itself to maintain proper formatting.
 
@@ -481,6 +575,43 @@ For example:
 ```
 
 You can use these tags in your controller methods to enhance the automatically generated documentation. Remember to use markdown formatting in your descriptions for better readability in the generated OAS document.
+
+## Summary
+
+Below is a summary of all available tags for documenting your API endpoints:
+
+### Authentication Tags
+
+- **`@auth`**: Specifies security mechanisms for the endpoint (e.g., `# @auth [bearer, basic]`).
+- **`@no_auth`**: Removes security requirements for the endpoint (e.g., `# @no_auth`).
+
+### Inclusion Tags
+
+- **`@oas_include`**: Explicitly includes the endpoint in the OAS file when `include_mode` is `:explicit` (e.g., `# @oas_include`).
+
+### Parameter Tags
+
+- **`@parameter`**: Documents a parameter for the endpoint (e.g., `# @parameter page(query) [Integer] The page number.`).
+- **`@parameter_ref`**: References a predefined parameter (e.g., `# @parameter_ref #/components/parameters/user_id`).
+
+### Request Body Tags
+
+- **`@request_body`**: Describes the request body (e.g., `# @request_body The user to be created [!User]`).
+- **`@request_body_example`**: Provides examples for the request body (e.g., `# @request_body_example basic user [Hash] {user: {name: "Oas"}}`).
+- **`@request_body_ref`**: References a predefined request body (e.g., `# @request_body_ref #/components/requestBodies/user`).
+
+### Response Tags
+
+- **`@response`**: Documents the endpoint's responses (e.g., `# @response User not found by the provided Id(404) [Hash]`).
+- **`@response_example`**: Provides examples for responses (e.g., `# @response_example Invalid Email(422) [{success: "false"}]`).
+- **`@response_ref`**: References a predefined response (e.g., `# @response_ref (200) #/components/responses/success`).
+
+### Metadata Tags
+
+- **`@summary`**: Adds a custom summary for the endpoint (e.g., `# @summary This endpoint creates a User`).
+- **`@tags`**: Tags the endpoint for categorization (e.g., `# @tags Users, Admin`).
+
+For detailed usage and examples, refer to the individual tag documentation files.
 
 
 # @summary
@@ -503,11 +634,56 @@ Used to add a summary to the endpoint. It replaces the default summary/title of 
 
 **Structure**: `@parameter name(position) [type] text`
 
-Represents a parameter for the endpoint. The position can be: `header`, `path`, `cookie`, or `query`. The type should be a valid Ruby class: `String`, `Integer`, `Array<String>`, etc. Add a `!` before the class to indicate a required parameter.
+Represents a parameter for the endpoint. The position can be one of the following: `header`, `path`, `cookie`, or `query`. The type should be a valid Ruby class, such as `String`, `Integer`, or `Array<String>`. Prefix the class with a `!` to indicate a required parameter.
 
 **Examples**:
+
 `# @parameter page(query) [Integer] The page number.`
-`# @parameter slug(path) [!String] Slug of the Project.`
+
+`# @parameter slug(path) [!String] The slug of the project.`
+
+### Reference
+
+This tag also supports a reference for its schema. The reference can point to any external or internal resource, following the OpenAPI Specification (OAS) definition: <https://spec.openapis.org/oas/v3.1.0.html#schema-object>.
+
+The reference should be formatted as follows:
+
+```
+# @parameter page(query) [Reference:#/components/schema/pageQueryParam]
+```
+
+Note that the reference applies to the schema, not the entire parameter. To reference the complete parameter, use the `@parameter_ref` tag.
+
+
+# @parameter_ref
+
+**Structure**: `@parameter_ref text`
+
+Document a parameter using a custom reference. This tag allows you to reference predefined parameters or external resources, making your API documentation more modular and reusable.
+
+### Usage
+
+- **`text`**: A reference to the parameter definition. This can be:
+  - An internal reference (e.g., `#/components/parameters/user_id`).
+  - An external URL (e.g., `https://example.com/parameters/user_id.json`).
+
+### Examples
+
+1. **Internal Reference**:
+
+   ```markdown
+   # @parameter_ref #/components/parameters/user_id
+   ```
+
+   This references a predefined user ID parameter in your OpenAPI components.
+
+2. **External Resource**:
+
+   ```markdown
+   # @parameter_ref https://example.com/parameters/user_id.json
+   ```
+
+   This references an external resource for a user ID parameter, useful for shared documentation across services.
 
 
 # @request_body
@@ -542,29 +718,75 @@ Documents the request body needed by the endpoint. The structure is optional if 
   #   ]
 ```
 
+### Reference
+
+This tag also supports a reference for its schema. The reference can be to anything you want, external or internal resources, following the definition of OAS <https://spec.openapis.org/oas/v3.1.0.html#schema-object>.
+
+The reference should be passed like this:
+
+```
+# @request_body The user to be created [Reference:#/components/schema/userRequest]
+```
+
+Notice that the reference here **is for the schema and not for the entire request body**. If you need to reference the complete request body, consider using `@request_body_ref`.
+
+
+# @request_body_ref
+
+**Structure**: `@request_body_ref text`
+
+Document a request body using a custom reference. This tag allows you to reference predefined request bodies or external resources, making your API documentation more modular and reusable.
+
+### Usage
+
+- **`text`**: A reference to the request body definition. This can be:
+  - An internal reference (e.g., `#/components/requestBodies/user`).
+  - An external URL (e.g., `https://example.com/request_bodies/user.json`).
+
+### Examples
+
+1. **Internal Reference**:
+
+   ```markdown
+   # @request_body_ref #/components/requestBodies/user
+   ```
+
+   This references a predefined user request body in your OpenAPI components.
+
+2. **External Resource**:
+
+   ```markdown
+   # @request_body_ref https://example.com/request_bodies/user.json
+   ```
+
+   This references an external resource for a user request body, useful for shared documentation across services.
+
 
 # @request_body_example
 
-**Structure**: `@request_body_example text [type] structure`
+**Structure**: `@request_body_example text [type]`
 
 Adds examples to the provided request body.
 
 **One line example**:
 
-`# @request_body_example A complete User. [Hash] {user: {name: 'Luis', age: 30, password: 'MyWeakPassword123'}}`
+`# @request_body_example A complete User. [JSON{"user": {"name": 'Luis', "age": 30, "password": 'MyWeakPassword123'}}]`
 
 **Multi-line example**:
 
 ```ruby
-  # @request_body_example basic user [Hash]
-  #   {
-  #     user: {
-  #       name: "Oas",
-  #       email: "oas@test.com",
-  #       password: "Test12345"
+  # @request_body_example basic user
+  #   [JSON{
+  #       "user": {
+  #         "name": "Oas",
+  #         "email": "oas@test.com",
+  #         "password": "Test12345"
+  #       }
   #     }
-  #   }
+  #   ]
 ```
+
+**It should be valid JSON; don't forget that keys must be enclosed in quotes ("").**
 
 
 # @response
@@ -594,33 +816,89 @@ Documents the responses of the endpoint and overrides the default responses foun
   #   ]
 ```
 
+### Reference
+
+This tag also supports a reference for its schema. The reference can be to anything you want, external or internal resources, following the definition of OAS <https://spec.openapis.org/oas/v3.1.0.html#schema-object>.
+
+The reference should be passed like this:
+
+```
+# @response User not found by the provided Id(404) [Reference:#/components/schema/errorResponse]
+```
+
+Notice that the reference here **is for the schema and not for the entire response**. If you need to reference the complete response, consider using `@response_ref`.
+
+
+# @response_ref
+
+**Structure**: `@response_ref (code) text`
+
+Document a response using a custom reference. This tag allows you to reference predefined responses or external resources, making your API documentation more modular and reusable.
+
+### Usage
+
+- **`code`**: The HTTP status code for the response (e.g., `200`, `404`, `500`).
+- **`text`**: A reference to the response definition. This can be:
+  - An internal reference (e.g., `#/components/responses/success`).
+  - An external URL (e.g., `https://example.com/responses/not_found`).
+
+### Examples
+
+1. **Internal Reference**:
+
+   ```markdown
+   # @response_ref (200) #/components/responses/success
+   ```
+
+   This references a predefined success response in your OpenAPI components.
+
+2. **Error Response**:
+
+   ```markdown
+   # @response_ref (500) #/components/responses/error
+   ```
+
+   This references a predefined error response in your OpenAPI components.
+
+3. **External Resource**:
+
+   ```markdown
+   # @response_ref (404) https://example.com/responses/not_found.json
+   ```
+
+   This references an external resource for a "Not Found" response, useful for shared documentation across services.
+
 
 # @response_example
 
-**Structure**: `@response_example text(code) [String Hash]`
+**Structure**: `@response_example text(code) [Type]`
 
 Documents response examples of the endpoint associated to a response code.
 
 **One line example**:
 
-`# @response_example Invalida Email(422) [{success: "false", errors: [{field: "email", type: "email", detail: ["Invalid email"]}] }]`
+`# @response_example Invalida Email(422) [JSON{"success": "false", "errors": [{"field": "email", "type": "email", "detail": ["Invalid email"]}] }]`
 
-`# @response_example Id not exists (404) [{success: "false", message: "Nothing found with the provided ID." }]`
+`# @response_example Id not exists (404) [{"success": "false", "message": "Nothing found with the provided ID." }]`
 
 **Multi-line example**:
 
 ```ruby
-  # @response_example Another 405 Error (405) [Hash]
-  #   {
-  #     message: "another",
-  #     data: {
-  #       availabilities: [
-  #         "three"
-  #       ],
-  #       dates: []
+  # @response_example Another 405 Error (405)
+  #   [JSON{
+  #     {
+  #       "message": "another",
+  #       "data": {
+  #         "availabilities": [
+  #           "three"
+  #         ],
+  #         "dates": []
+  #       }
   #     }
-  #   }
+  #   }]
 ```
+
+**It should be valid JSON; don't forget that keys must be enclosed in quotes ("").**
 
 
 # @tags

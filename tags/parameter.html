@@ -168,10 +168,16 @@
                     <main>
                         <h1 id="parameter"><a class="header" href="#parameter">@parameter</a></h1>
 <p><strong>Structure</strong>: <code>@parameter name(position) [type] text</code></p>
-<p>Represents a parameter for the endpoint. The position can be: <code>header</code>, <code>path</code>, <code>cookie</code>, or <code>query</code>. The type should be a valid Ruby class: <code>String</code>, <code>Integer</code>, <code>Array&lt;String&gt;</code>, etc. Add a <code>!</code> before the class to indicate a required parameter.</p>
-<p><strong>Examples</strong>:
-<code># @parameter page(query) [Integer] The page number.</code>
-<code># @parameter slug(path) [!String] Slug of the Project.</code></p>
+<p>Represents a parameter for the endpoint. The position can be one of the following: <code>header</code>, <code>path</code>, <code>cookie</code>, or <code>query</code>. The type should be a valid Ruby class, such as <code>String</code>, <code>Integer</code>, or <code>Array&lt;String&gt;</code>. Prefix the class with a <code>!</code> to indicate a required parameter.</p>
+<p><strong>Examples</strong>:</p>
+<p><code># @parameter page(query) [Integer] The page number.</code></p>
+<p><code># @parameter slug(path) [!String] The slug of the project.</code></p>
+<h3 id="reference"><a class="header" href="#reference">Reference</a></h3>
+<p>This tag also supports a reference for its schema. The reference can point to any external or internal resource, following the OpenAPI Specification (OAS) definition: <a href="https://spec.openapis.org/oas/v3.1.0.html#schema-object">https://spec.openapis.org/oas/v3.1.0.html#schema-object</a>.</p>
+<p>The reference should be formatted as follows:</p>
+<pre><code># @parameter page(query) [Reference:#/components/schema/pageQueryParam]
+</code></pre>
+<p>Note that the reference applies to the schema, not the entire parameter. To reference the complete parameter, use the <code>@parameter_ref</code> tag.</p>
 
                     </main>
 
@@ -181,7 +187,7 @@
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../tags/request_body.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../tags/parameter_ref.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -195,7 +201,7 @@
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../tags/request_body.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../tags/parameter_ref.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
