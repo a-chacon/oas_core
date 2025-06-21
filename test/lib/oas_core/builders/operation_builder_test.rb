@@ -59,6 +59,14 @@ module OasCore
           assert_empty operation.security
         end
       end
+
+      def test_from_oas_route_with_request_body
+        oas_route = FactoryBot.build(:oas_route, tags: [FactoryBot.build(:request_body_reference_tag)])
+        operation = @builder.from_oas_route(oas_route).build
+
+        assert operation.request_body
+        assert_equal '#/components/schemas/Example', operation.request_body.ref
+      end
     end
   end
 end

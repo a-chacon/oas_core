@@ -23,6 +23,10 @@ module OasCore
           @responses.add_response(response)
         end
 
+        oas_route.tags(:response_ref)&.each do |ref_tag|
+          @responses.add_reference_response(ref_tag.code, ref_tag.reference)
+        end
+
         self
       end
 

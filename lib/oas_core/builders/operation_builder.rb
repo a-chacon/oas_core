@@ -15,7 +15,7 @@ module OasCore
         @operation.tags = extract_tags(oas_route:)
         @operation.security = extract_security(oas_route:)
         @operation.parameters = ParametersBuilder.new(@specification).from_oas_route(oas_route).build
-        @operation.request_body = RequestBodyBuilder.new(@specification).from_oas_route(oas_route).reference
+        @operation.request_body = extract_request_body(oas_route)
         @operation.responses = ResponsesBuilder.new(@specification)
                                                .from_oas_route(oas_route)
                                                .add_default_responses(oas_route, !@operation.security.empty?).build
@@ -81,6 +81,14 @@ module OasCore
           update: 'Update',
           destroy: 'Delete'
         }.fetch(method.to_sym)
+      end
+
+      def extract_request_body(oas_route)
+        if (ref_tag = oas_route.tags(:request_body_ref).first)
+          ref_tag.reference
+        else
+          RequestBodyBuilder.new(@specification).from_oas_route(oas_route).reference
+        end
       end
     end
   end
