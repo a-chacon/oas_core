@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.0.0](https://github.com/a-chacon/oas_core/compare/oas_core/v0.5.3...oas_core/v1.0.0) (2025-06-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* support references for schemas of responses, request bodies and examples ([#19](https://github.com/a-chacon/oas_core/issues/19))
+
+### Features
+
+* Implement of reference tags ([@request](https://github.com/request)_body_ref, [@response](https://github.com/response)_ref, [@parameter](https://github.com/parameter)_ref) ([#20](https://github.com/a-chacon/oas_core/issues/20)) ([f9509e7](https://github.com/a-chacon/oas_core/commit/f9509e7f45bce2634cba81bdc8f759afdc4975ac))
+* support references for schemas of responses, request bodies and examples ([#19](https://github.com/a-chacon/oas_core/issues/19)) ([0b0cce7](https://github.com/a-chacon/oas_core/commit/0b0cce75abc142cb6cd529bca52517767177fa57))
+
+
+### Documentation
+
+* add oas_hanami to book ([5233231](https://github.com/a-chacon/oas_core/commit/52332312775654b3da972e6a785c361d980b1f5e))
+* **book:** add new tags, update old and new section of configuring oas source ([#22](https://github.com/a-chacon/oas_core/issues/22)) ([3a5db97](https://github.com/a-chacon/oas_core/commit/3a5db9786e1dfed9cae85583b2c9dc3cccfe34d4))
+* **readme:** update list of adapters ([6d37e47](https://github.com/a-chacon/oas_core/commit/6d37e4748ece2e36cb4574d398a117c08635ceef))
+
 ## [0.5.3](https://github.com/a-chacon/oas_core/compare/oas_core/v0.5.2...oas_core/v0.5.3) (2025-06-14)
 
 
