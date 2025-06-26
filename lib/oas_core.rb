@@ -3,7 +3,7 @@
 require 'yard'
 require 'method_source'
 require 'active_support/all'
-require 'deep_merge'
+require 'deep_merge/rails_compat'
 
 module OasCore
   require 'oas_core/version'
@@ -98,7 +98,7 @@ module OasCore
     def build(oas_routes, oas_source: {})
       oas = Builders::SpecificationBuilder.new.with_oas_routes(oas_routes).build.to_spec
 
-      oas_source.deep_merge(oas, merge_hash_arrays: true, extend_existing_arrays: true)
+      oas_source.deeper_merge(oas, merge_hash_arrays: true, extend_existing_arrays: true)
     end
   end
 end
