@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/a-chacon/oas_core/compare/oas_core/v1.0.0...oas_core/v1.0.1) (2025-06-27)
+
+
+### Bug Fixes
+
+* Use rails compatible deep_merge version to prevent conflicts ([#23](https://github.com/a-chacon/oas_core/issues/23)) ([b6fb653](https://github.com/a-chacon/oas_core/commit/b6fb653dadc9d3769b7ba7e3aad373902f4d4ecf))
+
 ## [1.0.0](https://github.com/a-chacon/oas_core/compare/oas_core/v0.5.3...oas_core/v1.0.0) (2025-06-21)
 
 
