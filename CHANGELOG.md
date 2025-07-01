@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/a-chacon/oas_core/compare/oas_core/v1.0.1...oas_core/v1.0.2) (2025-07-01)
+
+
+### Documentation
+
+* **book:** update oas hanami documentation after bump to version1 ([#25](https://github.com/a-chacon/oas_core/issues/25)) ([408f98e](https://github.com/a-chacon/oas_core/commit/408f98eaf3230d37a3bcd926e193136e0bba8cb6))
+
 ## [1.0.1](https://github.com/a-chacon/oas_core/compare/oas_core/v1.0.0...oas_core/v1.0.1) (2025-06-27)
 
 
