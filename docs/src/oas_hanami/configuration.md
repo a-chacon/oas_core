@@ -1,12 +1,19 @@
 # Configuring OasHanami
 
-To configure OasHanami, you need to create an initializer file including all your settings. The first step is to create your initializer file like this:
+To configure OasHanami, according to the [official documentation](https://guides.hanamirb.org/v2.1/app/providers/), you need to create a provider file that includes all your settings. The first step is to create your initializer file as follows:
 
 ```ruby
-# config/initializers/oas_hanami.rb
-OasHanami.configure do |config|
-  config.info.title = 'Amazing Hanami API'
-  # Others configurations here...
+# config/providers/oas_hanami.rb
+Hanami.app.register_provider(:oas_hanami) do
+  prepare do
+    require "oas_hanami"
+  end
+
+  start do
+    OasHanami.configure do |config|
+      config.info.title = "Amazing Hanami API"
+    end
+  end
 end
 ```
 
