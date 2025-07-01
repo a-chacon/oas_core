@@ -15,6 +15,7 @@
 - [OasHanami](oas_hanami/README.md)
   - [Installation](oas_hanami/installation.md)
   - [Configuration](oas_hanami/configuration.md)
+    - [Configure Source OAS](oas_hanami/configuration/configure_source_oas.md)
 
 # Usage
 
