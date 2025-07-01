@@ -556,11 +556,18 @@ run Hanami.app
 </ol>
 <p>You'll now have <strong>basic documentation</strong> based on your routes and automatically gathered information at <code>localhost:2300/docs</code>. To enhance it, create an initializer file and add <a href="https://yardoc.org/">Yard</a> tags to your controller methods.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="configuring-oashanami"><a class="header" href="#configuring-oashanami">Configuring OasHanami</a></h1>
-<p>To configure OasHanami, you need to create an initializer file including all your settings. The first step is to create your initializer file like this:</p>
-<pre><code class="language-ruby"># config/initializers/oas_hanami.rb
-OasHanami.configure do |config|
-  config.info.title = 'Amazing Hanami API'
-  # Others configurations here...
+<p>To configure OasHanami, according to the <a href="https://guides.hanamirb.org/v2.1/app/providers/">official documentation</a>, you need to create a provider file that includes all your settings. The first step is to create your initializer file as follows:</p>
+<pre><code class="language-ruby"># config/providers/oas_hanami.rb
+Hanami.app.register_provider(:oas_hanami) do
+  prepare do
+    require "oas_hanami"
+  end
+
+  start do
+    OasHanami.configure do |config|
+      config.info.title = "Amazing Hanami API"
+    end
+  end
 end
 </code></pre>
 <p>Then fill it with your data. Below are the available configuration options:</p>
@@ -663,6 +670,78 @@ end
 <p><code>config.info.license.url</code>: The URL to the full license text. Default: <a href="https://www.gnu.org/licenses/gpl-3.0.html#license-text">https://www.gnu.org/licenses/gpl-3.0.html#license-text</a></p>
 </li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="configuring-the-source-oas-1"><a class="header" href="#configuring-the-source-oas-1">Configuring the Source OAS</a></h1>
+<p>For more complex scenarios, it is highly recommended to use a <strong>source OAS (OpenAPI Specification)</strong> file. This file serves as a centralized repository for reusable objects (such as schemas, request bodies, parameters, and responses) that can be referenced across your API documentation. This approach promotes consistency and reduces redundancy.</p>
+<h2 id="basic-configuration-1"><a class="header" href="#basic-configuration-1">Basic Configuration</a></h2>
+<p>To set up a source OAS file, configure the path in your <code>OasHanami</code> configuration block:</p>
+<pre><code class="language-ruby">OasHanami.configure do |config|
+  config.source_oas_path = "lib/oas.json" # Path to your source OAS file
+end
+</code></pre>
+<h2 id="example-source-oas-file-1"><a class="header" href="#example-source-oas-file-1">Example Source OAS File</a></h2>
+<p>Below is an example of an <code>oas.json</code> file containing reusable components, such as a <code>User</code> schema:</p>
+<pre><code class="language-json">{
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The user's full name"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "The user's email address"
+          },
+          "age": {
+            "type": "integer",
+            "description": "The user's age",
+            "minimum": 0
+          },
+          "password": {
+            "type": "string",
+            "description": "The user's password",
+            "minLength": 6
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "example": {
+          "name": "John Doe",
+          "email": "john.doe@example.com",
+          "age": 30,
+          "password": "securepassword123"
+        }
+      }
+    },
+    "requestBodies": { ... },
+    "parameters": { ... },
+    ...
+  }
+}
+</code></pre>
+<h2 id="referencing-reusable-components-1"><a class="header" href="#referencing-reusable-components-1">Referencing Reusable Components</a></h2>
+<p>Once your source OAS file is configured, you can reference its components in your API documentation tags. For example, to reference the <code>User</code> schema in a response:</p>
+<pre><code class="language-markdown"># @response Created User (200) [Reference:#/components/schemas/User]
+</code></pre>
+<h3 id="key-benefits-1"><a class="header" href="#key-benefits-1">Key Benefits</a></h3>
+<ol>
+<li><strong>Consistency</strong>: Ensures uniformity across your API documentation.</li>
+<li><strong>Reusability</strong>: Eliminates duplication by centralizing common objects.</li>
+<li><strong>Maintainability</strong>: Simplifies updates, as changes to the source OAS propagate automatically to all references.</li>
+</ol>
+<h3 id="supported-references-1"><a class="header" href="#supported-references-1">Supported References</a></h3>
+<p>You can reference the <strong>schemas</strong> of <strong>request bodies, responses, and parameters</strong> using the main tag. For example:</p>
+<pre><code class="language-markdown"># @request_body Required User [Reference:#/components/schemas/User]
+</code></pre>
+<p>Alternatively, you can <strong>reference the entire request body, response, or parameter</strong> using the reference tags:</p>
+<pre><code class="language-markdown"># @request_body_ref #/components/requestBodies/createUser
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="tags"><a class="header" href="#tags">Tags</a></h1>
 <p>In addition to the information provided in the initializer file and the data that can be extracted from the routes and methods automatically, it is essential to document your API in the following way. The documentation is created <strong>with the help of YARD</strong>, so the methods are documented with <strong>comment tags</strong>.</p>
 <h2 id="documenting-your-endpoints"><a class="header" href="#documenting-your-endpoints">Documenting Your Endpoints</a></h2>
