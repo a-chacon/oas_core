@@ -31,7 +31,7 @@ module OasCore
 
       def extract_summary(oas_route:)
         summary_tag = oas_route.tags(:summary).first
-        summary_tag&.text || generate_crud_name(oas_route.method_name) || "#{oas_route.verb} #{oas_route.path}"
+        summary_tag&.text || generate_crud_name(oas_route.method_name)
       end
 
       def extract_operation_id(oas_route:)
@@ -81,6 +81,8 @@ module OasCore
           update: 'Update',
           destroy: 'Delete'
         }.fetch(method.to_sym)
+      rescue KeyError
+        raise OasCore::Errors::BuilderError, "Please add summary tag for custom method '#{method}'"
       end
 
       def extract_request_body(oas_route)

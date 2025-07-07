@@ -24,6 +24,15 @@ module OasCore
         assert_equal 'View', operation.summary
       end
 
+      def test_from_oas_route_without_summary_tag_and_custom_action_raises_exception
+        oas_route = FactoryBot.build(:oas_route, method_name: 'download', tags: [])
+        exception = assert_raises(OasCore::Errors::BuilderError) do
+          @builder.from_oas_route(oas_route).build
+        end
+
+        assert_equal "Please add summary tag for custom method '#{oas_route.method_name}'", exception.message
+      end
+
       def test_from_oas_route_with_tags_tag
         oas_route = FactoryBot.build(:oas_route, tags: [FactoryBot.build(:tag, tag_name: 'tags', text: 'tag1, tag2')])
         operation = @builder.from_oas_route(oas_route).build

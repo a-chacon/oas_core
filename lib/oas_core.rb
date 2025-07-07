@@ -13,6 +13,10 @@ module OasCore
   autoload :Utils, 'oas_core/utils'
   autoload :JsonSchemaGenerator, 'oas_core/json_schema_generator'
 
+  module Errors
+    class BuilderError < StandardError; end
+  end
+
   module Builders
     autoload :OperationBuilder, 'oas_core/builders/operation_builder'
     autoload :PathItemBuilder, 'oas_core/builders/path_item_builder'
