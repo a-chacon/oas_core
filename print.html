@@ -37,6 +37,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc.js"></script>
@@ -93,10 +94,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -147,7 +151,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -861,6 +870,10 @@ end
   #     }
   #   ]
 </code></pre>
+<h4 id="content-type"><a class="header" href="#content-type">Content type</a></h4>
+<p>By default, the content type defined for a request body is "application/json". You can change it by passing a custom content type between parentheses after the text. Example:</p>
+<pre><code class="language-ruby"># @request_body User (multipart/form-data) [Hash{ user: String }]
+</code></pre>
 <h3 id="reference-1"><a class="header" href="#reference-1">Reference</a></h3>
 <p>This tag also supports a reference for its schema. The reference can be to anything you want, external or internal resources, following the definition of OAS <a href="https://spec.openapis.org/oas/v3.1.0.html#schema-object">https://spec.openapis.org/oas/v3.1.0.html#schema-object</a>.</p>
 <p>The reference should be passed like this:</p>
@@ -1161,6 +1174,7 @@ end
             window.setTimeout(window.print, 100);
         });
         </script>
+
 
     </div>
     </body>
