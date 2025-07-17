@@ -30,6 +30,14 @@ Documents the request body needed by the endpoint. The structure is optional if 
   #   ]
 ```
 
+#### Content type
+
+By default, the content type defined for a request body is "application/json". You can change it by passing a custom content type between parentheses after the text. Example:
+
+```ruby
+# @request_body User (multipart/form-data) [Hash{ user: String }]
+```
+
 ### Reference
 
 This tag also supports a reference for its schema. The reference can be to anything you want, external or internal resources, following the definition of OAS <https://spec.openapis.org/oas/v3.1.0.html#schema-object>.
