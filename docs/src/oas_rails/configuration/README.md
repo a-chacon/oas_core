@@ -74,6 +74,18 @@ Then fill it with your data. Below are the available configuration options:
   config.api_path = "/api"
   ```
 
+- `config.rapidoc_configuration`: expects to be set as a string key => value hash. It is merged with defaults which can be found in [the OAsRailsHelper](https://github.com/a-chacon/oas_rails/blob/main/app/helpers/oas_rails/oas_rails_helper.rb). Any duplicate keys will override these. Refer to Rapidocs for any others.
+
+  ```ruby
+  config.rapidoc_configuration = {"show-header" => "true"}
+  ```
+
+- `config.rapidoc_logo_url`: expects a string, it is used as a source for an img tag so any valid img tag source should work.
+
+  ```ruby
+  config.rapidoc_logo_url = "/assets/some_random_image.png"
+  ```
+
 - `config.ignored_actions`: Defines an array of controller or controller#action pairs. You do not need to prepend the `api_path`. This is useful when you want to include all routes except a few specific actions or when an external engine (e.g., Devise) adds routes to your API.
 
 - `config.default_tags_from`: Determines the source of default tags for operations. Can be set to `:namespace` or `:controller`. The first option means that if your endpoint is in the route `/users/:id`, it will be tagged with `Users`. If set to `controller`, the tag will be `UsersController`.
