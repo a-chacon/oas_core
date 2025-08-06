@@ -29,7 +29,7 @@ You can customize the appearance of the OAS documentation UI by setting the `con
 
 #### How to Configure the Theme
 
-To change the theme, add the following line to your `config/initializers/oas_core.rb` file:
+To change the theme, add the following line to your `config/initializers/oas_rails.rb` file:
 
 ```ruby
 OasRails.configure do |config|
@@ -43,7 +43,7 @@ Any other modification will require that you overwrite the index view explained 
 
 To override the `index` view provided by the OasRails engine, follow these steps:
 
-1. **Create the Override View File**: In your host application, create a new file at the path `app/views/oas_core/oas_core/index.html.erb`. If the directories do not exist, you will need to create them.
+1. **Create the Override View File**: In your host application, create a new file at the path `app/views/oas_rails/oas_rails/index.html.erb`. If the directories do not exist, you will need to create them.
 
 2. **Customize the View**: Open the newly created `index.html.erb` file and add your custom HTML and ERB code to display the OAS as desired. You can refer to the source code of this project for guidance.
 
