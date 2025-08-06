@@ -74,13 +74,13 @@ Then fill it with your data. Below are the available configuration options:
   config.api_path = "/api"
   ```
 
-- `config.rapidoc_configuration`: expects to be set as a string key => value hash. It is merged with defaults which can be found in [the OAsRailsHelper](https://github.com/a-chacon/oas_rails/blob/main/app/helpers/oas_rails/oas_rails_helper.rb). Any duplicate keys will override these. Refer to Rapidocs for any others.
+- `config.rapidoc_configuration`: expects to be set as a string key => value hash. It is merged with defaults which can be found in [the OAsRailsHelper](https://github.com/a-chacon/oas_rails/blob/main/app/helpers/oas_rails/oas_rails_helper.rb). Any duplicate keys will override these. Refer to Rapidocs for any others. Defaults to `{}`
 
   ```ruby
   config.rapidoc_configuration = {"show-header" => "true"}
   ```
 
-- `config.rapidoc_logo_url`: expects a string, it is used as a source for an img tag so any valid img tag source should work.
+- `config.rapidoc_logo_url`: expects a string, it is used as a source for an img tag so any valid img tag source should work. Defaults to `nil`
 
   ```ruby
   config.rapidoc_logo_url = "/assets/some_random_image.png"
