@@ -286,6 +286,16 @@ end
 </code></pre>
 </li>
 <li>
+<p><code>config.rapidoc_configuration</code>: expects to be set as a string key =&gt; value hash. It is merged with defaults which can be found in <a href="https://github.com/a-chacon/oas_rails/blob/main/app/helpers/oas_rails/oas_rails_helper.rb">the OAsRailsHelper</a>. Any duplicate keys will override these. Refer to Rapidocs for any others. Defaults to <code>{}</code></p>
+<pre><code class="language-ruby">config.rapidoc_configuration = {"show-header" =&gt; "true"}
+</code></pre>
+</li>
+<li>
+<p><code>config.rapidoc_logo_url</code>: expects a string, it is used as a source for an img tag so any valid img tag source should work. Defaults to <code>nil</code></p>
+<pre><code class="language-ruby">config.rapidoc_logo_url = "/assets/some_random_image.png"
+</code></pre>
+</li>
+<li>
 <p><code>config.ignored_actions</code>: Defines an array of controller or controller#action pairs. You do not need to prepend the <code>api_path</code>. This is useful when you want to include all routes except a few specific actions or when an external engine (e.g., Devise) adds routes to your API.</p>
 </li>
 <li>
@@ -442,7 +452,7 @@ end
 <li><strong>rails</strong>: Default theme with Rails-inspired colors (red accents).</li>
 </ul>
 <h4 id="how-to-configure-the-theme"><a class="header" href="#how-to-configure-the-theme">How to Configure the Theme</a></h4>
-<p>To change the theme, add the following line to your <code>config/initializers/oas_core.rb</code> file:</p>
+<p>To change the theme, add the following line to your <code>config/initializers/oas_rails.rb</code> file:</p>
 <pre><code class="language-ruby">OasRails.configure do |config|
   config.rapidoc_theme = "dark" # Replace "dark" with your preferred theme name
 end
@@ -452,7 +462,7 @@ end
 <p>To override the <code>index</code> view provided by the OasRails engine, follow these steps:</p>
 <ol>
 <li>
-<p><strong>Create the Override View File</strong>: In your host application, create a new file at the path <code>app/views/oas_core/oas_core/index.html.erb</code>. If the directories do not exist, you will need to create them.</p>
+<p><strong>Create the Override View File</strong>: In your host application, create a new file at the path <code>app/views/oas_rails/oas_rails/index.html.erb</code>. If the directories do not exist, you will need to create them.</p>
 </li>
 <li>
 <p><strong>Customize the View</strong>: Open the newly created <code>index.html.erb</code> file and add your custom HTML and ERB code to display the OAS as desired. You can refer to the source code of this project for guidance.</p>

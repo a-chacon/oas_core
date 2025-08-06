@@ -201,7 +201,7 @@
 <li><strong>rails</strong>: Default theme with Rails-inspired colors (red accents).</li>
 </ul>
 <h4 id="how-to-configure-the-theme"><a class="header" href="#how-to-configure-the-theme">How to Configure the Theme</a></h4>
-<p>To change the theme, add the following line to your <code>config/initializers/oas_core.rb</code> file:</p>
+<p>To change the theme, add the following line to your <code>config/initializers/oas_rails.rb</code> file:</p>
 <pre><code class="language-ruby">OasRails.configure do |config|
   config.rapidoc_theme = "dark" # Replace "dark" with your preferred theme name
 end
@@ -211,7 +211,7 @@ end
 <p>To override the <code>index</code> view provided by the OasRails engine, follow these steps:</p>
 <ol>
 <li>
-<p><strong>Create the Override View File</strong>: In your host application, create a new file at the path <code>app/views/oas_core/oas_core/index.html.erb</code>. If the directories do not exist, you will need to create them.</p>
+<p><strong>Create the Override View File</strong>: In your host application, create a new file at the path <code>app/views/oas_rails/oas_rails/index.html.erb</code>. If the directories do not exist, you will need to create them.</p>
 </li>
 <li>
 <p><strong>Customize the View</strong>: Open the newly created <code>index.html.erb</code> file and add your custom HTML and ERB code to display the OAS as desired. You can refer to the source code of this project for guidance.</p>

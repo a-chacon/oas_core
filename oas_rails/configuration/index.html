@@ -246,6 +246,16 @@ end
 </code></pre>
 </li>
 <li>
+<p><code>config.rapidoc_configuration</code>: expects to be set as a string key =&gt; value hash. It is merged with defaults which can be found in <a href="https://github.com/a-chacon/oas_rails/blob/main/app/helpers/oas_rails/oas_rails_helper.rb">the OAsRailsHelper</a>. Any duplicate keys will override these. Refer to Rapidocs for any others. Defaults to <code>{}</code></p>
+<pre><code class="language-ruby">config.rapidoc_configuration = {"show-header" =&gt; "true"}
+</code></pre>
+</li>
+<li>
+<p><code>config.rapidoc_logo_url</code>: expects a string, it is used as a source for an img tag so any valid img tag source should work. Defaults to <code>nil</code></p>
+<pre><code class="language-ruby">config.rapidoc_logo_url = "/assets/some_random_image.png"
+</code></pre>
+</li>
+<li>
 <p><code>config.ignored_actions</code>: Defines an array of controller or controller#action pairs. You do not need to prepend the <code>api_path</code>. This is useful when you want to include all routes except a few specific actions or when an external engine (e.g., Devise) adds routes to your API.</p>
 </li>
 <li>
