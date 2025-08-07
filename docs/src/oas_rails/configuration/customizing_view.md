@@ -47,6 +47,14 @@ To override the `index` view provided by the OasRails engine, follow these steps
 
 2. **Customize the View**: Open the newly created `index.html.erb` file and add your custom HTML and ERB code to display the OAS as desired. You can refer to the source code of this project for guidance.
 
+### Overriding/Adding rapid-doc inline styles
+
+To override styles in rapidoc we can use [parts](https://rapidocweb.com/css-parts.html).
+
+If you do not override the default index then there is a partial available for override `app/views/oas_rails/oas_rails/_rapidoc_style_parts.html.erb`.
+
+Please see its [default for a starting point](https://github.com/a-chacon/oas_rails/blob/main/app/views/oas_rails/oas_rails/_rapidoc_style_parts.html.erb).
+
 #### Using the Custom View
 
 Once the custom view file is in place, Rails will automatically use it instead of the view provided by the OasRails engine. This allows you to fully customize the presentation of the OAS without modifying the engine's code.
