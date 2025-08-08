@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.0](https://github.com/a-chacon/oas_core/compare/oas_core/v1.1.0...oas_core/v1.2.0) (2025-08-08)
+
+
+### Features
+
+* add support for keywords in parameters (ex: default) ([#36](https://github.com/a-chacon/oas_core/issues/36)) ([3b2aa01](https://github.com/a-chacon/oas_core/commit/3b2aa01e3bd8ff65e676b8459b51622b3429e6c1))
+
+
+### Documentation
+
+* add docs for new partial ([#35](https://github.com/a-chacon/oas_core/issues/35)) ([5f24151](https://github.com/a-chacon/oas_core/commit/5f241517d8555078e4908dd0c833f37a6b65e9b6))
+* add docs for oas rails 157 ([#34](https://github.com/a-chacon/oas_core/issues/34)) ([11773b9](https://github.com/a-chacon/oas_core/commit/11773b9f4b805204dacb7ac213d9f39080118ffb))
+* **book:** add content type option to request_body tag ([#32](https://github.com/a-chacon/oas_core/issues/32)) ([aa6ddc2](https://github.com/a-chacon/oas_core/commit/aa6ddc2b420f39f7c0d7f4635b6204ff7c7f33ce))
+
 ## [1.1.0](https://github.com/a-chacon/oas_core/compare/oas_core/v1.0.1...oas_core/v1.1.0) (2025-07-07)
 
 
