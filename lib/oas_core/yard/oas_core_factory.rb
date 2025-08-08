@@ -49,6 +49,8 @@ module OasCore
         raw_type, required = text_and_required(second)
         schema = raw_type_to_content(raw_type)
         name = "#{name}[]" if location == 'query' && schema[:type] == 'array'
+        description, schema_keywords = extract_schema_keywords(description)
+        schema.merge!(schema_keywords)
 
         ParameterTag.new(tag_name, name, description.strip, schema, location, required:)
       rescue StandardError => e
@@ -200,6 +202,37 @@ module OasCore
         else
           [text.strip, nil]
         end
+      end
+
+      # Only allows keywords defined in the OpenAPI 3.0 specification for parameter schemas.
+      # @param text [String] The text to parse.
+      # @return [Array] An array containing the cleaned description and a hash of extracted keywords.
+      def extract_schema_keywords(text)
+        allowed_keywords = %i[
+          default minimum maximum enum format pattern multipleOf
+          exclusiveMinimum exclusiveMax minLength maxLength nullable
+        ].freeze
+
+        keywords = {}
+        cleaned_text = text.dup
+
+        text.scan(/(\w+):\s*\(([^)]+)\)/) do |keyword, value|
+          keyword_sym = keyword.to_sym
+          if allowed_keywords.include?(keyword_sym)
+            parsed_value = case keyword_sym
+                           when :nullable, :exclusiveMinimum, :exclusiveMaximum
+                             value.strip.downcase == 'true'
+                           when :enum
+                             value.strip.split(/\s*,\s*/)
+                           else
+                             value.strip
+                           end
+            keywords[keyword_sym] = parsed_value
+            cleaned_text.sub!(/#{keyword}:\s*\([^)]+\)/, '')
+          end
+        end
+
+        [cleaned_text.strip, keywords]
       end
     end
   end
