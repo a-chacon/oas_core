@@ -176,17 +176,51 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="parameter"><a class="header" href="#parameter">@parameter</a></h1>
-<p><strong>Structure</strong>: <code>@parameter name(position) [type] text</code></p>
+<p><strong>Structure</strong>: <code>@parameter name(position) [type] text [keyword: (value)]</code></p>
 <p>Represents a parameter for the endpoint. The position can be one of the following: <code>header</code>, <code>path</code>, <code>cookie</code>, or <code>query</code>. The type should be a valid Ruby class, such as <code>String</code>, <code>Integer</code>, or <code>Array&lt;String&gt;</code>. Prefix the class with a <code>!</code> to indicate a required parameter.</p>
+<h3 id="supported-keywords-in-descriptions"><a class="header" href="#supported-keywords-in-descriptions">Supported Keywords in Descriptions</a></h3>
+<p>You can include additional schema keywords in the description using the format <code>keyword: (value)</code>. The following keywords are supported:</p>
+<ul>
+<li><strong><code>default</code></strong>: The default value for the parameter.<br />
+Example: <code>default: (1)</code></li>
+<li><strong><code>minimum</code></strong>: The minimum value for numeric parameters.<br />
+Example: <code>minimum: (0)</code></li>
+<li><strong><code>maximum</code></strong>: The maximum value for numeric parameters.<br />
+Example: <code>maximum: (100)</code></li>
+<li><strong><code>enum</code></strong>: A comma-separated list of allowed values.<br />
+Example: <code>enum: (red,green,blue)</code></li>
+<li><strong><code>format</code></strong>: The format of the parameter (e.g., <code>date</code>, <code>uuid</code>).<br />
+Example: <code>format: (uuid)</code></li>
+<li><strong><code>pattern</code></strong>: A regex pattern for string validation.<br />
+Example: <code>pattern: (^[A-Za-z]+$)</code></li>
+<li><strong><code>nullable</code></strong>: Whether the parameter can be <code>null</code> (<code>true</code> or <code>false</code>).<br />
+Example: <code>nullable: (true)</code></li>
+<li><strong><code>exclusiveMinimum</code></strong>: Whether the <code>minimum</code> is exclusive (<code>true</code> or <code>false</code>).<br />
+Example: <code>exclusiveMinimum: (true)</code></li>
+<li><strong><code>exclusiveMaximum</code></strong>: Whether the <code>maximum</code> is exclusive (<code>true</code> or <code>false</code>).<br />
+Example: <code>exclusiveMaximum: (false)</code></li>
+<li><strong><code>minLength</code></strong>: The minimum length for string parameters.<br />
+Example: <code>minLength: (3)</code></li>
+<li><strong><code>maxLength</code></strong>: The maximum length for string parameters.<br />
+Example: <code>maxLength: (50)</code></li>
+</ul>
 <p><strong>Examples</strong>:</p>
-<p><code># @parameter page(query) [Integer] The page number.</code></p>
-<p><code># @parameter slug(path) [!String] The slug of the project.</code></p>
-<h3 id="reference"><a class="header" href="#reference">Reference</a></h3>
-<p>This tag also supports a reference for its schema. The reference can point to any external or internal resource, following the OpenAPI Specification (OAS) definition: <a href="https://spec.openapis.org/oas/v3.1.0.html#schema-object">https://spec.openapis.org/oas/v3.1.0.html#schema-object</a>.</p>
-<p>The reference should be formatted as follows:</p>
-<pre><code># @parameter page(query) [Reference:#/components/schema/pageQueryParam]
+<pre><code class="language-ruby"># Basic usage
+# @parameter page(query) [!Integer] The page number. default: (1) minimum: (0)
+
+# Enum and nullable
+# @parameter color(query) [String] The color of the item. enum: (red,green,blue) nullable: (true)
+
+# String validation
+# @parameter username(path) [String] The username. pattern: (^[A-Za-z0-9_]+$), minLength: (3), maxLength: (20)
+
 </code></pre>
-<p>Note that the reference applies to the schema, not the entire parameter. To reference the complete parameter, use the <code>@parameter_ref</code> tag.</p>
+<h2 id="from-swagger-docs-common-mistakes"><a class="header" href="#from-swagger-docs-common-mistakes">From Swagger docs: Common Mistakes</a></h2>
+<p>There are two common mistakes when using the default keyword:</p>
+<ul>
+<li>Using default with required parameters or properties, for example, with path parameters. This does not make sense – if a value is required, the client must always send it, and the default value is never used.</li>
+<li>Using default to specify a sample value. This is not intended use of default and can lead to unexpected behavior in some Swagger tools. Use the example or examples keyword for this purpose instead. See Adding Examples.</li>
+</ul>
 
                     </main>
 
