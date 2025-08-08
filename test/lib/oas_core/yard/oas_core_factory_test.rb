@@ -64,7 +64,7 @@ module OasCore
       end
 
       def test_parse_tag_with_parameter_returns_parameter_tag_with_all_attributes
-        text = 'id(path) [!Integer] The user ID'
+        text = 'id(path) [!Integer] The user ID default: (1) minimum: (0) enum: (1,2,3,4,5) nullable: (true)'
         tag = @factory.parse_tag_with_parameter('parameter', text)
 
         assert_instance_of ParameterTag, tag
@@ -74,7 +74,7 @@ module OasCore
         assert_equal 'path', tag.location
         assert_equal true, tag.required
         assert_nil tag.types
-        assert_equal({ type: 'integer' }, tag.schema)
+        assert_equal({ type: 'integer', default: '1', minimum: '0', enum: %w[1 2 3 4 5], nullable: true }, tag.schema)
       end
 
       def test_parse_tag_with_parameter_appends_brackets_to_query_array_parameters
