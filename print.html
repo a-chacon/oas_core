@@ -468,6 +468,10 @@ end
 <p><strong>Customize the View</strong>: Open the newly created <code>index.html.erb</code> file and add your custom HTML and ERB code to display the OAS as desired. You can refer to the source code of this project for guidance.</p>
 </li>
 </ol>
+<h3 id="overridingadding-rapid-doc-inline-styles"><a class="header" href="#overridingadding-rapid-doc-inline-styles">Overriding/Adding rapid-doc inline styles</a></h3>
+<p>To override styles in rapidoc we can use <a href="https://rapidocweb.com/css-parts.html">parts</a>.</p>
+<p>If you do not override the default index then there is a partial available for override <code>app/views/oas_rails/oas_rails/_rapidoc_style_parts.html.erb</code>.</p>
+<p>Please see its <a href="https://github.com/a-chacon/oas_rails/blob/main/app/views/oas_rails/oas_rails/_rapidoc_style_parts.html.erb">default for a starting point</a>.</p>
 <h4 id="using-the-custom-view"><a class="header" href="#using-the-custom-view">Using the Custom View</a></h4>
 <p>Once the custom view file is in place, Rails will automatically use it instead of the view provided by the OasRails engine. This allows you to fully customize the presentation of the OAS without modifying the engine's code.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="configuring-the-source-oas"><a class="header" href="#configuring-the-source-oas">Configuring the Source OAS</a></h1>
