@@ -165,6 +165,30 @@ module OasCore
         assert_equal '#/components/responses/one', tag.reference.ref
         assert_equal 405, tag.code
       end
+
+      def test_parse_tag_with_request_body_with_file
+        text = 'Upload a file(multipart/form-data) [!Hash{ book: Hash{force_create_users: Boolean, import_file: File}}]'
+
+        request_body = @factory.parse_tag_with_request_body('request_body', text)
+
+        assert request_body.is_a?(RequestBodyTag)
+        assert_equal 'Upload a file', request_body.text
+        assert_equal 'multipart/form-data', request_body.content_type
+        assert_equal (
+          {
+            type: 'object',
+            properties: {
+              book: {
+                type: 'object',
+                properties: {
+                  force_create_users: { type: 'boolean' },
+                  import_file: { type: 'string', format: 'binary' }
+                }
+              }
+            }
+          }
+        ), request_body.content
+      end
     end
   end
 end

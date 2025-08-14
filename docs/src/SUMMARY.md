@@ -17,6 +17,10 @@
   - [Configuration](oas_hanami/configuration.md)
     - [Configure Source OAS](oas_hanami/configuration/configure_source_oas.md)
 
+- [OasGrape](oas_grape/README.md)
+  - [Installation](oas_grape/installation.md)
+  - [Configuration](oas_grape/configuration.md)
+
 # Usage
 
 - [Tags](tags/README.md)
