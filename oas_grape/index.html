@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Installation - OasCore Documentation</title>
+        <title>OasGrape - OasCore Documentation</title>
 
 
         <!-- Custom HTML head -->
@@ -175,45 +175,44 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
-<ol>
-<li>
-<p>Add this line to your Hanami application's Gemfile:</p>
-<pre><code class="language-ruby">gem "oas_namai"`
+                        <h1 id="oasgrape"><a class="header" href="#oasgrape">OasGrape</a></h1>
+<p><strong>Please note that this implementation is not yet thoroughly tested and is in an early stage. If you encounter any issues or have suggestions, feel free to open a GitHub issue, pull request (PR), or discussion <a href="https://github.com/a-chacon/oas_grape">here</a>.</strong></p>
+<p>The usage can be a bit tricky. Unlike other frameworks, this cannot be implemented as a simple method comment because Grape does not use methods—only lambdas that are called and loaded once. As a result, live reloading of documentation does not work here.</p>
+<h2 id="usage"><a class="header" href="#usage">Usage</a></h2>
+<p>As mentioned earlier, the implementation in Grape differs from other frameworks. The tag comments must be placed inside the <code>detail</code> key of a <code>desc</code> block. Everything inside this key is parsed as a comment, and this is where the OAS YARD tags should be included.</p>
+<p>Example code:</p>
+<pre><code class="language-ruby">  desc "Returns a list of Users." do
+    detail &lt;&lt;~OAS_GRAPE
+      # @summary Returns a list of Users.
+      # @parameter offset(query) [Integer] Used for pagination of response data. default: (0) minimum: (0)
+      # @parameter limit(query) [Integer] Maximum number of items per page. default: (25) minimum: (1) maximum: (100)
+      # @parameter status(query) [Array&lt;String&gt;] Filter by status. enum: (active,inactive,deleted)
+      # @parameter X-front(header) [String] Header for identifying the front. minLength: (1) maxLength: (50)
+      # @response Success response(200) [Array&lt;Hash{ id: Integer}&gt;]
+      # @response_example Success(200)
+      #   [ JSON
+      #     [
+      #       { "id": 1, "name": "John", "email": "john@example.com" },
+      #       { "id": 2, "name": "Jane", "email": "jane@example.com" }
+      #     ]
+      #   ]
+      # @tags Users, Public
+    OAS_GRAPE
+  end
+  get do
+    { users: @@users }
+  end
 </code></pre>
-</li>
-<li>
-<p>Execute:</p>
-<pre><code class="language-bash">bundle
-</code></pre>
-</li>
-<li>
-<p>Mount the engine in your config/routes.rb file <strong>at the bottom of all routes</strong> to ensure it doesn't interfere with your application's routing:</p>
-<pre><code class="language-ruby"> mount OasHanami::Web::View, at: "/docs"
-</code></pre>
-</li>
-<li>
-<p><strong>The most important step:</strong> add the route inspector before starting the app.
-It can be do in your <code>config.ru</code> file:</p>
-<pre><code class="language-ruby">require "hanami/boot"
-
-Hanami.app.router(inspector: OasHanami::Inspector.new) # set before run the app.
-
-run Hanami.app
-</code></pre>
-</li>
-</ol>
-<p>You'll now have <strong>basic documentation</strong> based on your routes and automatically gathered information at <code>localhost:2300/docs</code>. To enhance it, create an initializer file and add <a href="https://yardoc.org/">Yard</a> tags to your controller methods.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../oas_hanami/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../oas_hanami/configuration/configure_source_oas.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../oas_hanami/configuration.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../oas_grape/installation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -223,11 +222,11 @@ run Hanami.app
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../oas_hanami/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../oas_hanami/configuration/configure_source_oas.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../oas_hanami/configuration.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../oas_grape/installation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

@@ -18,14 +18,23 @@
 - [Installation](oas_hanami/installation.md)
 - [Configuration](oas_hanami/configuration.md)
 
+## OasGrape
+
+- [OasGrape](oas_grape/index.md)
+- [Installation](oas_grape/installation.md)
+- [Configuration](oas_grape/configuration.md)
+
 ## Tags
 
 - [Tags](tags/index.md)
 - [@summary](tags/summary.md)
 - [@parameter](tags/parameter.md)
+- [@parameter_ref](tags/parameter_ref.md)
 - [@request_body](tags/request_body.md)
+- [@request_body_ref](tags/request_body_ref.md)
 - [@request_body_example](tags/request_body_example.md)
 - [@response](tags/response.md)
+- [@response_ref](tags/response_ref.md)
 - [@response_example](tags/response_example.md)
 - [@tags](tags/tags.md)
 - [@no_auth](tags/no_auth.md)

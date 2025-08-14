@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Installation - OasCore Documentation</title>
+        <title>@request_body_ref - OasCore Documentation</title>
 
 
         <!-- Custom HTML head -->
@@ -175,45 +175,43 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
+                        <h1 id="request_body_ref"><a class="header" href="#request_body_ref">@request_body_ref</a></h1>
+<p><strong>Structure</strong>: <code>@request_body_ref text</code></p>
+<p>Document a request body using a custom reference. This tag allows you to reference predefined request bodies or external resources, making your API documentation more modular and reusable.</p>
+<h3 id="usage"><a class="header" href="#usage">Usage</a></h3>
+<ul>
+<li><strong><code>text</code></strong>: A reference to the request body definition. This can be:
+<ul>
+<li>An internal reference (e.g., <code>#/components/requestBodies/user</code>).</li>
+<li>An external URL (e.g., <code>https://example.com/request_bodies/user.json</code>).</li>
+</ul>
+</li>
+</ul>
+<h3 id="examples"><a class="header" href="#examples">Examples</a></h3>
 <ol>
 <li>
-<p>Add this line to your Hanami application's Gemfile:</p>
-<pre><code class="language-ruby">gem "oas_namai"`
+<p><strong>Internal Reference</strong>:</p>
+<pre><code class="language-markdown"># @request_body_ref #/components/requestBodies/user
 </code></pre>
+<p>This references a predefined user request body in your OpenAPI components.</p>
 </li>
 <li>
-<p>Execute:</p>
-<pre><code class="language-bash">bundle
+<p><strong>External Resource</strong>:</p>
+<pre><code class="language-markdown"># @request_body_ref https://example.com/request_bodies/user.json
 </code></pre>
-</li>
-<li>
-<p>Mount the engine in your config/routes.rb file <strong>at the bottom of all routes</strong> to ensure it doesn't interfere with your application's routing:</p>
-<pre><code class="language-ruby"> mount OasHanami::Web::View, at: "/docs"
-</code></pre>
-</li>
-<li>
-<p><strong>The most important step:</strong> add the route inspector before starting the app.
-It can be do in your <code>config.ru</code> file:</p>
-<pre><code class="language-ruby">require "hanami/boot"
-
-Hanami.app.router(inspector: OasHanami::Inspector.new) # set before run the app.
-
-run Hanami.app
-</code></pre>
+<p>This references an external resource for a user request body, useful for shared documentation across services.</p>
 </li>
 </ol>
-<p>You'll now have <strong>basic documentation</strong> based on your routes and automatically gathered information at <code>localhost:2300/docs</code>. To enhance it, create an initializer file and add <a href="https://yardoc.org/">Yard</a> tags to your controller methods.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../oas_hanami/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../tags/request_body.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../oas_hanami/configuration.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../tags/request_body_example.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -223,11 +221,11 @@ run Hanami.app
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../oas_hanami/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../tags/request_body.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../oas_hanami/configuration.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../tags/request_body_example.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

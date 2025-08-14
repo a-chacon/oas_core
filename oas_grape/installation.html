@@ -176,44 +176,48 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
-<ol>
-<li>
-<p>Add this line to your Hanami application's Gemfile:</p>
-<pre><code class="language-ruby">gem "oas_namai"`
+<p>This guide will walk you through the steps to install and integrate the <code>oas_grape</code> gem into your Grape API project.</p>
+<h2 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h2>
+<ul>
+<li>A Ruby on Rails or Grape API project.</li>
+<li>Basic familiarity with Grape and OpenAPI Specification (OAS).</li>
+</ul>
+<h2 id="steps"><a class="header" href="#steps">Steps</a></h2>
+<h3 id="1-add-the-gem-to-your-project"><a class="header" href="#1-add-the-gem-to-your-project">1. Add the Gem to Your Project</a></h3>
+<p>Include the <code>oas_grape</code> gem in your <code>Gemfile</code>:</p>
+<pre><code class="language-ruby">gem 'oas_grape'
 </code></pre>
-</li>
-<li>
-<p>Execute:</p>
-<pre><code class="language-bash">bundle
-</code></pre>
-</li>
-<li>
-<p>Mount the engine in your config/routes.rb file <strong>at the bottom of all routes</strong> to ensure it doesn't interfere with your application's routing:</p>
-<pre><code class="language-ruby"> mount OasHanami::Web::View, at: "/docs"
-</code></pre>
-</li>
-<li>
-<p><strong>The most important step:</strong> add the route inspector before starting the app.
-It can be do in your <code>config.ru</code> file:</p>
-<pre><code class="language-ruby">require "hanami/boot"
+<p>Run <code>bundle install</code> to install the gem.</p>
+<h3 id="2-integrate-with-your-grape-api"><a class="header" href="#2-integrate-with-your-grape-api">2. Integrate with Your Grape API</a></h3>
+<p>In your main API file (e.g., <code>api.rb</code>), require the gem and mount the OAS documentation viewer:</p>
+<pre><code class="language-ruby">require "oas_grape"
 
-Hanami.app.router(inspector: OasHanami::Inspector.new) # set before run the app.
+module Dummy
+  class API &lt; Grape::API
+    format :json
 
-run Hanami.app
+    # Mount your API endpoints
+    mount Dummy::UsersAPI
+    mount Dummy::NotesAPI
+    # ... add other endpoints as needed
+
+    # Mount the OAS documentation viewer
+    mount OasGrape::Web::View, at: "/docs"
+  end
+end
 </code></pre>
-</li>
-</ol>
-<p>You'll now have <strong>basic documentation</strong> based on your routes and automatically gathered information at <code>localhost:2300/docs</code>. To enhance it, create an initializer file and add <a href="https://yardoc.org/">Yard</a> tags to your controller methods.</p>
+<h3 id="3-access-the-documentation"><a class="header" href="#3-access-the-documentation">3. Access the Documentation</a></h3>
+<p>After starting your server, navigate to <code>/docs</code> in your browser to view the interactive API documentation.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../oas_hanami/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../oas_grape/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../oas_hanami/configuration.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../oas_grape/configuration.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -223,11 +227,11 @@ run Hanami.app
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../oas_hanami/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../oas_grape/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../oas_hanami/configuration.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../oas_grape/configuration.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

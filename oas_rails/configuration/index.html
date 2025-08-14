@@ -36,6 +36,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc.js"></script>
@@ -92,10 +93,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -146,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -237,6 +246,16 @@ end
 </code></pre>
 </li>
 <li>
+<p><code>config.rapidoc_configuration</code>: expects to be set as a string key =&gt; value hash. It is merged with defaults which can be found in <a href="https://github.com/a-chacon/oas_rails/blob/main/app/helpers/oas_rails/oas_rails_helper.rb">the OAsRailsHelper</a>. Any duplicate keys will override these. Refer to Rapidocs for any others. Defaults to <code>{}</code></p>
+<pre><code class="language-ruby">config.rapidoc_configuration = {"show-header" =&gt; "true"}
+</code></pre>
+</li>
+<li>
+<p><code>config.rapidoc_logo_url</code>: expects a string, it is used as a source for an img tag so any valid img tag source should work. Defaults to <code>nil</code></p>
+<pre><code class="language-ruby">config.rapidoc_logo_url = "/assets/some_random_image.png"
+</code></pre>
+</li>
+<li>
 <p><code>config.ignored_actions</code>: Defines an array of controller or controller#action pairs. You do not need to prepend the <code>api_path</code>. This is useful when you want to include all routes except a few specific actions or when an external engine (e.g., Devise) adds routes to your API.</p>
 </li>
 <li>
@@ -244,9 +263,6 @@ end
 </li>
 <li>
 <p><code>config.http_verbs</code>: Defaults to <code>[:get, :post, :put, :patch, :delete]</code></p>
-</li>
-<li>
-<p><code>config.use_model_names</code>: Use model names when possible, defaults to <code>false</code></p>
 </li>
 </ul>
 <h3 id="authentication-settings"><a class="header" href="#authentication-settings">Authentication Settings</a></h3>
@@ -352,6 +368,7 @@ config.response_body_of_forbidden = "Hash{ code: Integer, message: String }"
         <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
+
 
 
     </div>

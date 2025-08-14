@@ -36,6 +36,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc.js"></script>
@@ -92,10 +93,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -146,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -168,7 +177,7 @@
                     <main>
                         <h1 id="tags"><a class="header" href="#tags">Tags</a></h1>
 <p>In addition to the information provided in the initializer file and the data that can be extracted from the routes and methods automatically, it is essential to document your API in the following way. The documentation is created <strong>with the help of YARD</strong>, so the methods are documented with <strong>comment tags</strong>.</p>
-<h3 id="documenting-your-endpoints"><a class="header" href="#documenting-your-endpoints">Documenting Your Endpoints</a></h3>
+<h2 id="documenting-your-endpoints"><a class="header" href="#documenting-your-endpoints">Documenting Your Endpoints</a></h2>
 <p>Almost every tag description in an OAS file supports <strong>markdown formatting</strong> (e.g., bold, italics, lists, links) for better readability in the generated documentation. Additionally, <strong>multi-line descriptions</strong> are supported. When using multi-line descriptions, ensure the content is indented at least one space more than the tag itself to maintain proper formatting.</p>
 <p>For example:</p>
 <pre><code class="language-ruby">  # @request_body_example Simple User [Hash]
@@ -181,12 +190,46 @@
   #   }
 </code></pre>
 <p>You can use these tags in your controller methods to enhance the automatically generated documentation. Remember to use markdown formatting in your descriptions for better readability in the generated OAS document.</p>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p>Below is a summary of all available tags for documenting your API endpoints:</p>
+<h3 id="authentication-tags"><a class="header" href="#authentication-tags">Authentication Tags</a></h3>
+<ul>
+<li><strong><code>@auth</code></strong>: Specifies security mechanisms for the endpoint (e.g., <code># @auth [bearer, basic]</code>).</li>
+<li><strong><code>@no_auth</code></strong>: Removes security requirements for the endpoint (e.g., <code># @no_auth</code>).</li>
+</ul>
+<h3 id="inclusion-tags"><a class="header" href="#inclusion-tags">Inclusion Tags</a></h3>
+<ul>
+<li><strong><code>@oas_include</code></strong>: Explicitly includes the endpoint in the OAS file when <code>include_mode</code> is <code>:explicit</code> (e.g., <code># @oas_include</code>).</li>
+</ul>
+<h3 id="parameter-tags"><a class="header" href="#parameter-tags">Parameter Tags</a></h3>
+<ul>
+<li><strong><code>@parameter</code></strong>: Documents a parameter for the endpoint (e.g., <code># @parameter page(query) [Integer] The page number.</code>).</li>
+<li><strong><code>@parameter_ref</code></strong>: References a predefined parameter (e.g., <code># @parameter_ref #/components/parameters/user_id</code>).</li>
+</ul>
+<h3 id="request-body-tags"><a class="header" href="#request-body-tags">Request Body Tags</a></h3>
+<ul>
+<li><strong><code>@request_body</code></strong>: Describes the request body (e.g., <code># @request_body The user to be created [!User]</code>).</li>
+<li><strong><code>@request_body_example</code></strong>: Provides examples for the request body (e.g., <code># @request_body_example basic user [Hash] {user: {name: "Oas"}}</code>).</li>
+<li><strong><code>@request_body_ref</code></strong>: References a predefined request body (e.g., <code># @request_body_ref #/components/requestBodies/user</code>).</li>
+</ul>
+<h3 id="response-tags"><a class="header" href="#response-tags">Response Tags</a></h3>
+<ul>
+<li><strong><code>@response</code></strong>: Documents the endpoint's responses (e.g., <code># @response User not found by the provided Id(404) [Hash]</code>).</li>
+<li><strong><code>@response_example</code></strong>: Provides examples for responses (e.g., <code># @response_example Invalid Email(422) [{success: "false"}]</code>).</li>
+<li><strong><code>@response_ref</code></strong>: References a predefined response (e.g., <code># @response_ref (200) #/components/responses/success</code>).</li>
+</ul>
+<h3 id="metadata-tags"><a class="header" href="#metadata-tags">Metadata Tags</a></h3>
+<ul>
+<li><strong><code>@summary</code></strong>: Adds a custom summary for the endpoint (e.g., <code># @summary This endpoint creates a User</code>).</li>
+<li><strong><code>@tags</code></strong>: Tags the endpoint for categorization (e.g., <code># @tags Users, Admin</code>).</li>
+</ul>
+<p>For detailed usage and examples, refer to the individual tag documentation files.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../oas_hanami/configuration.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../oas_grape/configuration.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
@@ -200,7 +243,7 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../oas_hanami/configuration.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../oas_grape/configuration.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
@@ -228,6 +271,7 @@
         <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
+
 
 
     </div>

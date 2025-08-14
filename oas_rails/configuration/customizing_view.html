@@ -36,6 +36,7 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../toc.js"></script>
@@ -92,10 +93,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -146,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -192,7 +201,7 @@
 <li><strong>rails</strong>: Default theme with Rails-inspired colors (red accents).</li>
 </ul>
 <h4 id="how-to-configure-the-theme"><a class="header" href="#how-to-configure-the-theme">How to Configure the Theme</a></h4>
-<p>To change the theme, add the following line to your <code>config/initializers/oas_core.rb</code> file:</p>
+<p>To change the theme, add the following line to your <code>config/initializers/oas_rails.rb</code> file:</p>
 <pre><code class="language-ruby">OasRails.configure do |config|
   config.rapidoc_theme = "dark" # Replace "dark" with your preferred theme name
 end
@@ -202,12 +211,16 @@ end
 <p>To override the <code>index</code> view provided by the OasRails engine, follow these steps:</p>
 <ol>
 <li>
-<p><strong>Create the Override View File</strong>: In your host application, create a new file at the path <code>app/views/oas_core/oas_core/index.html.erb</code>. If the directories do not exist, you will need to create them.</p>
+<p><strong>Create the Override View File</strong>: In your host application, create a new file at the path <code>app/views/oas_rails/oas_rails/index.html.erb</code>. If the directories do not exist, you will need to create them.</p>
 </li>
 <li>
 <p><strong>Customize the View</strong>: Open the newly created <code>index.html.erb</code> file and add your custom HTML and ERB code to display the OAS as desired. You can refer to the source code of this project for guidance.</p>
 </li>
 </ol>
+<h3 id="overridingadding-rapid-doc-inline-styles"><a class="header" href="#overridingadding-rapid-doc-inline-styles">Overriding/Adding rapid-doc inline styles</a></h3>
+<p>To override styles in rapidoc we can use <a href="https://rapidocweb.com/css-parts.html">parts</a>.</p>
+<p>If you do not override the default index then there is a partial available for override <code>app/views/oas_rails/oas_rails/_rapidoc_style_parts.html.erb</code>.</p>
+<p>Please see its <a href="https://github.com/a-chacon/oas_rails/blob/main/app/views/oas_rails/oas_rails/_rapidoc_style_parts.html.erb">default for a starting point</a>.</p>
 <h4 id="using-the-custom-view"><a class="header" href="#using-the-custom-view">Using the Custom View</a></h4>
 <p>Once the custom view file is in place, Rails will automatically use it instead of the view provided by the OasRails engine. This allows you to fully customize the presentation of the OAS without modifying the engine's code.</p>
 
@@ -219,7 +232,7 @@ end
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../oas_hanami/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../oas_rails/configuration/configure_source_oas.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -233,7 +246,7 @@ end
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../oas_hanami/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../oas_rails/configuration/configure_source_oas.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -257,6 +270,7 @@ end
         <script src="../../book.js"></script>
 
         <!-- Custom JS scripts -->
+
 
 
     </div>

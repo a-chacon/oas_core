@@ -36,6 +36,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc.js"></script>
@@ -92,10 +93,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -146,7 +150,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -167,11 +176,18 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="configuring-oashanami"><a class="header" href="#configuring-oashanami">Configuring OasHanami</a></h1>
-<p>To configure OasHanami, you need to create an initializer file including all your settings. The first step is to create your initializer file like this:</p>
-<pre><code class="language-ruby"># config/initializers/oas_hanami.rb
-OasHanami.configure do |config|
-  config.info.title = 'Amazing Hanami API'
-  # Others configurations here...
+<p>To configure OasHanami, according to the <a href="https://guides.hanamirb.org/v2.1/app/providers/">official documentation</a>, you need to create a provider file that includes all your settings. The first step is to create your initializer file as follows:</p>
+<pre><code class="language-ruby"># config/providers/oas_hanami.rb
+Hanami.app.register_provider(:oas_hanami) do
+  prepare do
+    require "oas_hanami"
+  end
+
+  start do
+    OasHanami.configure do |config|
+      config.info.title = "Amazing Hanami API"
+    end
+  end
 end
 </code></pre>
 <p>Then fill it with your data. Below are the available configuration options:</p>
@@ -283,7 +299,7 @@ end
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../tags/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../oas_hanami/configuration/configure_source_oas.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -297,7 +313,7 @@ end
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../tags/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../oas_hanami/configuration/configure_source_oas.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -321,6 +337,7 @@ end
         <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
+
 
 
     </div>
