@@ -8,7 +8,7 @@ The usage can be a bit tricky. Unlike other frameworks, this cannot be implement
 
 As mentioned earlier, the implementation in Grape differs from other frameworks. The tag comments must be placed inside the `detail` key of a `desc` block. Everything inside this key is parsed as a comment, and this is where the OAS YARD tags should be included.
 
-Example:
+Example code:
 
 ```ruby
   desc "Returns a list of Users." do
