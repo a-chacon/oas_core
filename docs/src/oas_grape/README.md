@@ -26,7 +26,6 @@ Example code:
       #       { "id": 2, "name": "Jane", "email": "jane@example.com" }
       #     ]
       #   ]
-      # @tags Users, Public
     OAS_GRAPE
   end
   get do
