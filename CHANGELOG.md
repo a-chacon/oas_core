@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.1](https://github.com/a-chacon/oas_core/compare/oas_core/v1.2.0...oas_core/v1.2.1) (2025-08-14)
+
+
+### Documentation
+
+* **book:** Add oas_grape documentation ([7358fb8](https://github.com/a-chacon/oas_core/commit/7358fb82a01c546f01181b15b0995993351ed894))
+* fix thing ([ab48353](https://github.com/a-chacon/oas_core/commit/ab483530f80bdf01ea18206617a642c258f3d4dc))
+* fix thing 1 ([a80ca2b](https://github.com/a-chacon/oas_core/commit/a80ca2b8c4226cfb35866ebcd43478ccac0d9b61))
+
 ## [1.2.0](https://github.com/a-chacon/oas_core/compare/oas_core/v1.1.0...oas_core/v1.2.0) (2025-08-08)
 
 
