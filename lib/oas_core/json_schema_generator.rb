@@ -139,10 +139,10 @@ module OasCore
       case type.to_s.downcase
       when 'string' then { type: 'string' }
       when 'integer' then { type: 'integer' }
-      when 'float' then { type: 'float' }
+      when 'float' then { type: 'number' }
       when 'boolean' then { type: 'boolean' }
       when 'array' then { type: 'array' }
-      when 'hash' then { type: 'hash' }
+      when 'hash' then { type: 'object' }
       when 'nil' then { type: 'null' }
       when 'date' then { type: 'string', format: 'date' }
       when 'datetime' then { type: 'string', format: 'date-time' }
