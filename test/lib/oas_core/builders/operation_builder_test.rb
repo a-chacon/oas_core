@@ -76,6 +76,36 @@ module OasCore
         assert operation.request_body
         assert_equal '#/components/schemas/Example', operation.request_body.ref
       end
+
+      def test_operation_id_simple_path
+        oas_route = FactoryBot.build(:oas_route, verb: 'GET', path: '/users')
+        operation = @builder.from_oas_route(oas_route).build
+
+        assert_equal 'GET_users', operation.operation_id
+      end
+
+      def test_operation_id_with_single_path_parameter
+        oas_route = FactoryBot.build(:oas_route, verb: 'GET', path: '/users/{id}')
+        operation = @builder.from_oas_route(oas_route).build
+
+        assert_equal 'GET_users_id', operation.operation_id
+      end
+
+      def test_operation_id_with_multiple_path_parameters
+        oas_route = FactoryBot.build(:oas_route, verb: 'POST', path: '/products/{slug}/licenses/{key}/validate')
+        operation = @builder.from_oas_route(oas_route).build
+
+        assert_equal 'POST_products_slug_licenses_key_validate', operation.operation_id
+      end
+
+      def test_operation_id_is_url_safe
+        oas_route = FactoryBot.build(:oas_route, verb: 'GET', path: '/items/{item_id}/details/{detail_id}')
+        operation = @builder.from_oas_route(oas_route).build
+
+        # operationId must not contain braces (not URL-safe)
+        refute_match(/[{}]/, operation.operation_id)
+        assert_equal 'GET_items_item_id_details_detail_id', operation.operation_id
+      end
     end
   end
 end
