@@ -63,7 +63,7 @@ module OasCore
         )
       end
 
-      def test_parse_tag_with_parameter_returns_parameter_tag_with_all_attributes
+      def test_parse_tag_with_parameter_returns_parameter_tag_with_all_attributes_when_integer
         text = 'id(path) [!Integer] The user ID default: (1) minimum: (0) enum: (1,2,3,4,5) nullable: (true)'
         tag = @factory.parse_tag_with_parameter('parameter', text)
 
@@ -74,7 +74,35 @@ module OasCore
         assert_equal 'path', tag.location
         assert_equal true, tag.required
         assert_nil tag.types
-        assert_equal({ type: 'integer', default: '1', minimum: '0', enum: %w[1 2 3 4 5], nullable: true }, tag.schema)
+        assert_equal({ type: 'integer', default: 1, minimum: '0', enum: [1, 2, 3, 4, 5], nullable: true }, tag.schema)
+      end
+
+      def test_parse_tag_with_parameter_returns_parameter_tag_with_all_attributes_when_string
+        text = 'id(path) [!String] The user ID default: (1) minimum: (0) enum: (1,2,3,4,5) nullable: (true)'
+        tag = @factory.parse_tag_with_parameter('parameter', text)
+
+        assert_instance_of ParameterTag, tag
+        assert_equal 'parameter', tag.tag_name
+        assert_equal 'The user ID', tag.text
+        assert_equal 'id', tag.name
+        assert_equal 'path', tag.location
+        assert_equal true, tag.required
+        assert_nil tag.types
+        assert_equal({ type: 'string', default: '1', minimum: '0', enum: %w[1 2 3 4 5], nullable: true }, tag.schema)
+      end
+
+      def test_parse_tag_with_parameter_returns_parameter_tag_with_all_attributes_when_boolean
+        text = 'id(path) [!Boolean] The user ID default: (true) minimum: (0) enum: (true,false) nullable: (true)'
+        tag = @factory.parse_tag_with_parameter('parameter', text)
+
+        assert_instance_of ParameterTag, tag
+        assert_equal 'parameter', tag.tag_name
+        assert_equal 'The user ID', tag.text
+        assert_equal 'id', tag.name
+        assert_equal 'path', tag.location
+        assert_equal true, tag.required
+        assert_nil tag.types
+        assert_equal({ type: 'boolean', default: true, minimum: '0', enum: [true, false], nullable: true }, tag.schema)
       end
 
       def test_parse_tag_with_parameter_appends_brackets_to_query_array_parameters
