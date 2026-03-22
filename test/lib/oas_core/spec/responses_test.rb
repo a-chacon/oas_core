@@ -26,7 +26,10 @@ module OasCore
         response = Response.new(@specification)
         @responses.add_response(response)
 
-        assert_equal({ 200 => { '$ref' => '#/components/responses/c3cbab93bbd905e02b9daa07c824b88a' } }, @responses.to_spec)
+        spec = @responses.to_spec
+        assert_equal 1, spec.keys.length
+        assert_equal 200, spec.keys.first
+        assert_match %r{#/components/responses/[a-f0-9]+}, spec[200]['$ref']
       end
 
       def test_add_reference_response

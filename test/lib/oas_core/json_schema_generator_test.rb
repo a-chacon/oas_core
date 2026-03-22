@@ -88,5 +88,92 @@ module OasCore
 
       assert_equal 'boolean', result[:type]
     end
+
+    # Tests for JSON Schema type compliance
+    # JSON Schema only allows these types: string, number, integer, boolean, array, object, null
+    # See: https://json-schema.org/understanding-json-schema/reference/type
+
+    def test_ruby_type_to_json_schema_type_hash_returns_object
+      # Bug: Hash type currently returns { type: 'hash' } which is invalid JSON Schema
+      # It should return { type: 'object' }
+      result = JsonSchemaGenerator.ruby_type_to_json_schema_type(:hash)
+
+      assert_equal 'object', result[:type],
+        "JSON Schema does not support 'hash' type - must use 'object'"
+    end
+
+    def test_ruby_type_to_json_schema_type_float_returns_number
+      # Bug: Float type currently returns { type: 'float' } which is invalid JSON Schema
+      # It should return { type: 'number' }
+      result = JsonSchemaGenerator.ruby_type_to_json_schema_type(:float)
+
+      assert_equal 'number', result[:type],
+        "JSON Schema does not support 'float' type - must use 'number'"
+    end
+
+    def test_plain_hash_type_in_process_string
+      # When using just 'Hash' (without field definitions), it should produce valid JSON Schema
+      input = 'Hash'
+      result = JsonSchemaGenerator.process_string(input)
+
+      assert_equal 'object', result[:json_schema][:type],
+        "Plain Hash type should convert to 'object' in JSON Schema"
+    end
+
+    def test_plain_hash_type_as_property_value
+      # When Hash is used as a property type without field definitions
+      input = 'Hash{metadata: Hash}'
+      result = JsonSchemaGenerator.process_string(input)
+
+      assert_equal 'object', result[:json_schema][:properties][:metadata][:type],
+        "Hash property should have type 'object' not 'hash'"
+    end
+
+    def test_float_type_in_process_string
+      # When using Float type
+      input = 'Float'
+      result = JsonSchemaGenerator.process_string(input)
+
+      assert_equal 'number', result[:json_schema][:type],
+        "Float type should convert to 'number' in JSON Schema"
+    end
+
+    def test_float_type_as_property_value
+      # When Float is used as a property type
+      input = 'Hash{price: Float, quantity: Integer}'
+      result = JsonSchemaGenerator.process_string(input)
+
+      assert_equal 'number', result[:json_schema][:properties][:price][:type],
+        "Float property should have type 'number' not 'float'"
+    end
+
+    def test_nested_hash_and_float_types
+      # Complex nested structure with both problematic types
+      input = 'Hash{data: Hash, stats: Hash{average: Float, count: Integer}}'
+      result = JsonSchemaGenerator.process_string(input)
+
+      # Nested plain Hash
+      assert_equal 'object', result[:json_schema][:properties][:data][:type],
+        "Nested plain Hash should have type 'object'"
+
+      # Nested object with Float property
+      assert_equal 'number', result[:json_schema][:properties][:stats][:properties][:average][:type],
+        "Nested Float property should have type 'number'"
+    end
+
+    def test_all_valid_json_schema_types
+      # Verify all valid JSON Schema primitive types are correctly mapped
+      valid_types = {
+        'string' => 'string',
+        'integer' => 'integer',
+        'boolean' => 'boolean',
+        'nil' => 'null'
+      }
+
+      valid_types.each do |ruby_type, json_type|
+        result = JsonSchemaGenerator.ruby_type_to_json_schema_type(ruby_type.to_sym)
+        assert_equal json_type, result[:type], "#{ruby_type} should map to #{json_type}"
+      end
+    end
   end
 end
