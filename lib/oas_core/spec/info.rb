@@ -31,7 +31,7 @@ module OasCore
       def default_description
         "# Welcome to OasCore
 
-OasCore automatically generates interactive documentation for your Rails APIs using the OpenAPI Specification 3.1 (OAS 3.1) and displays it with a nice UI.
+OasCore automatically generates interactive documentation for your Rails APIs using the OpenAPI Specification 3.2 (OAS 3.2) and displays it with a nice UI.
 
 ## Getting Started
 
@@ -52,7 +52,7 @@ To customize and enrich your API documentation:
 
 ## Features
 
-- Automatic OAS 3.1 document generation
+- Automatic OAS 3.2 document generation
 - [RapiDoc](https://github.com/rapi-doc/RapiDoc) integration for interactive exploration
 - Minimal setup required for basic documentation
 - Extensible through configuration and Yard tags

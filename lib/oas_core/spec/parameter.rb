@@ -6,7 +6,7 @@ module OasCore
       include Specable
       include Hashable
 
-      STYLE_DEFAULTS = { query: 'form', path: 'simple', header: 'simple', cookie: 'form' }.freeze
+      STYLE_DEFAULTS = { query: 'form', path: 'simple', header: 'simple', cookie: 'form', querystring: 'form' }.freeze
 
       attr_accessor :name, :style, :description, :required, :schema
       attr_reader :in

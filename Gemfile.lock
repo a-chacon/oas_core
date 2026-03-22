@@ -50,7 +50,8 @@ GEM
     lint_roller (1.1.0)
     logger (1.7.0)
     method_source (1.1.0)
-    minitest (5.25.5)
+    minitest (5.27.0)
+    minitest-mock (5.27.0)
     minitest-reporters (1.7.1)
       ansi
       builder
@@ -96,7 +97,7 @@ GEM
       concurrent-ruby (~> 1.0)
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
-    unicode-emoji (4.0.4)
+    unicode-emoji (4.2.0)
     yard (0.9.37)
 
 PLATFORMS
@@ -111,10 +112,11 @@ DEPENDENCIES
   debug (>= 1.0.0)
   factory_bot
   minitest (~> 5.25, >= 5.25.5)
+  minitest-mock (~> 5.27)
   minitest-reporters (~> 1.7, >= 1.7.1)
   oas_core!
   rake
   rubocop
 
 BUNDLED WITH
-   2.5.15
+  4.0.8
