@@ -52,9 +52,71 @@ module OasCore
         description, schema_keywords = extract_schema_keywords(description)
         schema.merge!(schema_keywords)
 
+        schema[:default] = parse_default_tag(schema) if schema.key?(:default)
+        schema[:enum] = parse_enum_tag(schema) if schema.key?(:enum)
+
         ParameterTag.new(tag_name, name, description.strip, schema, location, required:)
       rescue StandardError => e
         raise TagParsingError, "Failed to parse parameter tag: #{e.message}"
+      end
+
+      # Parses the default tag.
+      # @param schema [Hash] The schema containing the default value.
+      # @return [Value] The parsed default value.
+      def parse_default_tag(schema)
+        case schema[:type]
+        when 'integer'
+          parse_integer(schema[:default])
+        when 'boolean'
+          parse_boolean(schema[:default])
+        else
+          schema[:default]
+        end
+      end
+
+      # Parses the enum tag.
+      # @param schema [Hash] The schema containing the enum values.
+      # @return [Array] The parsed enum values.
+      def parse_enum_tag(schema)
+        enum_values = schema[:enum]
+        return enum_values unless enum_values.is_a?(Array)
+
+        case schema[:type]
+        when 'integer'
+          enum_values.map do |value|
+            parse_integer(value)
+          end
+        when 'boolean'
+          enum_values.map do |value|
+            parse_boolean(value)
+          end
+        else
+          enum_values
+        end
+      end
+
+      # Parses an integer value.
+      # @param value [String] The value to parse.
+      # @return [Integer, Object] The parsed integer or the original value if it can't be coerced.
+      def parse_integer(value)
+        Integer(value)
+      rescue ArgumentError, TypeError
+        # Keep original value if it can't be coerced
+        value
+      end
+
+      # Parses a boolean value.
+      # @param value [String] The value to parse.
+      # @return [Boolean, Object] The parsed boolean or the original value if it can't be coerced.
+      def parse_boolean(value)
+        value_str = value.to_s.downcase
+        if value_str == 'true'
+          true
+        elsif value_str == 'false'
+          false
+        else
+          value
+        end
       end
 
       # Parses a tag that represents a response.
