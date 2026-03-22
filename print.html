@@ -177,11 +177,11 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
-<p>OasCore is a Ruby gem designed to generate Open API Specification (OAS) 3.1 documentation directly from YARD comments in your endpoints. It serves as the core engine for OAS generation, while framework-specific adapters like <code>OasRails</code> (for Ruby on Rails) handle the extraction, integration and additional features.</p>
+<p>OasCore is a Ruby gem designed to generate Open API Specification (OAS) 3.2 documentation directly from YARD comments in your endpoints. It serves as the core engine for OAS generation, while framework-specific adapters like <code>OasRails</code> (for Ruby on Rails) handle the extraction, integration and additional features.</p>
 <h3 id="key-features"><a class="header" href="#key-features">Key Features</a></h3>
 <ul>
 <li>
-<p>🚀 <strong>OAS 3.1 Generation</strong>: OasCore generates OAS version 3.1, the latest standard, ensuring your API documentation is up-to-date.</p>
+<p>🚀 <strong>OAS 3.2 Generation</strong>: OasCore generates OAS version 3.2, the latest standard, ensuring your API documentation is up-to-date.</p>
 </li>
 <li>
 <p>📝 <strong>YARD-Powered Documentation</strong>: Simply annotate your endpoints with YARD tags to include descriptions, parameters, and examples—no need to learn a new DSL or rely on framework-specific tools.</p>
@@ -302,7 +302,7 @@ end
 <p><code>config.default_tags_from</code>: Determines the source of default tags for operations. Can be set to <code>:namespace</code> or <code>:controller</code>. The first option means that if your endpoint is in the route <code>/users/:id</code>, it will be tagged with <code>Users</code>. If set to <code>controller</code>, the tag will be <code>UsersController</code>.</p>
 </li>
 <li>
-<p><code>config.http_verbs</code>: Defaults to <code>[:get, :post, :put, :patch, :delete]</code></p>
+<p><code>config.http_verbs</code>: Defaults to <code>[get post put patch delete options head trace]</code></p>
 </li>
 </ul>
 <h3 id="authentication-settings"><a class="header" href="#authentication-settings">Authentication Settings</a></h3>
