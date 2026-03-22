@@ -35,7 +35,16 @@ module OasCore
       end
 
       def extract_operation_id(oas_route:)
-        "#{oas_route.verb}_#{oas_route.path.gsub('/', '_')}"
+        # Sanitize path to create URL-safe operationId:
+        # - Replace / with _
+        # - Remove braces from path parameters ({id} → id)
+        # - Clean up multiple consecutive underscores
+        sanitized_path = oas_route.path
+                           .gsub("/", "_")
+                           .gsub(/[{}]/, "")
+                           .gsub(/_+/, "_")
+                           .gsub(/^_|_$/, "")
+        "#{oas_route.verb}_#{sanitized_path}"
       end
 
       def extract_tags(oas_route:)
