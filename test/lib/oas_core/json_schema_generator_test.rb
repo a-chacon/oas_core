@@ -99,7 +99,7 @@ module OasCore
       result = JsonSchemaGenerator.ruby_type_to_json_schema_type(:hash)
 
       assert_equal 'object', result[:type],
-        "JSON Schema does not support 'hash' type - must use 'object'"
+                   "JSON Schema does not support 'hash' type - must use 'object'"
     end
 
     def test_ruby_type_to_json_schema_type_float_returns_number
@@ -108,7 +108,7 @@ module OasCore
       result = JsonSchemaGenerator.ruby_type_to_json_schema_type(:float)
 
       assert_equal 'number', result[:type],
-        "JSON Schema does not support 'float' type - must use 'number'"
+                   "JSON Schema does not support 'float' type - must use 'number'"
     end
 
     def test_plain_hash_type_in_process_string
@@ -117,7 +117,7 @@ module OasCore
       result = JsonSchemaGenerator.process_string(input)
 
       assert_equal 'object', result[:json_schema][:type],
-        "Plain Hash type should convert to 'object' in JSON Schema"
+                   "Plain Hash type should convert to 'object' in JSON Schema"
     end
 
     def test_plain_hash_type_as_property_value
@@ -126,7 +126,7 @@ module OasCore
       result = JsonSchemaGenerator.process_string(input)
 
       assert_equal 'object', result[:json_schema][:properties][:metadata][:type],
-        "Hash property should have type 'object' not 'hash'"
+                   "Hash property should have type 'object' not 'hash'"
     end
 
     def test_float_type_in_process_string
@@ -135,7 +135,7 @@ module OasCore
       result = JsonSchemaGenerator.process_string(input)
 
       assert_equal 'number', result[:json_schema][:type],
-        "Float type should convert to 'number' in JSON Schema"
+                   "Float type should convert to 'number' in JSON Schema"
     end
 
     def test_float_type_as_property_value
@@ -144,7 +144,7 @@ module OasCore
       result = JsonSchemaGenerator.process_string(input)
 
       assert_equal 'number', result[:json_schema][:properties][:price][:type],
-        "Float property should have type 'number' not 'float'"
+                   "Float property should have type 'number' not 'float'"
     end
 
     def test_nested_hash_and_float_types
@@ -154,11 +154,11 @@ module OasCore
 
       # Nested plain Hash
       assert_equal 'object', result[:json_schema][:properties][:data][:type],
-        "Nested plain Hash should have type 'object'"
+                   "Nested plain Hash should have type 'object'"
 
       # Nested object with Float property
       assert_equal 'number', result[:json_schema][:properties][:stats][:properties][:average][:type],
-        "Nested Float property should have type 'number'"
+                   "Nested Float property should have type 'number'"
     end
 
     def test_all_valid_json_schema_types

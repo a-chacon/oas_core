@@ -40,10 +40,10 @@ module OasCore
         # - Remove braces from path parameters ({id} → id)
         # - Clean up multiple consecutive underscores
         sanitized_path = oas_route.path
-                           .gsub("/", "_")
-                           .gsub(/[{}]/, "")
-                           .gsub(/_+/, "_")
-                           .gsub(/^_|_$/, "")
+                                  .gsub('/', '_')
+                                  .gsub(/[{}]/, '')
+                                  .gsub(/_+/, '_')
+                                  .gsub(/^_|_$/, '')
         "#{oas_route.verb}_#{sanitized_path}"
       end
 
