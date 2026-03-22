@@ -9,10 +9,10 @@ module OasCore
     end
 
     def test_initializes_with_default_values
-      assert_equal '3.1.0', @config.instance_variable_get(:@swagger_version)
+      assert_equal '3.2.0', @config.instance_variable_get(:@swagger_version)
       assert_equal '/', @config.api_path
       assert_equal true, @config.authenticate_all_routes_by_default
-      assert_equal %i[get post put patch delete], @config.http_verbs
+      assert_equal %i[get post put patch delete options head trace], @config.http_verbs
       assert_equal 'Hash{ status: !Integer, error: String }', @config.response_body_of_default
     end
 

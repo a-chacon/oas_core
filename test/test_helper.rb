@@ -7,6 +7,7 @@ require 'minitest/autorun'
 require 'factory_bot'
 require 'debug'
 require 'minitest/reporters'
+require 'minitest/mock'
 
 Minitest::Reporters.use!
 

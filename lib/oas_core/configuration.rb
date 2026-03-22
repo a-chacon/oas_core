@@ -17,7 +17,7 @@ module OasCore
       @info = args.fetch(:info, Spec::Info.new)
       @servers = args.fetch(:servers, default_servers)
       @tags = []
-      @swagger_version = '3.1.0'
+      @swagger_version = '3.2.0'
       @default_tags_from = :namespace
       @api_path = '/'
       @authenticate_all_routes_by_default = true
@@ -26,7 +26,7 @@ module OasCore
       @set_default_responses = true
       @possible_default_responses = %i[not_found unauthorized forbidden internal_server_error
                                        unprocessable_entity]
-      @http_verbs = %i[get post put patch delete]
+      @http_verbs = %i[get post put patch delete options head trace]
       @response_body_of_default = 'Hash{ status: !Integer, error: String }'
 
       @possible_default_responses.each do |response|

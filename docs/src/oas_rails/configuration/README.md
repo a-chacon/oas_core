@@ -90,7 +90,7 @@ Then fill it with your data. Below are the available configuration options:
 
 - `config.default_tags_from`: Determines the source of default tags for operations. Can be set to `:namespace` or `:controller`. The first option means that if your endpoint is in the route `/users/:id`, it will be tagged with `Users`. If set to `controller`, the tag will be `UsersController`.
 
-- `config.http_verbs`: Defaults to `[:get, :post, :put, :patch, :delete]`
+- `config.http_verbs`: Defaults to `[get post put patch delete options head trace]`
 
 ### Authentication Settings
 

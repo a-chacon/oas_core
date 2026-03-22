@@ -18,3 +18,5 @@ gem 'factory_bot'
 gem 'debug', '>= 1.0.0'
 
 gem 'minitest-reporters', '~> 1.7', '>= 1.7.1'
+
+gem 'minitest-mock', '~> 5.27'

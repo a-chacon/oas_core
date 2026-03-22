@@ -4,7 +4,7 @@ module OasCore
   module Spec
     class PathItem
       include Specable
-      attr_reader :get, :post, :put, :patch, :delete
+      attr_reader :get, :post, :put, :patch, :delete, :options, :head, :trace, :query
 
       def initialize(specification)
         @specification = specification
@@ -13,6 +13,10 @@ module OasCore
         @put = nil
         @patch = nil
         @delete = nil
+        @options = nil
+        @head = nil
+        @trace = nil
+        @query = nil
       end
 
       def add_operation(http_method, operation)

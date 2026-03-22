@@ -6,7 +6,7 @@
 
 # 📃Open API Specification Core
 
-OasCore is a Ruby gem designed to generate Open API Specification (OAS) 3.1 documentation directly from YARD comments in your endpoints. It serves as the core engine for OAS generation, while framework-specific adapters like `OasRails` (for Ruby on Rails) handle the extraction, integration and additional features.
+OasCore is a Ruby gem designed to generate Open API Specification (OAS) 3.2 documentation directly from YARD comments in your endpoints. It serves as the core engine for OAS generation, while framework-specific adapters like `OasRails` (for Ruby on Rails) handle the extraction, integration and additional features.
 
 ## Framework adapters
 
