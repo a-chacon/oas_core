@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.3.0](https://github.com/a-chacon/oas_core/compare/oas_core/v1.2.0...oas_core/v1.3.0) (2026-03-22)
+
+
+### Features
+
+* migrate to oas 3.2 ([#43](https://github.com/a-chacon/oas_core/issues/43)) ([f087ffa](https://github.com/a-chacon/oas_core/commit/f087ffac090145a0052510fbe39debc9849f5526))
+
+
+### Bug Fixes
+
+* add logic to cast boolean and integer to correct types to match spec ([#42](https://github.com/a-chacon/oas_core/issues/42)) ([b3cc116](https://github.com/a-chacon/oas_core/commit/b3cc1162fc68784de3a2dbd685f9e12ffc555577))
+* map Ruby Hash and Float to valid JSON Schema types ([#40](https://github.com/a-chacon/oas_core/issues/40)) ([309b8d9](https://github.com/a-chacon/oas_core/commit/309b8d9318f42eaa4bc259803bc85f630ddc49ca))
+* operationId to be URL-safe by removing braces from path parameters ([#41](https://github.com/a-chacon/oas_core/issues/41)) ([73082e3](https://github.com/a-chacon/oas_core/commit/73082e39207a8ad0f852e861f714fe0f2c71b669))
+* rubocop styles ([482c4c5](https://github.com/a-chacon/oas_core/commit/482c4c5e048d12dbb5cd943b93a7f95e520c532a))
+
+
+### Documentation
+
+* **book:** Add oas_grape documentation ([7358fb8](https://github.com/a-chacon/oas_core/commit/7358fb82a01c546f01181b15b0995993351ed894))
+* fix thing ([ab48353](https://github.com/a-chacon/oas_core/commit/ab483530f80bdf01ea18206617a642c258f3d4dc))
+* fix thing 1 ([a80ca2b](https://github.com/a-chacon/oas_core/commit/a80ca2b8c4226cfb35866ebcd43478ccac0d9b61))
+
 ## [1.2.0](https://github.com/a-chacon/oas_core/compare/oas_core/v1.1.0...oas_core/v1.2.0) (2025-08-08)
 
 
