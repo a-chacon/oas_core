@@ -47,6 +47,22 @@ module OasCore
         assert_equal ['Example'], operation.tags
       end
 
+      def test_from_oas_route_with_deprecated_tag
+        oas_route = FactoryBot.build(:oas_route, tags: [FactoryBot.build(:tag, tag_name: 'deprecated', text: 'Use another endpoint')])
+        operation = @builder.from_oas_route(oas_route).build
+
+        assert_equal true, operation.deprecated
+        assert_equal true, operation.to_spec[:deprecated]
+      end
+
+      def test_from_oas_route_without_deprecated_tag
+        oas_route = FactoryBot.build(:oas_route)
+        operation = @builder.from_oas_route(oas_route).build
+
+        assert_equal false, operation.deprecated
+        assert_equal false, operation.to_spec[:deprecated]
+      end
+
       def test_from_oas_route_with_auth_tag
         OasCore.config.authenticate_all_routes_by_default = false
         OasCore.config.security_schema = :bearer

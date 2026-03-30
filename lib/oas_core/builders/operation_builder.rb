@@ -14,6 +14,7 @@ module OasCore
         @operation.description = oas_route.docstring
         @operation.tags = extract_tags(oas_route:)
         @operation.security = extract_security(oas_route:)
+        @operation.deprecated = oas_route.tags(:deprecated).any?
         @operation.parameters = ParametersBuilder.new(@specification).from_oas_route(oas_route).build
         @operation.request_body = extract_request_body(oas_route)
         @operation.responses = ResponsesBuilder.new(@specification)
