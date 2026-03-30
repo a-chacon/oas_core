@@ -54,7 +54,7 @@ Below is a summary of all available tags for documenting your API endpoints:
 ### Metadata Tags
 
 - **`@summary`**: Adds a custom summary for the endpoint (e.g., `# @summary This endpoint creates a User`).
-- **`@deprecated`**: Marks the endpoint as deprecated in the generated OpenAPI operation (e.g., `# @deprecated Use POST /machine-file instead.`).
+- **`@deprecated`**: Marks the endpoint as deprecated in the generated OpenAPI operation (e.g., `# @deprecated Use /v2/reports instead.`).
 - **`@tags`**: Tags the endpoint for categorization (e.g., `# @tags Users, Admin`).
 
 For detailed usage and examples, refer to the individual tag documentation files.
