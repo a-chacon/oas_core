@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>@summary - OasCore Documentation</title>
+        <title>@deprecated - OasCore Documentation</title>
 
 
         <!-- Custom HTML head -->
@@ -175,24 +175,23 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="summary"><a class="header" href="#summary">@summary</a></h1>
-<p><strong>Structure</strong>: <code>@summary text</code></p>
-<p>Used to add a summary to the endpoint. It replaces the default summary/title of the endpoint.</p>
+                        <h1 id="deprecated"><a class="header" href="#deprecated">@deprecated</a></h1>
+<p><strong>Structure</strong>: <code>@deprecated text</code></p>
+<p>Marks an endpoint as deprecated in the generated OpenAPI Operation Object by emitting <code>deprecated: true</code>.</p>
+<p>The optional text is preserved by YARD and can be used by adapters or downstream generators to explain the replacement endpoint or migration path.</p>
 <p><strong>Example</strong>:</p>
-<p><code># @summary This endpoint creates a User</code></p>
-<pre><code># @summary This endpoint
-#   creates a User
+<pre><code class="language-ruby"># @deprecated Use /v2/reports instead.
 </code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../tags/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../tags/summary.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../tags/deprecated.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../tags/parameter.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -202,11 +201,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../tags/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../tags/summary.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../tags/deprecated.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../tags/parameter.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

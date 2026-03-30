@@ -916,6 +916,7 @@ Below is a summary of all available tags for documenting your API endpoints:
 ### Metadata Tags
 
 - **`@summary`**: Adds a custom summary for the endpoint (e.g., `# @summary This endpoint creates a User`).
+- **`@deprecated`**: Marks the endpoint as deprecated in the generated OpenAPI operation (e.g., `# @deprecated Use /v2/reports instead.`).
 - **`@tags`**: Tags the endpoint for categorization (e.g., `# @tags Users, Admin`).
 
 For detailed usage and examples, refer to the individual tag documentation files.
@@ -934,6 +935,21 @@ Used to add a summary to the endpoint. It replaces the default summary/title of 
 ```
 # @summary This endpoint
 #   creates a User
+```
+
+
+# @deprecated
+
+**Structure**: `@deprecated text`
+
+Marks an endpoint as deprecated in the generated OpenAPI Operation Object by emitting `deprecated: true`.
+
+The optional text is preserved by YARD and can be used by adapters or downstream generators to explain the replacement endpoint or migration path.
+
+**Example**:
+
+```ruby
+# @deprecated Use /v2/reports instead.
 ```
 
 
