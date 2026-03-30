@@ -25,6 +25,7 @@
 
 - [Tags](tags/README.md)
   - [@summary](tags/summary.md)
+  - [@deprecated](tags/deprecated.md)
   - [@parameter](tags/parameter.md)
   - [@parameter_ref](tags/parameter_ref.md)
   - [@request_body](tags/request_body.md)
