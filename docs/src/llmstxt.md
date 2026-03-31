@@ -2,8 +2,8 @@
 
 OasCore generates `.txt` files optimized for AI integration:
 
-- [llms.txt](/oas_core/llms.txt): Provides the basics to understand the structure and functionality of OasCore. (Work in progress)
-- [llms-full.txt](/oas_core/llms-full.txt): Offers a full description of how to use OasCore and document endpoints. (**Currently recommended**)
+- [llms.txt](https://a-chacon.github.io/oas_core/llms.txt): Provides the basics to understand the structure and functionality of OasCore. (Work in progress)
+- [llms-full.txt](https://a-chacon.github.io/oas_core/llms-full.txt): Offers a full description of how to use OasCore and document endpoints. (**Currently recommended**)
 
 ## How It Works (in 3 Steps)
 
@@ -24,6 +24,6 @@ You can load these files into any AI tool or editor that supports external conte
 
 Examples of questions you can ask:
 
-- *"How to document JWT authentication in OasCore?"*  
-- *"Document the endpoint..."*  
-- *"Add examples of possible request bodies for the create method."*
+- _"How to document JWT authentication in OasCore?"_
+- _"Document the endpoint..."_
+- _"Add examples of possible request bodies for the create method."_
