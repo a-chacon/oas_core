@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.0](https://github.com/a-chacon/oas_core/compare/oas_core/v1.3.0...oas_core/v1.4.0) (2026-03-31)
+
+
+### Features
+
+* add support for `deprecated` ([#44](https://github.com/a-chacon/oas_core/issues/44)) ([ddab2a7](https://github.com/a-chacon/oas_core/commit/ddab2a7e1a2215cebd86ccfa60bc48cf867683bc))
+
+
+### Documentation
+
+* add static link to llmstxt ([#46](https://github.com/a-chacon/oas_core/issues/46)) ([ae427c7](https://github.com/a-chacon/oas_core/commit/ae427c780b017d5f7dfdbfd72b7de9a4e39cbec3))
+
 ## [1.3.0](https://github.com/a-chacon/oas_core/compare/oas_core/v1.2.0...oas_core/v1.3.0) (2026-03-22)
 
 
