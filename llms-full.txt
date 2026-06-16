@@ -25,6 +25,8 @@ OasCore is a Ruby gem designed to generate Open API Specification (OAS) 3.2 docu
 
 ![Screenshot of OasCore](../assets/rails_theme.png)
 
+OasRails is a Rails engine that automatically generates OpenAPI documentation for your application. It provides an interactive UI powered by RapiDoc, allowing you to explore and test your API endpoints easily.
+
 
 ## Installation
 
@@ -56,6 +58,41 @@ To configure OasRails, **you MUST create an initializer file** including all you
 ```bash
 rails generate oas_rails:config
 ```
+
+### Multiple Configurations
+
+OasRails supports mounting the engine multiple times with different configurations. This is useful for separating documentation into distinct groups, such as a **Public API** and an **Internal API**.
+
+This feature **does not break current implementations**. If no specific configuration is used, the engine will use the normal default settings.
+
+### How to use it
+
+1. **Define named configurations** in your initializer (`config/initializers/oas_rails.rb`):
+
+    ```ruby
+    # Public configuration
+    OasRails.configure(:public) do |config|
+      config.info.title = 'Dummy App Public API'
+      # ...
+    end
+
+    # Internal configuration
+    OasRails.configure(:internal) do |config|
+      config.info.title = 'Dummy App Internal API'
+      config.api_path = "/admin"
+      # ...
+    end
+    ```
+
+2. **Mount the engine** in your routes (`config/routes.rb`) by passing the configuration name:
+
+    ```ruby
+    # Use 'default: { configuration: "name" }' to select the configuration
+    mount OasRails::Engine => '/api/docs', default: { configuration: 'public' }, as: 'public_oas'
+    mount OasRails::Engine => '/internal/api/docs', default: { configuration: 'internal' }, as: 'internal_oas'
+    ```
+
+---
 
 Then fill it with your data. Below are the available configuration options:
 

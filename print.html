@@ -196,6 +196,7 @@
 🔑 <strong>Password</strong>: <code>oasrails</code></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="oasrails"><a class="header" href="#oasrails">OasRails</a></h1>
 <p><img src="oas_rails/../assets/rails_theme.png" alt="Screenshot of OasCore" /></p>
+<p>OasRails is a Rails engine that automatically generates OpenAPI documentation for your application. It provides an interactive UI powered by RapiDoc, allowing you to explore and test your API endpoints easily.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
 <ol>
 <li>
@@ -219,6 +220,36 @@
 <p>To configure OasRails, <strong>you MUST create an initializer file</strong> including all your settings. The first step is to create your initializer file, which you can easily do with:</p>
 <pre><code class="language-bash">rails generate oas_rails:config
 </code></pre>
+<h3 id="multiple-configurations"><a class="header" href="#multiple-configurations">Multiple Configurations</a></h3>
+<p>OasRails supports mounting the engine multiple times with different configurations. This is useful for separating documentation into distinct groups, such as a <strong>Public API</strong> and an <strong>Internal API</strong>.</p>
+<p>This feature <strong>does not break current implementations</strong>. If no specific configuration is used, the engine will use the normal default settings.</p>
+<h3 id="how-to-use-it"><a class="header" href="#how-to-use-it">How to use it</a></h3>
+<ol>
+<li>
+<p><strong>Define named configurations</strong> in your initializer (<code>config/initializers/oas_rails.rb</code>):</p>
+<pre><code class="language-ruby"># Public configuration
+OasRails.configure(:public) do |config|
+  config.info.title = 'Dummy App Public API'
+  # ...
+end
+
+# Internal configuration
+OasRails.configure(:internal) do |config|
+  config.info.title = 'Dummy App Internal API'
+  config.api_path = "/admin"
+  # ...
+end
+</code></pre>
+</li>
+<li>
+<p><strong>Mount the engine</strong> in your routes (<code>config/routes.rb</code>) by passing the configuration name:</p>
+<pre><code class="language-ruby"># Use 'default: { configuration: "name" }' to select the configuration
+mount OasRails::Engine =&gt; '/api/docs', default: { configuration: 'public' }, as: 'public_oas'
+mount OasRails::Engine =&gt; '/internal/api/docs', default: { configuration: 'internal' }, as: 'internal_oas'
+</code></pre>
+</li>
+</ol>
+<hr />
 <p>Then fill it with your data. Below are the available configuration options:</p>
 <h3 id="basic-information-about-the-api"><a class="header" href="#basic-information-about-the-api">Basic Information about the API</a></h3>
 <ul>
