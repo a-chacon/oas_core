@@ -31,9 +31,13 @@ module OasCore
         when Array
           obj.map { |v| hash_representation_recursive(v) }
         when Hashable
-          obj.hash_representation
+          hash_representation_recursive(obj.hash_representation)
         else
-          obj
+          # Objects that serialize to a spec (e.g. MediaType) are hashed by
+          # their serialized form. Falling through to the default branch would
+          # embed their `inspect` output — memory address included — making
+          # the digest different on every run.
+          obj.respond_to?(:to_spec) ? hash_representation_recursive(obj.to_spec) : obj
         end
       end
     end
