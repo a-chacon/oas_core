@@ -1394,7 +1394,7 @@ class UsersController < ApplicationController
   # @no_auth
   #
   # @request_body The user to be created. At least include an `email`. [!User]
-  # @request_body_example basic user [Hash] {user: {name: "Luis", email: "luis@gmail.ocom"}}
+  # @request_body_example basic user [JSON{"user": {"name": "Luis", "email": "luis@gmail.com"}}]
   def create
     @user = User.new(user_params)
 
@@ -1410,8 +1410,8 @@ class UsersController < ApplicationController
   # - It must work
   # @tags users, update
   # @request_body User to be created [!Hash{user: { name: String, email: !String, age: Integer, available_dates: Array<Date>}}]
-  # @request_body_example Update user [Hash] {user: {name: "Luis", email: "luis@gmail.com"}}
-  # @request_body_example Complete User [Hash] {user: {name: "Luis", email: "luis@gmail.com", age: 21}}
+  # @request_body_example Update user [JSON{"user": {"name": "Luis", "email": "luis@gmail.com"}}]
+  # @request_body_example Complete User [JSON{"user": {"name": "Luis", "email": "luis@gmail.com", "age": 21}}]
   def update
     if @user.update(user_params)
       render json: @user
