@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.4.1](https://github.com/a-chacon/oas_core/compare/oas_core/v1.4.0...oas_core/v1.4.1) (2026-08-03)
+
+
+### Bug Fixes
+
+* make component hash keys deterministic across processes ([#51](https://github.com/a-chacon/oas_core/issues/51)) ([83559ed](https://github.com/a-chacon/oas_core/commit/83559ed12ca462de33a2e1f5489315015c1f1ef5))
+
+
+### Documentation
+
+* add multiple configuration steps for oas rails ([#48](https://github.com/a-chacon/oas_core/issues/48)) ([267fea9](https://github.com/a-chacon/oas_core/commit/267fea9d6c2bdaa698db7850fcf7b4bf0d89ceaa))
+* fix [@request](https://github.com/request)_body_example tags to the format the parser accepts ([#52](https://github.com/a-chacon/oas_core/issues/52)) ([8d0efff](https://github.com/a-chacon/oas_core/commit/8d0efffd6d7ad136495e1bc368a591f96f80f869))
+
 ## [1.4.0](https://github.com/a-chacon/oas_core/compare/oas_core/v1.3.0...oas_core/v1.4.0) (2026-03-31)
 
 
