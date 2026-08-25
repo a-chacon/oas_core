@@ -158,6 +158,29 @@ module OasCore
         assert_equal 'Invalid Email', tag.text
       end
 
+      def test_parse_tag_with_response_example_keeps_apostrophes_inside_json_strings
+        text = %q{Origin refused(403) [JSON{ "error": "origin_not_allowed", "message": "This key is restricted, and the request's origin is not allowed" }]}
+        tag = @factory.parse_tag_with_response_example('response_example', text)
+
+        assert_instance_of ResponseExampleTag, tag
+        assert_equal "This key is restricted, and the request's origin is not allowed",
+                     tag.content['message']
+      end
+
+      def test_parse_tag_with_response_example_still_accepts_single_quoted_json
+        text = "Created(201) [JSON{ 'status': 'created' }]"
+        tag = @factory.parse_tag_with_response_example('response_example', text)
+
+        assert_equal({ 'status' => 'created' }, tag.content)
+      end
+
+      def test_parse_tag_with_request_body_example_keeps_apostrophes_inside_json_strings
+        text = %q(A user's profile [JSON{ "bio": "I'm a driver" }])
+        tag = @factory.parse_tag_with_request_body_example('request_body_example', text)
+
+        assert_equal "I'm a driver", tag.content['bio']
+      end
+
       def test_parse_tag_with_response_example_and_reference_content
         text = 'Invalid Email(422) [Reference:#/components/schemas/response_example]'
         tag = @factory.parse_tag_with_response_example('response_example', text)
