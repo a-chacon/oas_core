@@ -190,14 +190,25 @@ module OasCore
       # @return [Hash] The processed content.
       def raw_type_to_content(raw_type)
         if raw_type.start_with?('JSON')
-          json_string = raw_type.sub(/^JSON/, '').gsub(/'/, '"')
-          JSON.parse(json_string)
+          parse_json_content(raw_type.sub(/^JSON/, ''))
         elsif raw_type.start_with?('Reference:')
           ref = raw_type.sub(/^Reference:/, '').strip
           OasCore::Spec::Reference.new(ref)
         else
           JsonSchemaGenerator.process_string(raw_type)[:json_schema]
         end
+      end
+
+      # Parses the body of a JSON example. Valid JSON is taken as written, so
+      # string values may contain apostrophes ("the request's origin"). The
+      # single-quote convenience (JSON{'key': 'value'}) is kept as a fallback
+      # for input that does not parse as strict JSON.
+      # @param json_string [String] The example body after the JSON prefix.
+      # @return [Hash] The parsed content.
+      def parse_json_content(json_string)
+        JSON.parse(json_string)
+      rescue JSON::ParserError
+        JSON.parse(json_string.gsub(/'/, '"'))
       end
 
       # Parses the position name and location from input text.
