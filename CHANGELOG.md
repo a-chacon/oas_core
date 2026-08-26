@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/a-chacon/oas_core/compare/oas_core/v1.4.1...oas_core/v1.4.2) (2026-08-26)
+
+
+### Bug Fixes
+
+* keep apostrophes inside JSON example strings ([#54](https://github.com/a-chacon/oas_core/issues/54)) ([89a1566](https://github.com/a-chacon/oas_core/commit/89a15668a3eefff053261536f0dd1eb9590bac21))
+
 ## [1.4.1](https://github.com/a-chacon/oas_core/compare/oas_core/v1.4.0...oas_core/v1.4.1) (2026-08-03)
 
 
